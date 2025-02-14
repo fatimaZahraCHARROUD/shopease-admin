@@ -17,7 +17,7 @@ const Add_depot = () => {
     adresse: "",
   });
 
-  const [gestionnaires, setGestionnaires] = useState([]); // Liste des gestionnaires
+  //const [gestionnaires, setGestionnaires] = useState([]); // Liste des gestionnaires
 
   // Récupération des gestionnaires de dépôt
   // useEffect(() => {
@@ -47,7 +47,7 @@ const Add_depot = () => {
  
     try {
       // Envoie de la requête POST avec axios
-      const response = await axios.post('http://localhost:8800/depot', depot);
+      const response = await axios.post('http://localhost:8800/api/depot', depot);
       console.log('depot ajouté avec succès', response.data);
        
       window.location.href = '/admin/depot';  
@@ -86,7 +86,7 @@ const Add_depot = () => {
             .form button {
                 width: 100%;
                 padding: 10px;
-                background-color: rgb(175, 76, 127);
+                background-color: #289dd2;
                 color: white;
                 border: none;
                 border-radius: 4px;

@@ -1,119 +1,167 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link , useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Fournisseur = () => { 
-  
+const Fournisseur = () => {
   const userId = localStorage.getItem("adminId");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [fournisseurs, setFournisseurs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
+  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
 
   useEffect(() => {
     if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
       navigate('/signin');
     }
   }, [userId, navigate]);
-    const [fournisseur, setFournisseur] = useState([]); 
-   const fetchFournisseur = async () => { 
-      try {
-      const response = await axios.get("http://localhost:8800/fournisseur");
-            setFournisseur(response.data);
-         } catch (err) {
-      console.error("Erreur lors de la récupération des fournisseur :", err);
+
+  const fetchFournisseurs = async () => {
+    try {
+      const response = await axios.get("http://localhost:8800/api/fournisseur");
+      setFournisseurs(response.data);
+    } catch (err) {
+      console.error("Erreur lors de la récupération des fournisseurs :", err);
     }
   };
- 
 
   useEffect(() => {
-    fetchFournisseur();
- }, []); 
+    fetchFournisseurs();
+  }, []);
 
-   const deleteFournisseur = async (fournisseurId) => {
-        const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer ce Fournisseur ?");
-
-    if (isConfirmed) {
-    try {
-      await axios.delete(`http://localhost:8800/fournisseur/${fournisseurId}`);
-           alert("Fournisseur supprimé avec succès !");
-      fetchFournisseur(); 
+  const deleteFournisseur = async (fournisseurId) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer ce fournisseur ?")) {
+      try {
+        await axios.delete(`http://localhost:8800/api/fournisseur/${fournisseurId}`);
+        alert("Fournisseur supprimé avec succès !");
+        fetchFournisseurs();
       } catch (err) {
-      console.error("Erreur lors de la suppression de Fournisseur :", err);
-    }}
+        console.error("Erreur lors de la suppression du fournisseur :", err);
+      }
+    }
   };
 
-  return (
-    <div style={{marginLeft:"180px", marginLeft:"180px" ,padding: "20px", fontFamily: "Arial", backgroundColor: "#f4f4f4", borderRadius: "8px" }}>
-    <h1 style={{ fontWeight:"bold" , textAlign: "center", color: "rgb(175, 76, 101)" }}>Liste des Fournisseur</h1>
-    <div className="users" style={{ marginTop: "20px" }}> 
-    <Link
-                    to="/admin/add_fournisseur"
-                    style={{
-                        display: "inline-block",
-                        padding: "8px 12px",
-                        backgroundColor: "rgb(175, 76, 101)",
-                        color: "white",
-                        textDecoration: "none",
-                        borderRadius: "4px",
-                        fontWeight: "bold",
-                    }}
-                >
-                    Ajouter un fournisseur
-                </Link><br/><br/>
-     {fournisseur.length > 0 ? (
-                 fournisseur.map((f) => (
-                   <div key={f.id} className="user" style={{ marginBottom: "20px", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#fff" }}>
-                    <h2 style={{ color: "#444" }}>Nom : {f.nomcomplet}</h2>
-                    <p style={{ color: "#666" }}>Email : {f.email}</p>
-                    <p style={{ color: "#666" }}>Tel : {f.tel}</p>
-                    <p style={{ color: "#666" }}>Adresse : {f.adresse}</p>
+  // Filtrer les fournisseurs selon la recherche
+  const filteredFournisseurs = fournisseurs.filter((f) =>
+    f.nomcomplet.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-                   
-                    <div>
-                      <button 
-                        style={{
-                          marginRight: "10px",
-                          padding: "8px 12px",
-                          backgroundColor: "rgb(175, 76, 101)",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                        }}
-                      >
-                         <Link
-                          to={`/admin/update_fournisseur/${f.id}`}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                          }}
-                        >  
-                          Modifier
-                        </Link> 
-                      </button>
+  // Fonction pour gérer l'affichage du dropdown
+  const toggleDropdown = (fournisseurId) => {
+    if (activeDropdown === fournisseurId) {
+      setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
+    } else {
+      setActiveDropdown(fournisseurId); // Ouvrir le dropdown correspondant
+    }
+  };
+  return (
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
+        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>
+          Liste des Fournisseurs
+        </h1>
+
+
+
+        {/* Conteneur pour aligner le bouton et l'input de recherche */}
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", marginTop: "80px" }}>
+          {/* Bouton Ajouter */}
+          <Link to="/admin/add_fournisseur" className="btn  " style={{ backgroundColor: "white", color: "black" }}>
+            Ajouter un fournisseur
+          </Link>
+
+          {/* Champ de recherche aligné à droite */}
+          <div className="input-group" style={{ width: "360px" }}>
+            <span className="input-group-text  ">
+              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+            </span>
+            <input
+              type="text"
+              placeholder="Rechercher un fournisseur..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control py-2  " 
+            />
+          </div>
+        </div>
+        {/* Tableau des fournisseurs */}
+        <table className="table   shadow">
+          <thead className="table-light">
+            <tr>
+              <th>Nom</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Adresse</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredFournisseurs.length > 0 ? (
+              filteredFournisseurs.map((f) => (
+                <tr key={f.id}>
+                  <td>{f.nomcomplet}</td>
+                  <td>{f.email}</td>
+                  <td>{f.tel}</td>
+                  <td>{f.adresse}</td>
+                  <td>
+                    {/* Menu déroulant avec trois points */}
+                    <div className="dropdown" style={{ marginRight: "40px" }}>
                       <button
-                        onClick={() => deleteFournisseur(f.id)}
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={() => toggleDropdown(f.id)} // Toggle du dropdown
                         style={{
-                          padding: "8px 12px",
-                          backgroundColor: "white",
-                          color: "rgb(175, 76, 101)",
-                          border: "1px solid rgb(175, 76, 101)",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontSize: "14px",
+                          padding: "5px 10px",
+                          minWidth: "35px", // Ajuste la largeur du bouton
                         }}
                       >
-                        Supprimer
+                        ⋮
                       </button>
+
+                      {/* Liste déroulante */}
+                      {activeDropdown === f.id && (
+                        <ul
+                          className="dropdown-menu show"
+                          aria-labelledby={`dropdownMenuButton-${f.id}`}
+                          style={{
+                            minWidth: "10px", // Ajuster la largeur du menu déroulant
+                            marginRight: "10px",  // Enlever toute marge droite indésirable
+                            padding: "0", // Enlever le padding inutile
+                          }}
+                        >
+                          <li>
+                            <Link
+                              to={`/admin/update_fournisseur/${f.id}`}
+                              className="dropdown-item"
+                              style={{ padding: "10px 15px" }}
+                            >
+                              Modifier
+                            </Link>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => deleteFournisseur(f.id)}
+                              style={{ cursor:"pointer" ,padding: "10px 15px" }}
+                            >
+                              Supprimer
+                            </a>
+                          </li>
+                        </ul>
+                      )}
                     </div>
-                    <hr />
-                  </div>
-                ))
-              ) : (
-                <p style={{ textAlign: "center", color: "#888" }}>Aucun fournisseur trouvé.</p>
-              )}
-            </div>
-      
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  Aucun fournisseur trouvé.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

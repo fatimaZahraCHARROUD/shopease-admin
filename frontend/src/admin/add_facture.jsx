@@ -17,7 +17,7 @@ const Add_facture = () => {
   // Fonction pour récupérer la liste des commandes fournisseur
   const fetchCommandesFournisseur = async () => {
   try {
-    const response = await axios.get("http://localhost:8800/commandef"); // Nouvelle route sans ":id"
+    const response = await axios.get("http://localhost:8800/api/commandef"); // Nouvelle route sans ":id"
     setCommandesFournisseur(response.data);
   } catch (error) {
     console.error("Erreur lors de la récupération des commandes fournisseur :", error);
@@ -27,7 +27,7 @@ const Add_facture = () => {
   // Fonction pour récupérer les produits associés à une commande et calculer le prix total
   const fetchProduitsAndCalculateTotal = async (idCommandef) => {
     try {
-      const response = await axios.get(`http://localhost:8800/commandesf/${idCommandef}/produits`);
+      const response = await axios.get(`http://localhost:8800/api/commandesf/${idCommandef}/produits`);
       const produits = response.data;
 
       // Calculer le prix total (prix unitaire * quantité pour chaque produit)
@@ -54,7 +54,7 @@ const Add_facture = () => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Empêche le rechargement de la page
     try {
-      await axios.post("http://localhost:8800/factures", {
+      await axios.post("http://localhost:8800/api/factures", {
         date,
         prixTotal,
         id_commandef: selectedCommandef,
@@ -72,14 +72,21 @@ const Add_facture = () => {
   };
 
   return (
-    <div style={{ marginLeft:"180px"  }} className="container mt-5">
-      <h1>Ajouter une Facture</h1>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{
+        width: "30%",
+        padding: "80px",
+        borderRadius: "8px",
+        backgroundColor: "white",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}>
+        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Ajouter une Facture</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Date</label>
           <input
-            type="date" style={{ width:"500px"}}
-            className="form-control"
+            type="date"
+            className="form-control w-100"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
@@ -88,7 +95,7 @@ const Add_facture = () => {
         <div className="mb-3">
           <label className="form-label">Commande Fournisseur</label>
           <select
-            className="form-control" style={{ width:"500px"}}
+            className="form-control w-100" 
             value={selectedCommandef}
             onChange={handleCommandefChange}
             required
@@ -102,10 +109,11 @@ const Add_facture = () => {
           </select>
         </div>
          
-        <button type="submit" className="btn  " style={{ backgroundColor:"rgb(175, 76, 127)" , color:"white"}}>
+        <button type="submit" className="btn w-100" style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}>
           Ajouter
         </button>
       </form>
+    </div>
     </div>
   );
 };

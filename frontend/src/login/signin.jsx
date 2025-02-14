@@ -42,18 +42,20 @@ const Signin = () => {
     <>
       <style>
         {`
+        
           .form {
-              width: 300px;
+              width: 500px;
               margin: 50px auto;
               padding: 20px;
               border: 1px solid #ccc;
               border-radius: 8px;
               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
               font-family: Arial, sans-serif;
+              background-color: #fff;
           }
           .form h1 {
               text-align: center;
-              color: #333;
+              color: #222;
               margin-bottom: 20px;
           }
           .form input {
@@ -67,7 +69,7 @@ const Signin = () => {
           .form button {
               width: 100%;
               padding: 10px;
-              background-color: rgb(175, 76, 127);
+              background-color:rgb(0, 0, 0);
               color: white;
               border: none;
               border-radius: 4px;
@@ -76,7 +78,7 @@ const Signin = () => {
               font-weight: bold;
           }
           .form button:hover {
-              background-color: rgb(160, 69, 108);
+              background-color:rgb(109, 107, 106);
           }
           .message {
               margin-top: 10px;
@@ -89,37 +91,38 @@ const Signin = () => {
               color: green;
           }
         `}
-      </style>
+      </style><div></div>
       <div className="form">
-        <h1>Sign In</h1>
+        <h1>Bienvenu à ShopEase</h1><br/>
         <form onSubmit={handleSignIn}>
           <div style={{ marginBottom: '15px' }}>
-            <label>Email</label>
+            <label>Email  </label>
             <input
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Entrez votre email  "
               required
             />
           </div>
           <div style={{ marginBottom: '15px' }}>
-            <label>Password</label>
+            <label>Mot de passe</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Entrez votre mot de passe"
               required
             />
           </div>
-          <button type="submit">Sign In</button>
+          <button type="submit">Se connecter</button>
         </form>
         {errorMessage && <div className="message error">{errorMessage}</div>}
         {successMessage && <div className="message success">{successMessage}</div>}
       </div>
     </>
   );
+  
 };
 
 export default Signin;

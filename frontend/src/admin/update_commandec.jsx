@@ -21,8 +21,8 @@ const update_commandec = () => {
    useEffect(() => { 
      const fetchcommandec = async () => { 
            try {
-        const response = await axios.get(`http://localhost:8800/commandec/${id}`); 
-        setcommandec(response.data[0]); 
+        const response = await axios.get(`http://localhost:8800/api/commandec/${id}`); 
+        setcommandec(response.data || {}); 
        } catch (err) {
         console.error("Erreur lors de la récupération des données de commandec :", err);
       }
@@ -37,7 +37,7 @@ const update_commandec = () => {
   useEffect(() => {
     const fetchlivreur = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/livreur");  
+        const response = await axios.get("http://localhost:8800/api/livreur");  
          setlivreur(response.data);
        } catch (err) {
         console.error("Erreur lors de la récupération des livreur :", err);
@@ -58,7 +58,7 @@ const update_commandec = () => {
    const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/commandec/${id}`, commandec);
+      await axios.put(`http://localhost:8800/api/commandec/${id}`, commandec);
       alert("commandec affecté avec succès !");
       navigate("/admin/commandec");  
     } catch (err) {
@@ -66,6 +66,9 @@ const update_commandec = () => {
     }
   };
 
+  if (!commandec || Object.keys(commandec).length === 0) {
+    return <p>Chargement des données...</p>;
+  }
   return (<>
     <style>
     {`

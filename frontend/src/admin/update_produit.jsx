@@ -25,7 +25,7 @@ const Update_product = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/products/${id}`);
+        const response = await axios.get(`http://localhost:8800/api/products/${id}`);
         const product = response.data;
 
         setProductData({
@@ -46,7 +46,7 @@ const Update_product = () => {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/categorie`);
+        const response = await axios.get(`http://localhost:8800/api/categorie`);
         setCategories(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
@@ -55,7 +55,7 @@ const Update_product = () => {
 
     const fetchDepots = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/depot`);
+        const response = await axios.get(`http://localhost:8800/api/depot`);
         setDepots(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des dépôts :", error);
@@ -64,7 +64,7 @@ const Update_product = () => {
 
     const fetchSuppliers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/fournisseur`);
+        const response = await axios.get(`http://localhost:8800/api/fournisseur`);
         setFournisseursList(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des fournisseurs :", error);
@@ -81,7 +81,7 @@ const Update_product = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/products/${id}`, {
+      await axios.put(`http://localhost:8800/api/products/${id}`, {
         ...productData,
         fournisseurs: selectedFournisseurs,
       });
@@ -108,7 +108,7 @@ const Update_product = () => {
   };
 
   return (
-    <div style={{ marginLeft: "180px" }} className="container mt-5">
+    <div style={{ marginLeft: "300px" }} className="container mt-5">
       <h1>Modifier un Produit</h1>
       <form onSubmit={handleUpdate}>
         <div className="mb-3">

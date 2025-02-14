@@ -20,9 +20,9 @@ const details_categorie = () => {
   useEffect(() => {
     const fetchCategorieDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/categorie_details/${id}`);
+        const response = await axios.get(`http://localhost:8800/api/categorie_details/${id}`);
         setCategorie(response.data);
-        const response2 = await axios.get(`http://localhost:8800/categorie/${id}`);
+        const response2 = await axios.get(`http://localhost:8800/api/categorie/${id}`);
         setName(response2.data[0].nom); 
        } catch (err) {
         console.error("Erreur lors de la récupération des détails :", err);
@@ -35,7 +35,7 @@ const details_categorie = () => {
  
 
   return (
-    <div style={{ marginLeft:"180px"}} className="container mt-5">
+    <div style={{ marginLeft:"350px"}} className="container mt-5">
       <h3>Détails de la catégorie (produits associés ):<u>{name  }</u> </h3><br/>
       {categorie ? (
         <div>

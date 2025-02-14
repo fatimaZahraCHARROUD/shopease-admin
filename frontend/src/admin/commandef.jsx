@@ -1,153 +1,170 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link ,useNavigate} from "react-router-dom"; // Corriger l'importation de Link
- 
-const commandef = () => {
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link, useNavigate } from "react-router-dom";
+
+const Commandef = () => {
   const userId = localStorage.getItem("adminId");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [commandef, setCommandef] = useState([]);
 
   useEffect(() => {
     if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
-    window.location.href="signin";
-     // navigate('/signin');
+      navigate('/signin');
     }
   }, [userId, navigate]);
-  const [commandef, setcommandef] = useState([]);
- 
-  // Récupération des commandes
-  const fetchcommandef = async () => {
+
+  useEffect(() => {
+    fetchCommandef();
+  }, []);
+
+  const fetchCommandef = async () => {
     try {
-      const response = await axios.get(`http://localhost:8800/commandef`);
-      setcommandef(response.data);
+      const response = await axios.get("http://localhost:8800/api/commandef");
+      setCommandef(response.data);
     } catch (err) {
       console.error("Erreur lors de la récupération des commandes :", err);
     }
   };
 
-  useEffect(() => {
-    if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
-      navigate('/signin');
-    }
-  }, [userId, navigate]);
- 
-  useEffect(() => {
-   
-    fetchcommandef();
-   }, []);
-
-   const deletecommandef = async (commandeId) => {
+  const deleteCommandef = async (commandeId) => {
     const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cette commande fournisseur ?");
+    if (isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:8800/api/commandef/${commandeId}`);
+        alert("Commande fournisseur supprimée avec succès !");
+        fetchCommandef();
+      } catch (err) {
+        console.error("Erreur lors de la suppression de la commande :", err);
+      }
+    }
+  };
+// Fonction pour gérer l'affichage du dropdown
+  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
 
-if (isConfirmed) {
-try {
-  await axios.delete(`http://localhost:8800/commandef/${commandeId}`);
-       alert("commande fournisseur supprimé avec succès !");
-       fetchcommandef(); 
-  } catch (err) {
-  console.error("Erreur lors de la suppression de commande fournisseur :", err);
-}}
-};
-
+  const toggleDropdown = (factureId) => {
+    if (activeDropdown === factureId) {
+      setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
+    } else {
+      setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
+    }
+  };
   return (
-    <div style={{marginLeft:"180px", padding: "20px", fontFamily: "Arial", backgroundColor: "#f4f4f4", borderRadius: "8px" }}>
-      <h1 style={{ fontWeight: "bold", textAlign: "center", color: "rgb(175, 76, 101)" }}>
-        Liste des commandes fournisseurs  
-      </h1>
-      <Link
-                          to="/admin/add_commandef"
-                          style={{
-                              display: "inline-block",
-                              padding: "8px 12px",
-                              backgroundColor: "rgb(175, 76, 101)",
-                              color: "white",
-                              textDecoration: "none",
-                              borderRadius: "4px",
-                              fontWeight: "bold",
-                          }}
-                      >
-                          Ajouter une commande fournisseur
-                      </Link> <br/>
-      <div className="users" style={{ marginTop: "20px" }}>
-        {commandef.length > 0 ? (
-          commandef.map((commande) => (
-            <div key={commande.id} className="user" style={{ marginBottom: "20px", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#fff" }}>
-                       <h1 style={{ color: "#666" }}>ID: {commande.id }</h1>
-
-            <p style={{ color: "#666" }}>Date envoyer commande: {new Date(commande.date).toLocaleDateString('fr-FR')}</p>
-            <p style={{ color: "#666" }}> Date possible de reçue la commande: {   commande.date_possible    ? new Date(commande.date_possible).toLocaleDateString('fr-FR')     : '-' }</p>
-            <p style={{ color: "#666" }}>  Date reçue la commande: { commande.date_reçue   ? new Date(commande.date_reçue).toLocaleDateString('fr-FR')  : '-' }</p>
-              <p style={{ color: "#666" }}>Etat : {commande.etat}</p>
-              <p style={{ color: "#666" }}>Fournisseur : {commande.nomcomplet} -{commande.email}  </p>
-
-              
-                                          <Link
-                                         to={`/admin/produit_cf/${commande.id}`}
-                                         style={{
-                                            
-                                           color: "rgb(175, 76, 101)",
-                                         }}
-                                       >  
-                                         plus de details
-                                       </Link> <br/>
-                                        <Link
-                                         to={`/admin/facture`}
-                                         style={{
-                                            
-                                           color: "rgb(175, 76, 101)",
-                                         }}
-                                       >  
-                                         voir facture
-                                       </Link> <br/><br/>
-                                       {commande.etat !== 'reçue' && (
-  <button
-    style={{
-      marginRight: "10px",
-      padding: "8px 12px",
-      backgroundColor: "rgb(175, 76, 101)",
-      color: "white",
-      border: "none",
-      borderRadius: "4px",
-      cursor: "pointer",
-      fontSize: "14px",
-    }}
-  >
-    <Link
-      to={`/admin/update_commandef/${commande.id}`}
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
+      <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>Gestion des Commandes Fournisseurs</h1>
+      <div className="d-flex justify-content-between mb-3 my-5">
+        <Link to="/admin/add_commandef" className="btn text-black" style={{ backgroundColor: "white" , color:"black" }}>
+          Ajouter une Commande
+        </Link>
+      </div>
+      <table className="table table-bordered shadow">
+        <thead className="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Date d'Envoi</th>
+            <th>Date Possible Réception</th>
+            <th>Date Réception</th>
+            <th>État</th>
+            <th>Fournisseur</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {commandef.length > 0 ? (
+            commandef.map((commande) => (
+              <tr key={commande.id}>
+                <td>{commande.id}</td>
+                <td>{new Date(commande.date).toLocaleDateString('fr-FR')}</td>
+                <td>{commande.date_possible ? new Date(commande.date_possible).toLocaleDateString('fr-FR') : "-"}</td>
+                <td>{commande.date_reçue ? new Date(commande.date_reçue).toLocaleDateString('fr-FR') : "-"}</td>
+                <td>
+                  <span className={`badge ${commande.etat === "reçue" ? "bg-success" : "bg-warning"}`}>
+                    {commande.etat}
+                  </span>
+                </td>
+                <td>{commande.nomcomplet} - {commande.email}</td>
+                <td>
+  {/* Menu déroulant avec trois points */}
+  <div className="dropdown" style={{ marginRight: "40px" }}>
+    <button
+      className="btn btn-sm btn-outline-secondary"
+      type="button"
+      onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
       style={{
-        textDecoration: "none",
-        color: "white",
+        padding: "5px 10px",
+        minWidth: "35px", // Ajuste la largeur du bouton
       }}
     >
-      Modifier
-    </Link>
-  </button>
-)}
+      ⋮
+    </button>
 
-                                                             <button
-                        onClick={() => deletecommandef(commande.id)}
-                        style={{
-                          padding: "8px 12px",
-                          backgroundColor: "white",
-                          color: "rgb(175, 76, 101)",
-                          border: "1px solid rgb(175, 76, 101)",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Supprimer
-                      </button>
-              <hr />
-            </div>
-          ))
-        ) : (
-          <p style={{ textAlign: "center", color: "#888" }}>Aucune commande trouvée.</p>
+    {/* Liste déroulante */}
+    {activeDropdown === commande.id && (
+      <ul
+        className="dropdown-menu show"
+        aria-labelledby={`dropdownMenuButton-${commande.id}`}
+        style={{
+          minWidth: "10px", // Ajuster la largeur du menu déroulant
+          marginRight: "10px",  // Enlever toute marge droite indésirable
+          padding: "0", // Enlever le padding inutile
+        }}
+      >
+        <li>
+          <Link
+            to={`/admin/produit_cf/${commande.id}`}
+            className="dropdown-item"
+            style={{ padding: "10px 15px" }}
+          >
+            Détails
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={`/admin/facture`}
+            className="dropdown-item"
+            style={{ padding: "10px 15px" }}
+          >
+            Voir Facture
+          </Link>
+        </li>
+        {commande.etat !== 'reçue' && (
+          <li>
+            <Link
+              to={`/admin/update_commandef/${commande.id}`}
+              className="dropdown-item"
+              style={{ padding: "10px 15px" }}
+            >
+              Modifier
+            </Link>
+          </li>
         )}
-      </div>
+        <li>
+          <a
+            className="dropdown-item"
+            onClick={() => deleteCommandef(commande.id)}
+            style={{ padding: "10px 15px" }}
+          >
+            Supprimer
+          </a>
+        </li>
+      </ul>
+    )}
+  </div>
+</td>
+
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center text-muted">Aucune commande trouvée.</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
     </div>
   );
 };
 
-export default commandef;
+export default Commandef;

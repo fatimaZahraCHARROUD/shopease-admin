@@ -1,121 +1,174 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const employe = () => { 
+const Employe = () => {
   const userId = localStorage.getItem("adminId");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [employes, setEmployes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
 
   useEffect(() => {
     if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
       navigate('/signin');
     }
   }, [userId, navigate]);
-    const [employe, setemploye] = useState([]); 
-   const fetchemploye = async () => { 
-      try {
-      const response = await axios.get("http://localhost:8800/employe");
-            setemploye(response.data);
-         } catch (err) {
-      console.error("Erreur lors de la récupération des employe :", err);
+
+  const fetchEmployes = async () => {
+    try {
+      const response = await axios.get("http://localhost:8800/api/employe");
+      setEmployes(response.data);
+    } catch (err) {
+      console.error("Erreur lors de la récupération des employés :", err);
     }
   };
- 
 
   useEffect(() => {
-    fetchemploye();
- }, []); 
+    fetchEmployes();
+  }, []);
 
-   const deleteemploye = async (employeId) => {
-        const isConfirmed = window.confirm("Êtes-vous sûr de vouloir supprimer cet employe ?");
-
-    if (isConfirmed) {
-    try {
-      await axios.delete(`http://localhost:8800/employe/${employeId}`);
-           alert("employe supprimé avec succès !");
-      fetchemploye(); 
+  const deleteEmploye = async (employeId) => {
+    if (window.confirm("Êtes-vous sûr de vouloir supprimer cet employé ?")) {
+      try {
+        await axios.delete(`http://localhost:8800/api/employe/${employeId}`);
+        alert("Employé supprimé avec succès !");
+        fetchEmployes();
       } catch (err) {
-      console.error("Erreur lors de la suppression de employe :", err);
-    }}
+        console.error("Erreur lors de la suppression de l'employé :", err);
+      }
+    }
+  };
+
+  const filteredEmployes = employes.filter((e) =>
+    e.nomcomplet.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Fonction pour gérer l'affichage du dropdown
+  const toggleDropdown = (fournisseurId) => {
+    if (activeDropdown === fournisseurId) {
+      setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
+    } else {
+      setActiveDropdown(fournisseurId); // Ouvrir le dropdown correspondant
+    }
   };
 
   return (
-    <div style={{ marginLeft:"180px", padding: "20px", fontFamily: "Arial", backgroundColor: "#f4f4f4", borderRadius: "8px" }}>
-    <h1 style={{ fontWeight:"bold" , textAlign: "center", color: "rgb(175, 76, 101)" }}>Liste des employe</h1>
-    <div className="users" style={{ marginTop: "20px" }}> 
-    <Link
-                    to="/admin/add_employe"
-                    style={{
-                        display: "inline-block",
-                        padding: "8px 12px",
-                        backgroundColor: "rgb(175, 76, 101)",
-                        color: "white",
-                        textDecoration: "none",
-                        borderRadius: "4px",
-                        fontWeight: "bold",
-                    }}
-                >
-                    Ajouter un employe
-                </Link><br/><br/>
-     {employe.length > 0 ? (
-                 employe.map((e) => (
-                   <div key={e.id} className="user" style={{ marginBottom: "20px", padding: "10px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#fff" }}>
-                    <h2 style={{ color: "#444" }}>Nom : {e.nomcomplet}</h2>
-                    <p style={{ color: "#666" }}>Email : {e.email}</p>
-                    <p style={{ color: "#666" }}>Password : {e.password}</p>
-                    <p style={{ color: "#666" }}>Adresse : {e.adresse}</p>
-                    <p style={{ color: "#666" }}>Telephone : {e.tel}</p>
- 
-                   
-                    <div>
-                      <button 
-                        style={{
-                          marginRight: "10px",
-                          padding: "8px 12px",
-                          backgroundColor: "rgb(175, 76, 101)",
-                          color: "white",
-                          border: "none",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                        }}
-                      >
-                         <Link
-                          to={`/admin/update_employe/${e.id}`}
-                          style={{
-                            textDecoration: "none",
-                            color: "white",
-                          }}
-                        >  
-                          Modifier
-                        </Link> 
-                      </button>
-                      <button
-                        onClick={() => deleteemploye(e.id)}
-                        style={{
-                          padding: "8px 12px",
-                          backgroundColor: "white",
-                          color: "rgb(175, 76, 101)",
-                          border: "1px solid rgb(175, 76, 101)",
-                          borderRadius: "4px",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                        }}
-                      >
-                        Supprimer
-                      </button>
-                    </div>
-                    <hr />
-                  </div>
-                ))
-              ) : (
-                <p style={{ textAlign: "center", color: "#888" }}>Aucun employe trouvé.</p>
-              )}
-            </div>
-      
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
+        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>
+          Liste des Employés
+        </h1>
+
+        {/* Conteneur pour aligner le bouton et l'input de recherche */}
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px",marginTop:"80px" }}>
+          <Link
+            to="/admin/add_employe"
+            className="btn  "
+            style={{ backgroundColor: "white", color: "black" }}
+          >
+            Ajouter un employé
+          </Link>
+
+          <div className="input-group" style={{ width: "360px" }}>
+            <span className="input-group-text">
+              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+            </span>
+            <input
+              type="text"
+              placeholder="Rechercher un employé..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control"
+
+            />
+          </div>
+        </div>
+
+        {/* Tableau des employés */}
+        <table className="table shadow">
+        <thead className="table-light">
+        <tr>
+              <th>Nom </th>
+              <th>Email</th>
+              <th>Mot de passe</th>
+              <th>Adresse</th>
+              <th>Téléphone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredEmployes.length > 0 ? (
+              filteredEmployes.map((e) => (
+                <tr key={e.id}>
+                  <td>{e.nomcomplet}</td>
+                  <td>{e.email}</td>
+                  <td>{e.password}</td>
+                  <td>{e.adresse}</td>
+                  <td>{e.tel}</td>
+                  <td>
+  {/* Menu déroulant avec trois points */}
+  <div className="dropdown" style={{ marginRight: "40px" }}>
+    <button
+      className="btn btn-secondary"
+      type="button"
+      onClick={() => toggleDropdown(e.id)} // Toggle du dropdown
+      style={{
+        padding: "5px 10px",
+        minWidth: "35px", // Ajuste la largeur du bouton
+      }}
+    >
+      ⋮
+    </button>
+
+    {/* Liste déroulante */}
+    {activeDropdown === e.id && (
+      <ul
+        className="dropdown-menu show"
+        aria-labelledby={`dropdownMenuButton-${e.id}`}
+        style={{
+          minWidth: "10px", // Ajuster la largeur du menu déroulant
+          marginRight: "10px",  // Enlever toute marge droite indésirable
+          padding: "0", // Enlever le padding inutile
+        }}
+      >
+        <li>
+          <Link
+            to={`/admin/update_employe/${e.id}`}
+            className="dropdown-item"
+            style={{ padding: "10px 15px" }}
+          >
+            Modifier
+          </Link>
+        </li>
+        <li>
+          <a
+            className="dropdown-item"
+            onClick={() => deleteEmploye(e.id)}
+            style={{ cursor:"pointer" ,padding: "10px 15px" }}
+          >
+            Supprimer
+          </a>
+        </li>
+      </ul>
+    )}
+  </div>
+</td>
+
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  Aucun employé trouvé.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default employe;
+export default Employe;

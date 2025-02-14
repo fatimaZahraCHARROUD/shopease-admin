@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 const AddCommandef = () => {
   const userId = localStorage.getItem("adminId");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
       navigate('/signin');
     }
   }, [userId, navigate]);
+
   const [commandef, setCommandef] = useState({
     id_fournisseur: "",
     etat: "en attente",
@@ -22,16 +22,14 @@ const AddCommandef = () => {
   const [produitsFournisseur, setProduitsFournisseur] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState({});
 
-  //Récupération des fournisseurs
   useEffect(() => {
-    axios.get("http://localhost:8800/fournisseur")
+    axios.get("http://localhost:8800/api/fournisseur")
       .then((response) => setFournisseurs(response.data))
       .catch((err) => console.error("Erreur récupération fournisseurs:", err));
   }, []);
 
-  //Récupération des produits du fournisseur sélectionné
   const fetchProduitsFournisseur = (fournisseurId) => {
-    axios.get(`http://localhost:8800/fournir/${fournisseurId}`)
+    axios.get(`http://localhost:8800/api/fournir/${fournisseurId}`)
       .then((response) => setProduitsFournisseur(response.data))
       .catch((err) => console.error("Erreur récupération produits:", err));
   };
@@ -77,139 +75,105 @@ const AddCommandef = () => {
       }));
 
     try {
-      const response = await axios.post(`http://localhost:8800/commandef`, {
+      await axios.post(`http://localhost:8800/api/commandef`, {
         id_fournisseur: commandef.id_fournisseur,
         etat: commandef.etat,
         produits: produitsCommande,
       });
-      console.log("Commande ajoutée avec succès:", response.data);
-       navigate('/admin/commandef');
+      alert("Commande ajoutée avec succès !");
+      navigate('/admin/commandef');
     } catch (err) {
       console.error("Erreur lors de l'ajout de la commande:", err);
     }
   };
 
-  return ( <>
-  <style>
-    {`
-        .form {
-            width: 500px;
-            margin: 50px auto;
-            marginLeft:"180px";
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
-        }
-        .form h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form input, .form select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form button {
-            width: 100%;
-            padding: 10px;
-            background-color: rgb(175, 76, 127);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .form button:hover {
-            background-color: rgb(143, 61, 97);
-        }
-        .products-list {
-            margin: 20px 0;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-        }
-        .product-item {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            padding-left:60px;
-            padding-right:200px;
-           
-            border: 1px solid #eee;
-            border-radius: 4px;
-        }
-        .quantity-input {
-            width: 80px !important;
-            margin-left: 60px !important;
-        }
-    `}
-  </style>
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        <h1>Nouvelle Commande Fournisseur</h1>
-
-        <select
-          name="id_fournisseur"
-          value={commandef.id_fournisseur}
-          onChange={handleChange}
-          required
-        >
-          <option value="">-- Sélectionnez un fournisseur --</option>
-          {fournisseurs.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.nomcomplet} - {f.email}
-            </option>
-          ))}
-        </select>
-
-        {commandef.id_fournisseur && (
-          <div className="products-list">
-            <h3>Produits disponibles :</h3>
-            {produitsFournisseur.map((produit) => (
-              <div key={produit.id} className="product-item">
-                <input
-                  type="checkbox"
-                  checked={selectedProducts[produit.id]?.selected || false}
-                  onChange={() => handleProductSelection(produit.id)}
-                />
-                <span>
-                  <img src={produit.imgurl} alt={produit.nom} width="50" />
-                  {produit.nom} - {produit.prix}€
-                </span>
-                {selectedProducts[produit.id]?.selected && (
-                  <input
-                    type="number"
-                    min="1"
-                    value={selectedProducts[produit.id]?.quantity || 1}
-                    onChange={(e) => handleQuantityChange(produit.id, e.target.value)}
-                    className="quantity-input"
-                  />
-                )}
-              </div>
-            ))}
+  return (
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div style={{
+        width: "500px",
+        padding: "40px",
+        borderRadius: "8px",
+        backgroundColor: "white",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+      }}>
+        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Nouvelle Commande Fournisseur</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Fournisseur</label>
+            <select
+              name="id_fournisseur"
+              className="form-control"
+              value={commandef.id_fournisseur}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Sélectionnez un fournisseur --</option>
+              {fournisseurs.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.nomcomplet} - {f.email}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
 
-        <button
-          type="submit"
-          disabled={
-            !commandef.id_fournisseur ||
-            !Object.values(selectedProducts).some((p) => p.selected)
-          }
-        >
-          Créer la commande
-        </button>
-      </form>
-    </div></>
+          {commandef.id_fournisseur && (
+            <div className="mb-3">
+              <h4>Produits disponibles</h4>
+              <div style={{
+                maxHeight: "250px",
+                overflowY: "auto",
+                padding: "10px",
+                border: "1px solid #ddd",
+                borderRadius: "4px",
+                backgroundColor: "#f9f9f9"
+              }}>
+                {produitsFournisseur.map((produit) => (
+                  <div key={produit.id} style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "8px",
+                    borderBottom: "1px solid #ddd"
+                  }}>
+                    <input
+                      type="checkbox"
+                      checked={selectedProducts[produit.id]?.selected || false}
+                      onChange={() => handleProductSelection(produit.id)}
+                    />
+                    <span style={{ flex: 1, marginLeft: "10px" }}>
+                      <img src={produit.imgurl} alt={produit.nom} width="40" style={{ marginRight: "10px" }} />
+                      {produit.nom} - {produit.prix}€
+                    </span>
+                    {selectedProducts[produit.id]?.selected && (
+                      <input
+                        type="number"
+                        min="1"
+                        className="form-control"
+                        style={{ width: "70px", textAlign: "center" }}
+                        value={selectedProducts[produit.id]?.quantity || 1}
+                        onChange={(e) => handleQuantityChange(produit.id, e.target.value)}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            className="btn w-100"
+            style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}
+            disabled={
+              !commandef.id_fournisseur ||
+              !Object.values(selectedProducts).some((p) => p.selected)
+            }
+          >
+            Créer la commande
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

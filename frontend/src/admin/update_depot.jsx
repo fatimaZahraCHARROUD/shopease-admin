@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom"; 
+import { useParams, useNavigate } from "react-router-dom";
 
 const update_depot = () => {
-  const userId = localStorage.getItem("adminId");  const navigate = useNavigate(); 
+  const userId = localStorage.getItem("adminId"); const navigate = useNavigate();
 
   useEffect(() => {
     if (!userId) {
@@ -11,63 +11,67 @@ const update_depot = () => {
       navigate('/signin');
     }
   }, [userId, navigate]);
-  const { id } = useParams(); 
- 
+  const { id } = useParams();
+
   const [depot, setdepot] = useState({
-     adresse: "",
+    adresse: "",
   });
 
-   useEffect(() => { 
-     const fetchdepot = async () => { 
-           try {
-        const response = await axios.get(`http://localhost:8800/depot/${id}`); 
-        setdepot(response.data[0]); 
-       } catch (err) {
+  useEffect(() => {
+    const fetchdepot = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8800/api/depot/${id}`);
+        setdepot(response.data || {});
+      } catch (err) {
         console.error("Erreur lors de la récupération des données de depot :", err);
       }
     };
 
     fetchdepot();
-  }, [id]); 
-  
-  const [gestionnaires, setGestionnaires] = useState([]); // Liste des gestionnaires
+  }, [id]);
 
-  // Récupération des gestionnaires de dépôt
+  //const [gestionnaires, setGestionnaires] = useState([]); // Liste des gestionnaires
+
+  /* Récupération des gestionnaires de dépôt
   useEffect(() => {
     const fetchGestionnaires = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/gdepot");  
-         setGestionnaires(response.data);
-       } catch (err) {
+        const response = await axios.get("http://localhost:8800/gdepot");
+        setGestionnaires(response.data);
+      } catch (err) {
         console.error("Erreur lors de la récupération des gestionnaires de dépôt :", err);
       }
     };
 
     fetchGestionnaires();
   }, []); 
-   const handleChange = (e) => {
-    const { name, value } = e.target;  
-    setdepot((prevdepot) => ({ 
-      ...prevdepot,  
-      [name]: value, 
+  */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setdepot((prevdepot) => ({
+      ...prevdepot,
+      [name]: value,
     }));
   };
-  
 
-   const handleSubmit = async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/depot/${id}`, depot);
+      await axios.put(`http://localhost:8800/api/depot/${id}`, depot);
       alert("depot modifié avec succès !");
-      navigate("/admin/depot");  
+      navigate("/admin/depot");
     } catch (err) {
       console.error("Erreur lors de la mise à jour de depot :", err);
     }
   };
 
+  if (!depot || Object.keys(depot).length === 0) {
+    return <p>Chargement des données...</p>;
+  }
   return (<>
     <style>
-    {`
+      {`
         .form {
             width: 300px;
             margin: 50px auto;marginLeft:"180px";
@@ -105,14 +109,14 @@ const update_depot = () => {
             background-color:rgb(160, 69, 108);
         }
     `}
-</style>
+    </style>
     <div className="form">
       <form onSubmit={handleSubmit}>
         <h1>Mettre à jour le depot</h1>
-        <input type="text"  placeholder="adresse" name="adresse" value={depot.adresse} onChange={handleChange} required />  
-          <br />
-      
-          
+        <input type="text" placeholder="adresse" name="adresse" value={depot.adresse} onChange={handleChange} required />
+        <br />
+
+
 
         <button type="submit">Mettre à jour</button>
       </form>

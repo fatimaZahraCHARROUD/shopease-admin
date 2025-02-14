@@ -12,7 +12,7 @@ const Details_facture = () => {
     useEffect(() => {
         const fetchFactureDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8800/facturesdet/${id}`);
+                const response = await axios.get(`http://localhost:8800/api/facturesdet/${id}`);
                 setFacture(response.data);
                 setLoading(false);
             } catch (error) {
@@ -84,7 +84,7 @@ const Details_facture = () => {
     }
 
     return (
-        <div style={{ marginLeft:"180px"}} className="container mt-5">
+        <div style={{ marginLeft:"350px"}} className="container mt-5">
             <h1>Détails de la Facture</h1>
             <Link to="/admin/facture" className="btn   mb-3" style={{border:"1px solid rgb(175, 76, 101)" ,background:"white" , color:"rgb(175, 76, 101)"}}>
                 Retour à la liste des factures

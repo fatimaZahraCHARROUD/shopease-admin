@@ -1,65 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from "react-router-dom"; 
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Details_cf = () => {
   const userId = localStorage.getItem("adminId");
   const navigate = useNavigate(); 
+  const { id } = useParams(); 
 
   useEffect(() => {
     if (!userId) {
-      // Si userId est null ou vide, rediriger vers /signin
       navigate('/signin');
     }
   }, [userId, navigate]);
-  const { id } = useParams(); // Récupère l'ID de la commande depuis l'URL
 
-  const [produits, setProduits] = useState([]); // pour stocker les produits
-  
+  const [produits, setProduits] = useState([]);
+
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const response = await axios.get(`http://localhost:8800/produit_cf/${id}`);
+        const response = await axios.get(`http://localhost:8800/api/produit_cf/${id}`);
         setProduits(response.data);
       } catch (err) {
-        console.log(err);
+        console.error("Erreur lors du chargement des produits :", err);
       }
     };
-
     fetchProduits();
-  }, [id]); // Recharger les produits quand id_cf change
+  }, [id]);
 
   return (
-    <div style={{marginLeft:"180px"}}>
-      <h1>Détails des produits pour la commande {id}</h1> {/* Utilisez id_cf ici */}
-      
+    <div className="container mt-5">
+      <h1 className="text-center mb-4" style={{ color: "#333", fontWeight: "bold" }}>
+        Détails des Produits - Commande #{id}
+      </h1>
+
+      <div className="text-center mb-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="btn"
+          style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}
+        >
+          Retour aux commandes
+        </button>
+      </div>
+
+      <div className="row">
         {produits.length > 0 ? (
           produits.map((produit) => (
-            <div key={produit.id} style={{ marginBottom: '20px' }}>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                {/* Image */}
-                <img 
-                  src={produit.imgurl || '/default-image.jpg'} // Si produit.img est vide, affiche une image par défaut
+            <div key={produit.id} className="col-md-6 col-lg-4 mb-4">
+              <div className="card shadow-sm">
+                <img
+                  src={produit.imgurl || '/default-image.jpg'}
                   alt={produit.nom}
-                  style={{ width: '100px', height: '100px', marginRight: '15px' }} 
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "cover" }}
                 />
-                
-                <div>
-                  {/* Nom et prix */}
-                  <strong>{produit.nom}</strong> - {produit.prix}€
-                  <p>Description: {produit.description}</p>
-                  <p>Quantité: {produit.quantite_commande}</p>
-                  <p>Catégorie: {produit.categorie}</p>
-                  <p>Dépôt: {produit.depot}</p>
+                <div className="card-body">
+                  <h5 className="card-title" style={{ fontWeight: "bold", color: "#333" }}>
+                    {produit.nom}
+                  </h5>
+                  <p className="card-text"><strong>Prix :</strong> {produit.prix}€</p>
+                  <p className="card-text"><strong>Quantité :</strong> {produit.quantite_commande}</p>
+                  <p className="card-text"><strong>Catégorie :</strong> {produit.categorie}</p>
+                  <p className="card-text"><strong>Dépôt :</strong> {produit.depot}</p>
                 </div>
               </div>
-              <hr/></div> 
+            </div>
           ))
         ) : (
-          <p>Aucun produit trouvé pour cette commande.</p>
+          <p className="text-center" style={{ color: "#888" }}>
+            Aucun produit trouvé pour cette commande.
+          </p>
         )}
-       
+      </div>
     </div>
   );
 };

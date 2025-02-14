@@ -6,21 +6,26 @@ const Update_facture = () => {
   const { id } = useParams(); // Récupère l'ID de la facture à modifier
   const navigate = useNavigate();
 
-  const [date, setDate] = useState("");
-  const [prixTotal, setPrixTotal] = useState("");
-  const [idCommandef, setIdCommandef] = useState("");
+  const [date, setDate] = useState('');
+  const [prixTotal, setPrixTotal] = useState('');
+  const [idCommandef, setIdCommandef] = useState('');
   const [commandesFournisseur, setCommandesFournisseur] = useState([]);
 
   // Charger les données de la facture à modifier
   const fetchFactureDetails = useCallback(async () => {
     try {
-      const response = await axios.get(`http://localhost:8800/factures/${id}`);
+      const response = await axios.get(`http://localhost:8800/api/factures/${id}`);
       const facture = response.data;
   
-      // Conversion de la date au format 'YYYY-MM-DD' si nécessaire
-      const formattedDate = new Date(facture.date).toISOString().split("T")[0];
+      console.log("Données de la facture reçues :", facture); // Debug
   
-      setDate(formattedDate);
+      if (!facture.date) {
+        console.warn("⚠️ Aucune date trouvée pour cette facture !");
+        setDate(""); // Évite d'essayer de formater une date null
+      } else {
+        setDate(new Date(facture.date).toISOString().split("T")[0]);
+      }
+  
       setPrixTotal(facture.prixTotal);
       setIdCommandef(facture.id_commandef);
     } catch (error) {
@@ -28,11 +33,13 @@ const Update_facture = () => {
     }
   }, [id]);
   
+  
 
   const fetchCommandesFournisseur = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:8800/commandef");
-      setCommandesFournisseur(response.data);
+      const response = await axios.get("http://localhost:8800/api/commandef");
+      console.log("Commandes fournisseur reçues :", response.data); // 🔍 Vérification des données
+      setCommandesFournisseur(response.data || []);
     } catch (error) {
       console.error("Erreur lors de la récupération des commandes fournisseur :", error);
     }
@@ -46,7 +53,7 @@ const Update_facture = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8800/factures/${id}`, {
+      await axios.put(`http://localhost:8800/api/factures/${id}`, {
         date,
         prixTotal,
         id_commandef: idCommandef,
@@ -58,16 +65,23 @@ const Update_facture = () => {
       alert("Une erreur est survenue lors de la modification.");
     }
   };
-
+  
   return (
-    <div style={{ marginLeft:"180px"}} className="container mt-5">
-      <h1>Modifier une Facture</h1>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{
+        width: "30%",
+        padding: "80px",
+        borderRadius: "8px",
+        backgroundColor: "white",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}>
+        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Modifier une Facture</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Date</label>
           <input
-            type="date"style={{ width:"500px"}}
-            className="form-control"
+            type="date"
+            className="form-control w-100"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
@@ -76,7 +90,7 @@ const Update_facture = () => {
         <div className="mb-3">
           <label className="form-label">Commande Fournisseur</label>
           <select
-            className="form-control"style={{ width:"500px"}}
+            className="form-control w-100"
             value={idCommandef}
             onChange={(e) => setIdCommandef(e.target.value)}
             required
@@ -89,10 +103,11 @@ const Update_facture = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn  " style={{ backgroundColor:"rgb(175, 76, 127)" , color:"white"}}>
+        <button type="submit" className="btn w-100 " style={{ backgroundColor:"#289dd2" , color:"white"}}>
           Modifier
         </button>
       </form>
+    </div>
     </div>
   );
 };

@@ -23,11 +23,11 @@ const Stock = () => {
     try {
       if (idadmin) {
         // Récupération des produits
-        const produitsResponse = await axios.get(`http://localhost:8800/stock`);
+        const produitsResponse = await axios.get(`http://localhost:8800/api/stock`);
         setProduits(produitsResponse.data || []); // Mise à jour des produits ou tableau vide
 
         // Récupération des entrées et sorties selon le filtre
-        const response = await axios.get(`http://localhost:8800/es/${filter}`
+        const response = await axios.get(`http://localhost:8800/api/es/${filter}`
         );
 
         if (response.data) {
@@ -50,7 +50,7 @@ const Stock = () => {
   }, [idadmin, filter]);
 
   return (
-    <div style={{ marginLeft:"180px" ,padding: "20px" }}>
+    <div style={{ marginLeft:"350px" ,padding: "20px" }}>
       <div className="filter-section" style={{ marginBottom: "20px" }}>
         <label htmlFor="filter-select" style={{ marginRight: "10px", fontWeight: "bold" }}>
           Filtrer par :
@@ -91,7 +91,7 @@ const Stock = () => {
             backgroundColor: "#f8f9fa",
           }}
         >
-           <h1 style={{   marginBottom: "10px", color: "rgb(175, 76, 127)" }}>Quantité totale des entrées :</h1>
+           <h1 style={{   marginBottom: "10px", color: "black" }}>Quantité totale des entrées :</h1>
           <h1 style={{ marginTop:"50px" ,textAlign:"center", color: "#333" }}>{entries}</h1> 
 
         </div>
@@ -107,7 +107,7 @@ const Stock = () => {
             backgroundColor: "#f8f9fa",
           }}
         >
-          <h1 style={{   marginBottom: "10px", color: "rgb(175, 76, 127)" }}>Quantité totale des sorties :</h1>
+          <h1 style={{   marginBottom: "10px", color: "black" }}>Quantité totale des sorties :</h1>
            <h1 style={{ marginTop:"50px" ,textAlign:"center", color: "#333" }}>{exits}</h1> 
         </div>
       </div>
@@ -117,7 +117,7 @@ const Stock = () => {
       <h1>Produits dans le Stock  </h1>
       {produits.length > 0 ? (
         <table className="table table-bordered">
-          <thead>
+          <thead className="table-light">
             <tr>
               <th>Image</th>
               <th>Nom du Produit</th>
