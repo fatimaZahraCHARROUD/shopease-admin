@@ -50,7 +50,7 @@ const Commandef = () => {
     }
   };
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "150vh" }}>
     <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
       <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>Gestion des Commandes Fournisseurs</h1>
       <div className="d-flex justify-content-between mb-3 my-5">
@@ -58,7 +58,7 @@ const Commandef = () => {
           Ajouter une Commande
         </Link>
       </div>
-      <table className="table table-bordered shadow">
+      <table className="table   shadow">
         <thead className="table-light">
           <tr>
             <th>ID</th>
@@ -67,7 +67,7 @@ const Commandef = () => {
             <th>Date Réception</th>
             <th>État</th>
             <th>Fournisseur</th>
-            <th>Actions</th>
+            <th> </th>
           </tr>
         </thead>
         <tbody>
@@ -88,13 +88,14 @@ const Commandef = () => {
   {/* Menu déroulant avec trois points */}
   <div className="dropdown" style={{ marginRight: "40px" }}>
     <button
-      className="btn btn-sm btn-outline-secondary"
+      className="btn btn-secondary"
       type="button"
       onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
       style={{
         padding: "5px 10px",
         minWidth: "35px", // Ajuste la largeur du bouton
       }}
+ 
     >
       ⋮
     </button>

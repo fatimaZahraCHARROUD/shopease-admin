@@ -26,10 +26,18 @@ const Stock = () => {
         const produitsResponse = await axios.get(`http://localhost:8800/api/stock`);
         setProduits(produitsResponse.data || []); // Mise à jour des produits ou tableau vide
 
-        // Récupération des entrées et sorties selon le filtre
-        const response = await axios.get(`http://localhost:8800/api/es/${filter}`
+        // Vérification des produits dont la quantité est inférieure à 5
+        const lowStockProducts = produitsResponse.data.filter(
+          (produit) => produit.quantite < 5
         );
+        if (lowStockProducts.length > 0) {
+          // Si des produits ont une quantité inférieure à 5, afficher une alerte
+          const productNames = lowStockProducts.map((produit) => produit.nom).join(", ");
+          alert(`Produits avec une quantité inférieure à 5 : ${productNames}`);
+        }
 
+        // Récupération des entrées et sorties selon le filtre
+        const response = await axios.get(`http://localhost:8800/api/es/${filter}`);
         if (response.data) {
           setEntries(response.data.entrées || 0); // Mettre à jour les entrées
           setExits(response.data.sorties || 0); // Mettre à jour les sorties
@@ -50,7 +58,7 @@ const Stock = () => {
   }, [idadmin, filter]);
 
   return (
-    <div style={{ marginLeft:"350px" ,padding: "20px" }}>
+    <div style={{ backgroundColor: "#f8f9fa", marginLeft: "260px", padding: "20px" }}>
       <div className="filter-section" style={{ marginBottom: "20px" }}>
         <label htmlFor="filter-select" style={{ marginRight: "10px", fontWeight: "bold" }}>
           Filtrer par :
@@ -82,48 +90,48 @@ const Stock = () => {
         }}
       >
         <div
+          className="shadow"
           style={{
             padding: "10px",
             border: "1px solid #ddd",
             borderRadius: "5px",
-            height:"300px",
+            height: "300px",
             width: "48%",
-            backgroundColor: "#f8f9fa",
+            backgroundColor: "white",
           }}
         >
-           <h1 style={{   marginBottom: "10px", color: "black" }}>Quantité totale des entrées :</h1>
-          <h1 style={{ marginTop:"50px" ,textAlign:"center", color: "#333" }}>{entries}</h1> 
-
+          <h1 style={{ marginBottom: "10px", color: "black" }}>Quantité totale des entrées :</h1>
+          <h1 style={{ marginTop: "50px", textAlign: "center", color: "#333" }}>{entries}</h1>
         </div>
 
         <div
+          className="shadow"
           style={{
-           
             padding: "10px",
             border: "1px solid #ddd",
             borderRadius: "5px",
-            height:"300px",
+            height: "300px",
             width: "48%",
-            backgroundColor: "#f8f9fa",
+            backgroundColor: "white",
           }}
         >
-          <h1 style={{   marginBottom: "10px", color: "black" }}>Quantité totale des sorties :</h1>
-           <h1 style={{ marginTop:"50px" ,textAlign:"center", color: "#333" }}>{exits}</h1> 
+          <h1 style={{ marginBottom: "10px", color: "black" }}>Quantité totale des sorties :</h1>
+          <h1 style={{ marginTop: "50px", textAlign: "center", color: "#333" }}>{exits}</h1>
         </div>
       </div>
 
       <hr style={{ borderTop: "2px solid #ddd" }} />
 
-      <h1>Produits dans le Stock  </h1>
+      <h1>Produits dans le Stock</h1>
       {produits.length > 0 ? (
-        <table className="table table-bordered">
+        <table className="table shadow">
           <thead className="table-light">
             <tr>
               <th>Image</th>
               <th>Nom du Produit</th>
               <th>Quantité</th>
               <th>Prix</th>
-              <th>Dépot  adresse</th>
+              <th>Dépot adresse</th>
             </tr>
           </thead>
           <tbody>

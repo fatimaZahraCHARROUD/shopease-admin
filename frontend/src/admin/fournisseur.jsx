@@ -91,7 +91,7 @@ const Fournisseur = () => {
               <th>Email</th>
               <th>Téléphone</th>
               <th>Adresse</th>
-              <th>Actions</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>

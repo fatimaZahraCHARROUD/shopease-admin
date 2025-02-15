@@ -2,7 +2,15 @@ import db from "../config/database.js";
 
 // Récupérer tous les dépôts
 export const getDepots = (callback) => {
-  const q = "SELECT id, adresse FROM depot";
+  const q = `
+  SELECT 
+    depot.id, 
+    depot.adresse, 
+    (SELECT COUNT(*) 
+     FROM produit
+     WHERE produit.id_depot = depot.id) AS nbr_product 
+  FROM depot
+`;
   db.query(q, callback);
 };
 

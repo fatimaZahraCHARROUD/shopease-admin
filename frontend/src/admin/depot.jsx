@@ -138,7 +138,8 @@ const Depot = () => {
            <tr>
               <th>ID</th>
               <th>Adresse</th>
-              <th>Actions</th>
+              <th>Quantité des produits actuelle</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
@@ -147,6 +148,7 @@ const Depot = () => {
                 <tr key={depot.id}>
                   <td>{depot.id}</td>
                   <td>{depot.adresse}</td>
+                  <td>{depot.nbr_product}</td>
                   <td>
   {/* Menu déroulant avec trois points */}
   <div className="dropdown" style={{ marginRight: "40px" }}>

@@ -69,71 +69,55 @@ const update_commandec = () => {
   if (!commandec || Object.keys(commandec).length === 0) {
     return <p>Chargement des données...</p>;
   }
-  return (<>
-    <style>
-    {`
-        .form {
-            width: 300px;
-            margin: 50px auto;
-            marginLeft:"180px";
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            font-family: Arial, sans-serif;
-        }
-        .form h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .form input ,.form select  {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form button {
-            width: 100%;
-            padding: 10px;
-            background-color:rgb(175, 76, 127);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .form button:hover {
-            background-color:rgb(160, 69, 108);
-        }
-    `}
-</style>
-    <div className="form">
-      <form onSubmit={handleSubmit}>
-        <h1>Mettre à jour le commandec</h1>
-     
-      
-          <select 
-            name="id_livreur" 
-            value={commandec.id_livreur} 
-            onChange={handleChange} 
-            required
-          >
-            <option value="">-- Sélectionnez un livreur --</option>
+  return (
+      <div style={{  marginLeft:"250px" ,
+            backgroundColor: "#f8f9fa", 
+            minHeight: "100vh", 
+            display: "flex", 
+            justifyContent: "center", 
+            alignItems: "center" 
+        }}>
+            <div style={{
+                width: "700px",
+                padding: "40px",
+                borderRadius: "8px",
+                backgroundColor: "white",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+            }}>
+                <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>
+                    Affecter la commande à un livreur
+                </h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="form-label">Livreur</label>
+                        <select
+                            className="form-control"
+                            name="id_livreur" 
+                            value={commandec.id_livreur}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">-- Sélectionnez un livreur --</option>
             {livreur.map((g) => (
               <option key={g.id} value={g.id}>
                 {g.nomcomplet} - {g.email}
               </option>
-            ))}
-          </select>
+            ))}  </select>
+                    </div>
 
-        <button type="submit">Mettre à jour</button>
-      </form>
-    </div></>
-  );
+                     
+                    <button 
+                        type="submit" 
+                        className="btn w-100" 
+                        style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}
+                    >
+                        Affecter
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
+ 
 };
 
 export default update_commandec;

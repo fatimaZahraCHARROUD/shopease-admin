@@ -90,7 +90,7 @@ const Product = () => {
               <th>Quantité</th>
               <th>Catégorie</th>
               <th>Dépôt</th>
-              <th>Actions</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
@@ -110,7 +110,7 @@ const Product = () => {
                   </td>
                   <td>{product.nom}</td>
                   <td>{product.description}</td>
-                  <td>{product.prix} €</td>
+                  <td>{product.prix} DH</td>
                   <td>{product.quantite}</td>
                   <td>{product.categorie_nom || "Non défini"}</td>
                   <td>{product.depot_adresse}</td>

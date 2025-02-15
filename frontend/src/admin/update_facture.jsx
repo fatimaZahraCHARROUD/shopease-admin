@@ -67,15 +67,15 @@ const Update_facture = () => {
   };
   
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ marginLeft: "230px",backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
     <div style={{
-        width: "30%",
+        width: "60%",
         padding: "80px",
         borderRadius: "8px",
         backgroundColor: "white",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
     }}>
-        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Modifier une Facture</h2>
+        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}> Mettre à jour une Facture</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Date</label>
@@ -103,8 +103,8 @@ const Update_facture = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn w-100 " style={{ backgroundColor:"#289dd2" , color:"white"}}>
-          Modifier
+        <button type="submit" className="btn w-100 " style={{ backgroundColor:"black" , color:"white"}}>
+        Mettre à jour
         </button>
       </form>
     </div>

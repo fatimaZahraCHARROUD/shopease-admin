@@ -35,10 +35,10 @@ import {
   
   // Ajouter une nouvelle catégorie
   export const createCategorie = (req, res) => {
-    const { nom } = req.body;
+    const { nom , imgurl } = req.body;
     if (!nom) return res.status(400).json({ message: "Le champ nom est requis" });
   
-    addCategorie(nom, (err, data) => {
+    addCategorie(nom , imgurl, (err, data) => {
       if (err) return res.status(500).json({ message: "Erreur lors de l'ajout", error: err });
       return res.json({ message: "Catégorie ajoutée avec succès !" });
     });

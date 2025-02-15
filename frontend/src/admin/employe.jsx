@@ -94,7 +94,7 @@ const Employe = () => {
               <th>Mot de passe</th>
               <th>Adresse</th>
               <th>Téléphone</th>
-              <th>Actions</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>

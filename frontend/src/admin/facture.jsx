@@ -50,7 +50,7 @@ const Facture = () => {
       <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
         <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px" }}>Liste des Factures</h1>
         <button
-          className="btn shadow mb-3 mt-5"
+          className="btn   mb-3 mt-5"
           style={{ backgroundColor: "white", color: "black" }}
           onClick={() => navigate("/admin/add_facture")}
         >
@@ -59,17 +59,19 @@ const Facture = () => {
         <table className="table   shadow" style={{ borderCollapse: "collapse" }}>
           <thead className="table-light">
             <tr>
-              <th>ID Commande Fournisseur</th>
-              <th>Prix Total</th>
+            <th>ID Facture  </th>
+            <th>ID Commande  </th>
+            <th>Prix Total</th>
               <th>Date</th>
               <th>Nom Fournisseur</th>
               <th>Email Fournisseur</th>
-              <th>Actions</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
             {factures.map((facture) => (
               <tr key={facture.facture_id}>
+                <td>{facture.facture_id}</td>
                 <td>{facture.id_commandefournisseur}</td>
                 <td>{facture.prix_total} €</td>
                 <td>{facture.date_facture && new Date(facture.date_facture).toLocaleDateString('fr-FR')}</td>

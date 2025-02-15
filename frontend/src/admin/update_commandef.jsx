@@ -63,7 +63,7 @@ const UpdateCommandef = () => {
     };
 
     return (
-        <div style={{ 
+        <div style={{  marginLeft:"250px" ,
             backgroundColor: "#f8f9fa", 
             minHeight: "100vh", 
             display: "flex", 
@@ -71,7 +71,7 @@ const UpdateCommandef = () => {
             alignItems: "center" 
         }}>
             <div style={{
-                width: "500px",
+                width: "700px",
                 padding: "40px",
                 borderRadius: "8px",
                 backgroundColor: "white",
@@ -113,7 +113,7 @@ const UpdateCommandef = () => {
                     <button 
                         type="submit" 
                         className="btn w-100" 
-                        style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}
+                        style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}
                     >
                         Mettre à jour
                     </button>

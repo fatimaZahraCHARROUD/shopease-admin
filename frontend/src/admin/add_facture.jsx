@@ -31,8 +31,10 @@ const Add_facture = () => {
       const produits = response.data;
 
       // Calculer le prix total (prix unitaire * quantité pour chaque produit)
-      const total = produits.reduce((sum, produit) => sum + produit.prix * produit.quantite, 0);
-      setPrixTotal(total); // Met à jour le prix total
+      const total = produits.reduce((sum, produit) => 
+        sum + Number(produit.prix) * Number(produit.quantite), 0
+      );
+            setPrixTotal(total); // Met à jour le prix total
     } catch (error) {
       console.error("Erreur lors de la récupération des produits de la commande :", error);
       setPrixTotal(0); // Réinitialise en cas d'erreur
@@ -72,9 +74,9 @@ const Add_facture = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ marginLeft: "230px",backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
     <div style={{
-        width: "30%",
+        width: "60%",
         padding: "80px",
         borderRadius: "8px",
         backgroundColor: "white",
@@ -109,7 +111,7 @@ const Add_facture = () => {
           </select>
         </div>
          
-        <button type="submit" className="btn w-100" style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}>
+        <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>
           Ajouter
         </button>
       </form>

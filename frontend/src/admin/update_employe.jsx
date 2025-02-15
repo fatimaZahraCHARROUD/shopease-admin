@@ -57,9 +57,9 @@ const UpdateEmploye = () => {
     }
 
     return (
-        <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div style={{marginLeft:"250px" , backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div style={{
-                width: "500px",
+                width: "700px",
                 padding: "40px",
                 borderRadius: "8px",
                 backgroundColor: "white",
@@ -87,7 +87,7 @@ const UpdateEmploye = () => {
                         <label className="form-label">Téléphone</label>
                         <input type="number" className="form-control" name="tel" value={employe.tel} onChange={handleChange} required />
                     </div>
-                    <button type="submit" className="btn w-100" style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}>
+                    <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>
                         Mettre à jour
                     </button>
                 </form>

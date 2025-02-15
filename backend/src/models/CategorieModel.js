@@ -22,8 +22,8 @@ export const getCategorieDetails = (id, callback) => {
 };
 
 // Ajouter une nouvelle catégorie
-export const addCategorie = (nom, callback) => {
-  db.query("INSERT INTO categorie (nom) VALUES (?)", [nom], callback);
+export const addCategorie = (nom,imgurl, callback) => {
+  db.query("INSERT INTO categorie (nom,imgurl) VALUES (?)", [nom,imgurl], callback);
 };
 
 // Mettre à jour une catégorie

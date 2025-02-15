@@ -26,6 +26,8 @@ import Update_depot from "../admin/update_depot";
 import Produit_cc from "../admin/details_cc";
 
 import Categorie from "../admin/categorie";
+import Add_categorie from "../admin/add_categorie";
+// import Update_categorie from "../admin/update_categorie";
 import Details_categorie from "../admin/details_categorie";
 
 import Facture from "../admin/facture";
@@ -181,6 +183,8 @@ const Admin = () => {
         <Route path="produit" element={<Produit />} />
         <Route path="add_produit" element={<Add_produit />} />
         <Route path="update_produit/:id" element={<Update_produit />} />
+        <Route path="add_categorie" element={<Add_categorie />} />
+        {/* <Route path="update_categorie/:id" element={<Update_categorie />} /> */}
 
         <Route path="facture" element={<Facture />} />
         <Route path="add_facture" element={<Add_facture />} />

@@ -84,8 +84,8 @@ const AddProduct = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div className="card shadow-lg p-4" style={{ width: "900px", backgroundColor: "white", borderRadius: "10px", padding: "40px" }}>
+    <div style={{marginLeft:"250px" , backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div className="card shadow-lg p-4 my-4" style={{ width: "900px", backgroundColor: "white", borderRadius: "10px", padding: "40px" }}>
         <h2 className="text-center mb-4" style={{ color: "#333" }}>Ajouter un Produit</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
@@ -134,7 +134,7 @@ const AddProduct = () => {
               ))}
             </select>
           </div>
-          <button type="submit" className="btn w-100" style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}>Ajouter</button>
+          <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>Ajouter</button>
           
         </form>
       </div>

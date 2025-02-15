@@ -27,6 +27,16 @@ const Commandec = () => {
     fetchCommandec();
   }, []);
 
+  // Fonction pour gérer l'affichage du dropdown
+    const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
+  
+    const toggleDropdown = (factureId) => {
+      if (activeDropdown === factureId) {
+        setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
+      } else {
+        setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
+      }
+    };
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
@@ -34,14 +44,14 @@ const Commandec = () => {
           Liste des commandes clients
         </h1>
         {commandec.length > 0 ? (
-          <table className="table table-bordered">
+          <table className="table shadow">
             <thead className="table-light">
               <tr style={{ backgroundColor: "#289dd2", color: "white" }}>
                 <th>ID</th>
                 <th>Date</th>
                 <th>État</th>
                 <th>Livreur</th>
-                <th>Actions</th>
+                <th> </th>
               </tr>
             </thead>
             <tbody>
@@ -50,37 +60,63 @@ const Commandec = () => {
                   <td>{commande.id}</td>
                   <td>{new Date(commande.date).toLocaleDateString("fr-FR")}</td>
                   <td>
-                    <span style={{
-                      padding: "5px 10px",
-                      borderRadius: "5px",
-                      color: "white",
-                      backgroundColor: commande.etat === "livré" ? "green" : "orange"
-                    }}>
-                      {commande.etat}
-                    </span>
+                  <span className={`badge ${commande.etat === "livré" ? "bg-success" : "bg-warning"}`}>
+                    {commande.etat}
+                  </span>
+
+                     
                   </td>
                   <td>{commande.nomcomplet} - {commande.email}</td>
-                  <td>
-                    {commande.etat !== "livré" && (
-                      <Link
-                        to={`/admin/update_commandec/${commande.id}`}
-                        className="btn"
-                        style={{
-                          backgroundColor: "#289dd2",
-                          color: "white",
-                          marginRight: "10px"
-                        }}
-                      >
-                        Affecter
-                      </Link>
-                    )}
-                    <Link
-                      to={`/admin/produit_cc/${commande.id}`}
-                      className="btn btn-outline-dark"
-                    >
-                      Détails
-                    </Link>
-                  </td>
+                  <td style={{ position: "relative" }}>
+      {/* Menu déroulant avec trois points */}
+      <div className="dropdown">
+        <button
+  style={{
+    padding: "5px 10px",
+    minWidth: "35px", // Ajuste la largeur du bouton
+  }}
+  className="btn btn-secondary"          type="button"
+          onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
+          
+        >
+          ⋮
+        </button>
+
+        {/* Liste déroulante */}
+        {activeDropdown === commande.id && (
+          <ul
+            className="dropdown-menu show"
+            style={{
+              minWidth: "150px",
+              position: "absolute",
+              right: "0",
+              top: "100%",
+              zIndex: "1000",
+              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            {commande.etat !== "livré" && (
+              <li>
+                <Link
+                  to={`/admin/update_commandec/${commande.id}`}
+                  className="dropdown-item"
+                >
+                  Affecter
+                </Link>
+              </li>
+            )}
+            <li>
+              <Link
+                to={`/admin/produit_cc/${commande.id}`}
+                className="dropdown-item"
+              >
+                Détails
+              </Link>
+            </li>
+          </ul>
+        )}
+      </div>
+    </td>
                 </tr>
               ))}
             </tbody>

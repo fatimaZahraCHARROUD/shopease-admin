@@ -7,10 +7,8 @@ const Categorie = () => {
   const userId = localStorage.getItem("adminId");
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [nom, setNom] = useState("");
-  const [id, setId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState(""); // Ajout du champ de recherche
-  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   useEffect(() => {
     if (!userId) {
@@ -32,40 +30,17 @@ const Categorie = () => {
     }
   };
 
-  // Fonction pour ajouter ou modifier une catégorie
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!nom.trim()) {
-      alert("Le champ nom est obligatoire !");
-      return;
-    }
-
-    try {
-      let response;
-
-      if (id) {
-        response = await axios.put(`http://localhost:8800/api/categorie/${id}`, { nom });
-        alert("Catégorie modifiée avec succès !");
-      } else {
-        response = await axios.post(`http://localhost:8800/api/categorie`, { nom });
-        alert("Catégorie ajoutée avec succès !");
-      }
-
-      setNom("");
-      setId(null);
-      fetchCategories();
-    } catch (error) {
-      console.error("Erreur lors de l'ajout/modification :", error);
-      alert("Une erreur est survenue lors de l'ajout ou de la modification.");
-    }
+  // Redirection pour ajouter une catégorie
+  const handleAdd = () => {
+    navigate("/admin/add_categorie"); // Redirige vers une page de création
   };
 
-  // Fonction pour pré-remplir le formulaire lors de la modification
-  const handleEdit = (category) => {
-    setNom(category.nom);
-    setId(category.id);
-  };
+  // Redirection pour modifier une catégorie
+  // const handleEdit = (category) => {
+  //   navigate(`/admin/update_categorie/${category.id}`, {
+  //     state: { category }, // Passe la catégorie à la page suivante
+  //   });
+  // };
 
   // Fonction pour supprimer une catégorie
   const handleDelete = async (id) => {
@@ -85,38 +60,33 @@ const Categorie = () => {
   const filteredCategories = categories.filter((category) =>
     category.nom.toLowerCase().includes(searchTerm.toLowerCase())
   );
-// Fonction pour gérer l'affichage du dropdown
-const toggleDropdown = (factureId) => {
-  if (activeDropdown === factureId) {
-    setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
-  } else {
-    setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
-  }
-};
+
+  // Fonction pour gérer l'affichage du dropdown
+  const toggleDropdown = (factureId) => {
+    if (activeDropdown === factureId) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(factureId);
+    }
+  };
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px", marginBottom: "80px" }}> Gestion des Catégories
+        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px", marginBottom: "80px" }}>
+          Gestion des Catégories
         </h1>
 
         {/* Conteneur pour aligner le bouton et l'input de recherche */}
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-          {/* Formulaire d'ajout/modification */}
-          <form onSubmit={handleSubmit} style={{ display: "flex", gap: "10px", width: "100%" }}>
-            <input
-              type="text"
-              placeholder="Nom de la catégorie..."
-              className="form-control"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-              required
-              style={{ maxWidth: "300px" }}
-            />
-            <button type="submit" className="btn" style={{ backgroundColor: "white", color: "black" }}>
-              {id ? "Modifier" : "Ajouter"}
-            </button>
-          </form>
+          {/* Bouton pour ajouter une catégorie */}
+          <button
+            onClick={handleAdd}
+            className="btn"
+            style={{ backgroundColor: "white", color: "black" }}
+          >
+            Ajouter une Catégorie
+          </button>
 
           {/* Champ de recherche aligné à droite */}
           <div className="input-group" style={{ width: "360px" }}>
@@ -129,90 +99,88 @@ const toggleDropdown = (factureId) => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="form-control"
-
             />
           </div>
         </div>
 
         {/* Tableau des catégories */}
-        <table className="table  shadow  " style={{border:"1px solid rgb(237, 237, 237)" }}>
-        <thead className="table-light">
-        <tr>
+        <table className="table shadow" style={{ border: "1px solid rgb(237, 237, 237)" }}>
+          <thead className="table-light">
+            <tr>
               <th>Image</th>
               <th>Nom</th>
-              <th>Actions</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             {filteredCategories.length > 0 ? (
               filteredCategories.map((category) => (
                 <tr key={category.id}>
-<td>
-  <img 
-    src={`${category.imgurl}`} // Replace with your image path or URL
-    alt={`Category ${category.id}`}
-    style={{ width: "60px", height: "60px", borderRadius: "5px" }} // Adjust size and styling as needed
-  />
-</td>
+                  <td>
+                    <img
+                      src={`${category.imgurl}`}
+                      alt={`Category ${category.id}`}
+                      style={{ width: "60px", height: "60px", borderRadius: "5px" }}
+                    />
+                  </td>
                   <td>{category.nom}</td>
                   <td>
-  {/* Menu déroulant avec trois points */}
-  <div className="dropdown" style={{ marginRight: "40px" }}>
-    <button
-      className="btn btn-secondary"
-      type="button"
-      onClick={() => toggleDropdown(category.id)} // Toggle du dropdown
-      style={{
-        padding: "5px 10px",
-        minWidth: "35px", // Ajuste la largeur du bouton
-      }}
-    >
-      ⋮
-    </button>
+                    {/* Menu déroulant avec trois points */}
+                    <div className="dropdown" style={{ marginRight: "40px" }}>
+                      <button
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={() => toggleDropdown(category.id)}
+                        style={{
+                          padding: "5px 10px",
+                          minWidth: "35px",
+                        }}
+                      >
+                        ⋮
+                      </button>
 
-    {/* Liste déroulante */}
-    {activeDropdown === category.id && (
-      <ul
-        className="dropdown-menu show"
-        aria-labelledby={`dropdownMenuButton-${category.id}`}
-        style={{
-          minWidth: "10px", // Ajuster la largeur du menu déroulant
-          marginRight: "10px",  // Enlever toute marge droite indésirable
-          padding: "0", // Enlever le padding inutile
-        }}
-      >
-        <li>
-          <a
-            className="dropdown-item"
-            onClick={() => handleEdit(category)}
-            style={{ padding: "10px 15px" }}
-          >
-            Modifier
-          </a>
-        </li>
-        <li>
-          <a
-            className="dropdown-item"
-            onClick={() => handleDelete(category.id)}
-            style={{ padding: "10px 15px" }}
-          >
-            Supprimer
-          </a>
-        </li>
-        <li>
-          <Link
-            to={`/admin/details_categorie/${category.id}`}
-            className="dropdown-item"
-            style={{ padding: "10px 15px", color: "black" }}
-          >
-            Détails
-          </Link>
-        </li>
-      </ul>
-    )}
-  </div>
-</td>
-
+                      {/* Liste déroulante */}
+                      {activeDropdown === category.id && (
+                        <ul
+                          className="dropdown-menu show"
+                          aria-labelledby={`dropdownMenuButton-${category.id}`}
+                          style={{
+                            minWidth: "10px",
+                            marginRight: "10px",
+                            padding: "0",
+                          }}
+                        >
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              // onClick={() => handleEdit(category)}
+                              style={{cursor:"pointer" ,  padding: "10px 15px" }}
+                            >
+                              Modifier
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => handleDelete(category.id)}
+                              style={{ cursor:"pointer" , padding: "10px 15px" }}
+                            >
+                              Supprimer
+                            </a>
+                          </li>
+                          <li>
+                            <Link
+                              to={`/admin/details_categorie/${category.id}`}
+                              className="dropdown-item"
+                              style={{ padding: "10px 15px", color: "black" }}
+                            >
+                              Détails
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (

@@ -88,15 +88,15 @@ const AddCommandef = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{  marginLeft:"250px" ,backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <div style={{
-        width: "500px",
+        width: "700px", minHeight:"500px",
         padding: "40px",
         borderRadius: "8px",
         backgroundColor: "white",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
       }}>
-        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Nouvelle Commande Fournisseur</h2>
+        <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Ajoutez une Commande Fournisseur</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Fournisseur</label>
@@ -162,8 +162,8 @@ const AddCommandef = () => {
 
           <button
             type="submit"
-            className="btn w-100"
-            style={{ backgroundColor: "#289dd2", color: "white", fontWeight: "bold" }}
+            className="btn w-100  "
+            style={{   backgroundColor: "black", color: "white", fontWeight: "bold" }}
             disabled={
               !commandef.id_fournisseur ||
               !Object.values(selectedProducts).some((p) => p.selected)

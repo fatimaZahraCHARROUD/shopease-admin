@@ -108,8 +108,9 @@ const Update_product = () => {
   };
 
   return (
-    <div style={{ marginLeft: "300px" }} className="container mt-5">
-      <h1>Modifier un Produit</h1>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" ,marginLeft:"250px" }}>
+    <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding:"40px" }}>
+           <h1>Modifier un Produit</h1>
       <form onSubmit={handleUpdate}>
         <div className="mb-3">
           <label className="form-label">Nom</label>
@@ -212,11 +213,11 @@ const Update_product = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn  " style={{ backgroundColor:"rgb(175, 76, 101)",color:"white"}}>
-          Modifier
-        </button>
+        <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "black", fontSize: "16px", fontWeight: "bold" }}>
+            Mettre à jour
+          </button>
       </form>
-    </div>
+    </div></div>
   );
 };
 
