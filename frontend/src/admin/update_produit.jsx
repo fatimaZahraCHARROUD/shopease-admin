@@ -38,7 +38,7 @@ const Update_product = () => {
           id_depot: product.id_depot,
         });
 
-        setSelectedFournisseurs(product.fournisseurs || []);
+        setSelectedFournisseurs(product.fournisseurs ? product.fournisseurs.map(f => f.id.toString()) : []);
       } catch (error) {
         console.error("Erreur lors de la récupération du produit :", error);
       }
@@ -98,126 +98,134 @@ const Update_product = () => {
     setProductData({ ...productData, [name]: value });
   };
 
-  // Gestion des fournisseurs sélectionnés
+  // Gestion des fournisseurs sélectionnés (cases à cocher)
   const handleSupplierChange = (e) => {
-    const selected = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
+    const { value, checked } = e.target;
+    setSelectedFournisseurs((prevSelected) =>
+      checked
+        ? [...prevSelected, value.toString()]
+        : prevSelected.filter((id) => id !== value.toString())
     );
-    setSelectedFournisseurs(selected);
   };
+  
 
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" ,marginLeft:"250px" }}>
-    <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding:"40px" }}>
-           <h1>Modifier un Produit</h1>
-      <form onSubmit={handleUpdate}>
-        <div className="mb-3">
-          <label className="form-label">Nom</label>
-          <input
-            type="text"
-            className="form-control"
-            name="nom"
-            value={productData.nom}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Description</label>
-          <textarea
-            className="form-control"
-            name="description"
-            value={productData.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Prix</label>
-          <input
-            type="number"
-            className="form-control"
-            name="prix"
-            value={productData.prix}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Quantité</label>
-          <input
-            type="number"
-            className="form-control"
-            name="quantite"
-            value={productData.quantite}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">URL de l'image</label>
-          <input
-            type="text"
-            className="form-control"
-            name="imgurl"
-            value={productData.imgurl}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Catégorie</label>
-          <select
-            className="form-control"
-            name="id_categorie"
-            value={productData.id_categorie}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Sélectionnez une catégorie</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.nom}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Fournisseurs</label>
-          <select 
-            className="form-control"
-            multiple
-            value={selectedFournisseurs}
-            onChange={handleSupplierChange}
-          >
-            {fournisseursList.map((fournisseur) => (
-              <option key={fournisseur.id} value={fournisseur.id}>
-                {fournisseur.nomcomplet}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Dépôt</label>
-          <select
-            className="form-control"
-            name="id_depot"
-            value={productData.id_depot}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Sélectionnez un dépôt</option>
-            {depots.map((depot) => (
-              <option key={depot.id} value={depot.id}>
-                {depot.adresse}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "black", fontSize: "16px", fontWeight: "bold" }}>
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", marginLeft: "250px" }}>
+      <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding: "40px" }}>
+        <h1>Modifier un Produit</h1>
+        <form onSubmit={handleUpdate}>
+          <div className="mb-3">
+            <label className="form-label">Nom</label>
+            <input
+              type="text"
+              className="form-control"
+              name="nom"
+              value={productData.nom}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Description</label>
+            <textarea
+              className="form-control"
+              name="description"
+              value={productData.description}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Prix</label>
+            <input
+              type="number"
+              className="form-control"
+              name="prix"
+              value={productData.prix}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Quantité</label>
+            <input
+              type="number"
+              className="form-control"
+              name="quantite"
+              value={productData.quantite}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">URL de l'image</label>
+            <input
+              type="text"
+              className="form-control"
+              name="imgurl"
+              value={productData.imgurl}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Catégorie</label>
+            <select
+              className="form-control"
+              name="id_categorie"
+              value={productData.id_categorie}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Sélectionnez une catégorie</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.nom}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Fournisseurs</label>
+            <div>
+              {fournisseursList.map((fournisseur) => (
+                <div key={fournisseur.id} className="form-check">
+                 <input
+  className="form-check-input"
+  type="checkbox"
+  value={fournisseur.id.toString()}  // Convertir en chaîne
+  checked={selectedFournisseurs.includes(fournisseur.id.toString())} // Comparaison correcte
+  onChange={handleSupplierChange}
+/>
+
+                  <label className="form-check-label">
+                    {fournisseur.nomcomplet}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Dépôt</label>
+            <select
+              className="form-control"
+              name="id_depot"
+              value={productData.id_depot}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Sélectionnez un dépôt</option>
+              {depots.map((depot) => (
+                <option key={depot.id} value={depot.id}>
+                  {depot.adresse}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "black", fontSize: "16px", fontWeight: "bold" }}>
             Mettre à jour
           </button>
-      </form>
-    </div></div>
+        </form>
+      </div>
+    </div>
   );
 };
 

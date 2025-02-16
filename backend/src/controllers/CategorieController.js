@@ -16,13 +16,16 @@ import {
   };
   
   // Récupérer une catégorie spécifique
-  export const getCategorie = (req, res) => {
-    getCategorieById(req.params.id, (err, data) => {
-      if (err) return res.status(500).json({ message: "Erreur serveur", error: err });
-      if (data.length === 0) return res.status(404).json({ message: "Catégorie non trouvée" });
-      return res.json(data);
-    });
-  };
+export const getCategorie = (req, res) => {
+  getCategorieById(req.params.id, (err, data) => {
+    if (err) return res.status(500).json({ message: "Erreur serveur", error: err });
+    if (data.length === 0) return res.status(404).json({ message: "Catégorie non trouvée" });
+
+    // Retourner le premier élément au lieu d'un tableau
+    return res.json(data[0]); // On retourne uniquement l'objet
+  });
+};
+
   
   // Récupérer les produits d'une catégorie spécifique
   export const getCategorieProduits = (req, res) => {
@@ -33,28 +36,43 @@ import {
     });
   };
   
-  // Ajouter une nouvelle catégorie
-  export const createCategorie = (req, res) => {
-    const { nom , imgurl } = req.body;
-    if (!nom) return res.status(400).json({ message: "Le champ nom est requis" });
-  
-    addCategorie(nom , imgurl, (err, data) => {
-      if (err) return res.status(500).json({ message: "Erreur lors de l'ajout", error: err });
-      return res.json({ message: "Catégorie ajoutée avec succès !" });
-    });
-  };
-  
-  // Modifier une catégorie
-  export const editCategorie = (req, res) => {
-    const { id } = req.params;
-    const { nom } = req.body;
-    if (!nom) return res.status(400).json({ message: "Le champ nom est requis" });
-  
-    updateCategorie(id, nom, (err, data) => {
-      if (err) return res.status(500).json({ message: "Erreur lors de la modification", error: err });
-      return res.json({ message: "Catégorie modifiée avec succès !" });
-    });
-  };
+ // Ajouter une nouvelle catégorie
+export const createCategorie = (req, res) => {
+  const { nom, imgurl } = req.body;
+
+  // Vérification des champs obligatoires
+  if (!nom || !imgurl) {
+    return res.status(400).json({ message: "Les champs nom et imgurl sont requis." });
+  }
+
+  addCategorie(nom, imgurl, (err, data) => {
+    if (err) {
+      console.error("Erreur lors de l'ajout de la catégorie :", err);
+      return res.status(500).json({ message: "Erreur lors de l'ajout de la catégorie.", error: err });
+    }
+    return res.status(201).json({ message: "Catégorie ajoutée avec succès !" });
+  });
+};
+
+// Modifier une catégorie existante
+export const editCategorie = (req, res) => {
+  const { id } = req.params; // Récupération de l'ID depuis les paramètres de la requête
+  const { nom, imgurl } = req.body;
+
+  // Vérification des champs obligatoires
+  if (!nom || !imgurl) {
+    return res.status(400).json({ message: "Les champs nom et imgurl sont requis pour la mise à jour." });
+  }
+
+  updateCategorie(id, nom, imgurl, (err, data) => {
+    if (err) {
+      console.error("Erreur lors de la modification de la catégorie :", err);
+      return res.status(500).json({ message: "Erreur lors de la modification de la catégorie.", error: err });
+    }
+    return res.json({ message: "Catégorie modifiée avec succès !" });
+  });
+};
+
   
   // Supprimer une catégorie
   export const removeCategorie = (req, res) => {

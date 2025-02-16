@@ -107,7 +107,7 @@ const Commandec = () => {
             )}
             <li>
               <Link
-                to={`/admin/produit_cc/${commande.id}`}
+                to={`/admin/details_cc/${commande.id}`}
                 className="dropdown-item"
               >
                 Détails

@@ -122,7 +122,8 @@ const Commandef = () => {
         </li>
         <li>
           <Link
-            to={`/admin/facture`}
+ 
+            to={`/admin/details_facture/${commande.facture_id}`}
             className="dropdown-item"
             style={{ padding: "10px 15px" }}
           >

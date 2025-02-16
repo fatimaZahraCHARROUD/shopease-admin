@@ -14,6 +14,7 @@ import Update_fournisseur from "../admin/update_fournisseur";
 
 import Commandec from "../admin/commandec";
 import Update_commandec from "../admin/update_commandec";
+import Details_cc from "../admin/details_cc";
 
 import Employe from "../admin/employe";
 import Add_employe from "../admin/add_employe";
@@ -27,7 +28,7 @@ import Produit_cc from "../admin/details_cc";
 
 import Categorie from "../admin/categorie";
 import Add_categorie from "../admin/add_categorie";
-// import Update_categorie from "../admin/update_categorie";
+import Update_categorie from "../admin/update_categorie";
 import Details_categorie from "../admin/details_categorie";
 
 import Facture from "../admin/facture";
@@ -184,12 +185,13 @@ const Admin = () => {
         <Route path="add_produit" element={<Add_produit />} />
         <Route path="update_produit/:id" element={<Update_produit />} />
         <Route path="add_categorie" element={<Add_categorie />} />
-        {/* <Route path="update_categorie/:id" element={<Update_categorie />} /> */}
+        <Route path="update_categorie/:id" element={<Update_categorie />} />
 
         <Route path="facture" element={<Facture />} />
         <Route path="add_facture" element={<Add_facture />} />
         <Route path="update_facture/:id" element={<Update_facture />} />
         <Route path="details_facture/:id" element={<Details_facture />} />
+        <Route path="details_cc/:id" element={<Details_cc />} />
       </Routes>
     </div >
   );

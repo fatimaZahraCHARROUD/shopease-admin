@@ -51,7 +51,7 @@ const Product = () => {
       }
     };
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "200vh"   }}>
       <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
 
         <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop:"20px" }}>
@@ -102,7 +102,7 @@ const Product = () => {
                       <img
                         src={product.imgurl}
                         alt={product.name}
-                        style={{ width: "100px", height: "auto" }}
+                        style={{  width: '50px', height: '50px'  }}
                       />
                     ) : (
                       "Pas d'image"

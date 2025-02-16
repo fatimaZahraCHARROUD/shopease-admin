@@ -22,14 +22,18 @@ export const getCategorieDetails = (id, callback) => {
 };
 
 // Ajouter une nouvelle catégorie
-export const addCategorie = (nom,imgurl, callback) => {
-  db.query("INSERT INTO categorie (nom,imgurl) VALUES (?)", [nom,imgurl], callback);
+export const addCategorie = (nom, imgurl, callback) => {
+  const query = "INSERT INTO categorie (nom, imgurl) VALUES (?, ?)";
+  db.query(query, [nom, imgurl], callback);
 };
 
+
 // Mettre à jour une catégorie
-export const updateCategorie = (id, nom, callback) => {
-  db.query("UPDATE categorie SET nom = ? WHERE id = ?", [nom, id], callback);
+export const updateCategorie = (id, nom, imgurl, callback) => {
+  const query = "UPDATE categorie SET nom = ?, imgurl = ? WHERE id = ?";
+  db.query(query, [nom, imgurl, id], callback);
 };
+
 
 // Supprimer une catégorie
 export const deleteCategorie = (id, callback) => {

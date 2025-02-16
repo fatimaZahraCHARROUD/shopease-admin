@@ -51,6 +51,14 @@ const AddProduct = () => {
     }
   };
 
+  const handleSupplierChange = (supplierId) => {
+    setSelectedSuppliers((prev) =>
+      prev.includes(supplierId)
+        ? prev.filter((id) => id !== supplierId) // Uncheck
+        : [...prev, supplierId] // Check
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -84,58 +92,143 @@ const AddProduct = () => {
   };
 
   return (
-    <div style={{marginLeft:"250px" , backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <div className="card shadow-lg p-4 my-4" style={{ width: "900px", backgroundColor: "white", borderRadius: "10px", padding: "40px" }}>
-        <h2 className="text-center mb-4" style={{ color: "#333" }}>Ajouter un Produit</h2>
+    <div
+      style={{
+        marginLeft: "250px",
+        backgroundColor: "#f8f9fa",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <div
+        className="card shadow-lg p-4 my-4"
+        style={{
+          width: "900px",
+          backgroundColor: "white",
+          borderRadius: "10px",
+          padding: "40px",
+        }}
+      >
+        <h2 className="text-center mb-4" style={{ color: "#333" }}>
+          Ajouter un Produit
+        </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Nom du Produit</label>
-            <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </div>
           <div className="mb-3">
             <label className="form-label">Description</label>
-            <textarea className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <textarea
+              className="form-control"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </div>
           <div className="mb-3">
             <label className="form-label">Prix</label>
-            <input type="number" className="form-control" value={price} onChange={(e) => setPrice(e.target.value)} required />
+            <input
+              type="number"
+              className="form-control"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              required
+            />
           </div>
           <div className="mb-3">
             <label className="form-label">Quantité</label>
-            <input type="number" className="form-control" value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
+            <input
+              type="number"
+              className="form-control"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+            />
           </div>
           <div className="mb-3">
             <label className="form-label">URL de l'image</label>
-            <input type="text" className="form-control" value={imgurl} onChange={(e) => setImgurl(e.target.value)} required />
+            <input
+              type="text"
+              className="form-control"
+              value={imgurl}
+              onChange={(e) => setImgurl(e.target.value)}
+              required
+            />
           </div>
           <div className="mb-3">
             <label className="form-label">Catégorie</label>
-            <select className="form-control" value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
+            <select
+              className="form-control"
+              value={categoryId}
+              onChange={(e) => setCategoryId(e.target.value)}
+              required
+            >
               <option value="">Sélectionnez une catégorie</option>
               {categories.map((category) => (
-                <option key={category.id} value={category.id}>{category.nom}</option>
+                <option key={category.id} value={category.id}>
+                  {category.nom}
+                </option>
               ))}
             </select>
           </div>
           <div className="mb-3">
             <label className="form-label">Fournisseurs</label>
-            <select multiple className="form-control" value={selectedSuppliers} onChange={(e) => setSelectedSuppliers(Array.from(e.target.selectedOptions, (option) => option.value))}>
+            <div>
               {suppliers.map((supplier) => (
-                <option key={supplier.id} value={supplier.id}>{supplier.nomcomplet} - {supplier.email}</option>
+                <div key={supplier.id} className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={`supplier-${supplier.id}`}
+                    value={supplier.id}
+                    checked={selectedSuppliers.includes(supplier.id)}
+                    onChange={() => handleSupplierChange(supplier.id)}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor={`supplier-${supplier.id}`}
+                  >
+                    {supplier.nomcomplet} - {supplier.email}
+                  </label>
+                </div>
               ))}
-            </select>
+            </div>
           </div>
           <div className="mb-3">
             <label className="form-label">Dépôt</label>
-            <select className="form-control" value={selectedDepot} onChange={(e) => setSelectedDepot(e.target.value)} required>
+            <select
+              className="form-control"
+              value={selectedDepot}
+              onChange={(e) => setSelectedDepot(e.target.value)}
+              required
+            >
               <option value="">Sélectionnez un dépôt</option>
               {depots.map((depot) => (
-                <option key={depot.id} value={depot.id}>{depot.adresse}</option>
+                <option key={depot.id} value={depot.id}>
+                  {depot.adresse}
+                </option>
               ))}
             </select>
           </div>
-          <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>Ajouter</button>
-          
+          <button
+            type="submit"
+            className="btn w-100"
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              fontWeight: "bold",
+            }}
+          >
+            Ajouter
+          </button>
         </form>
       </div>
     </div>

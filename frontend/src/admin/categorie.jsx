@@ -36,11 +36,11 @@ const Categorie = () => {
   };
 
   // Redirection pour modifier une catégorie
-  // const handleEdit = (category) => {
-  //   navigate(`/admin/update_categorie/${category.id}`, {
-  //     state: { category }, // Passe la catégorie à la page suivante
-  //   });
-  // };
+  const handleEdit = (category) => {
+    navigate(`/admin/update_categorie/${category.id}`, {
+      state: { category }, // Passe la catégorie à la page suivante
+    });
+  };
 
   // Fonction pour supprimer une catégorie
   const handleDelete = async (id) => {
@@ -71,7 +71,7 @@ const Categorie = () => {
   };
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "130vh" }}>
       <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
         <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px", marginBottom: "80px" }}>
           Gestion des Catégories
@@ -153,7 +153,7 @@ const Categorie = () => {
                           <li>
                             <a
                               className="dropdown-item"
-                              // onClick={() => handleEdit(category)}
+                               onClick={() => handleEdit(category)}
                               style={{cursor:"pointer" ,  padding: "10px 15px" }}
                             >
                               Modifier
