@@ -4,8 +4,7 @@ import { FaBriefcase, FaHome, FaChevronDown, FaChevronUp } from "react-icons/fa"
 import { useState } from "react";
 
 
-import Accueil from "../admin/accueil";
-import Client from "../admin/client";
+ import Client from "../admin/client";
 import Dashboard from "../admin/dashboard";
 
 import Fournisseur from "../admin/fournisseur";
@@ -55,8 +54,7 @@ import Produit_cf from "../admin/produit_cf";
 const Admin = () => {
   const [showPatrimoine, setShowPatrimoine] = useState(false);
   const [showStore, setShowStore] = useState(false);
-  const [showFinance, setShowFinance] = useState(false);
-
+ 
 
   return (
     <div>
@@ -115,9 +113,9 @@ const Admin = () => {
         `}
       </style>
       <nav>
-        <ul>
-          <li><Link to="/admin/Accueil"> <FaHome style={{ marginRight: "10px" }} /> Accueil</Link></li>
-          <li>
+        <ul>          <li><Link to="/admin/dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
+
+           <li>
             <button className="dropdown-btn" onClick={() => setShowPatrimoine(!showPatrimoine)}>
               <FaBriefcase style={{ marginRight: "10px"   }} />
               Gestion
@@ -152,13 +150,12 @@ const Admin = () => {
           
           <li><Link to="/admin/facture"> <i className="fa-solid fa-coins" style={{ marginRight: "10px" }}> </i> Facture</Link></li>
 
-          <li><Link to="/admin/dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
           <li><Link to="/home"> <i class="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>Log out</Link></li>
         </ul>
       </nav >
 
       <Routes>
-        <Route path="/" element={<Accueil />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Client" element={<Client />} />
         <Route path="/Stock" element={<Stock />} />
