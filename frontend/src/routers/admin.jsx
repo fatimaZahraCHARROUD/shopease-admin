@@ -5,7 +5,8 @@ import { useState } from "react";
 
 
  import Client from "../admin/client";
-import Dashboard from "../admin/dashboard";
+ import Dashboard from "../admin/dashboard";
+ import Reclamation from "../admin/reclamation";
 
 import Fournisseur from "../admin/fournisseur";
 import Add_fournisseur from "../admin/add_fournisseur";
@@ -149,6 +150,7 @@ const Admin = () => {
           </li>
           
           <li><Link to="/admin/facture"> <i className="fa-solid fa-coins" style={{ marginRight: "10px" }}> </i> Facture</Link></li>
+          <li><Link to="/admin/reclamation">   <i class="fas fa-comment-dots"></i>  Reclamation</Link></li>
 
           <li><Link to="/home"> <i class="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>Log out</Link></li>
         </ul>
@@ -157,6 +159,7 @@ const Admin = () => {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/reclamation" element={<Reclamation />} />
         <Route path="/Client" element={<Client />} />
         <Route path="/Stock" element={<Stock />} />
         <Route path="fournisseur" element={<Fournisseur />} />

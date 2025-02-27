@@ -93,6 +93,19 @@ app.post('/signin', (req, res) => {
 
 
 
+app.get("/api/reclamations", (req, res) => {
+  const sql = "SELECT r.id, u.nomcomplet , u.email, r.msg, r.date FROM reclamation r , utilisateur u where u.id=r.id_client";
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(results);
+  });
+});
+
+
+
+
 
 //listen to any request to 8800
 app.listen(8800, () => {
