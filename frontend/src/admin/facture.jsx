@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Facture = () => {
   const [factures, setFactures] = useState([]);
-   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState(""); // Add state for search term
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchFactures();
@@ -35,7 +36,7 @@ const Facture = () => {
   };
 
   // Fonction pour gérer l'affichage du dropdown
-  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (factureId) => {
     if (activeDropdown === factureId) {
@@ -45,107 +46,138 @@ const Facture = () => {
     }
   };
 
+  // Filter factures based on the search term
+  const filteredFactures = factures.filter((facture) =>
+    facture.facture_id.toString().includes(searchTerm)
+  );
+
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px" }}>Liste des Factures</h1>
-        <button
-          className="btn   mb-3 mt-5"
-          style={{ backgroundColor: "white", color: "black" }}
-          onClick={() => navigate("/admin/add_facture")}
-        >
-          Ajouter une facture
-        </button>
-        <table className="table   shadow" style={{ borderCollapse: "collapse" }}>
-          <thead className="table-light">
-            <tr>
-            <th>ID Facture  </th>
-            <th>ID Commande  </th>
-            <th>Prix Total</th>
-              <th>Date</th>
-              <th>Nom Fournisseur</th>
-              <th>Email Fournisseur</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {factures.map((facture) => (
-              <tr key={facture.facture_id}>
-                <td>{facture.facture_id}</td>
-                <td>{facture.id_commandefournisseur}</td>
-                <td>{facture.prix_total} €</td>
-                <td>{facture.date_facture && new Date(facture.date_facture).toLocaleDateString('fr-FR')}</td>
-                <td>{facture.fournisseur_nom}</td>
-                <td>{facture.fournisseur_email}</td>
-                <td>
-                  {/* Menu déroulant avec trois points */}
-                  <div className="dropdown" style={{ marginRight:"40px"}}>
-                    <button
-                      className="btn btn-secondary"
-                      type="button"
-                      onClick={() => toggleDropdown(facture.facture_id)} // Toggle du dropdown
-                      style={{
-                        padding: "5px 10px",
-                        minWidth: "35px", // Ajuste la largeur du bouton
-                      }}
-                    >
-                      ⋮
-                    </button>
+         <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "10px",
+              marginTop: "30px",
+              marginBottom: "30px",
+            }}
+          >
+            {/* Champ de recherche */}
+            <div className="input-group" style={{ width: "960px" }}>
+              <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
+                <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+              </span>
+              <input
+                type="text"
+                placeholder="Rechercher par ID Facture..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="form-control py-2"
+              />
+            </div>
 
-                    {/* Liste déroulante */}
-                    {activeDropdown === facture.facture_id && (
-                      <ul
-                        className="dropdown-menu show"
-                        aria-labelledby={`dropdownMenuButton-${facture.facture_id}`}
+            {/* Bouton Ajouter */}
+            <Link
+              to="/admin/add_facture"
+              className="btn"
+              style={{
+                marginRight: "10px",
+                backgroundColor: "white",
+                color: "rgb(74,138,126)",
+                fontSize: "20px",
+                padding: "5px 15px",
+                borderRadius: "5px", // Arrondi léger
+              }}
+            >
+              +
+            </Link>
+          </div>
+
+          <table className="table shadow" style={{ borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID Facture</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID Commande</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Prix Total</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Nom Fournisseur</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Email Fournisseur</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredFactures.map((facture) => (
+                <tr key={facture.facture_id}>
+                  <td>{facture.facture_id}</td>
+                  <td>{facture.id_commandefournisseur}</td>
+                  <td>{facture.prix_total} DH</td>
+                  <td>{facture.date_facture && new Date(facture.date_facture).toLocaleDateString('fr-FR')}</td>
+                  <td>{facture.fournisseur_nom}</td>
+                  <td>{facture.fournisseur_email}</td>
+                  <td>
+                    <div className="dropdown" style={{ marginRight: "40px" }}>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={() => toggleDropdown(facture.facture_id)}
                         style={{
-                          minWidth: "10px", // Ajuster la largeur du menu déroulant
-                          marginRight: "10px",  // Enlever toute marge droite indésirable
-                          padding: "0", // Enlever le padding inutile
+                          backgroundColor: "white",
+                          padding: "5px 10px",
+                          minWidth: "35px",
                         }}
                       >
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            onClick={() => navigate(`/admin/update_facture/${facture.facture_id}`)}
-                             style={{ cursor:"pointer",
-                              padding: "10px 15px",
-                            }}
-                          >
-                            Modifier
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            onClick={() => handleDelete(facture.facture_id)}
-                            style={{ cursor:"pointer",
-                              padding: "10px 15px",
-                            }}
-                          >
-                            Supprimer
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            className="dropdown-item cursor"
-                            onClick={() => navigate(`/admin/details_facture/${facture.facture_id}`)}
-                             style={{ cursor:"pointer",
-                              padding: "10px 15px",
-                            }}
-                          >
-                            <u>Détails</u>
-                          </a>
-                        </li>
-                      </ul>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+                        ⋮
+                      </button>
+
+                      {activeDropdown === facture.facture_id && (
+                        <ul
+                          className="dropdown-menu show"
+                          aria-labelledby={`dropdownMenuButton-${facture.facture_id}`}
+                          style={{
+                            minWidth: "10px",
+                            marginRight: "10px",
+                            padding: "0",
+                          }}
+                        >
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => navigate(`/admin/update_facture/${facture.facture_id}`)}
+                              style={{ cursor: "pointer", padding: "10px 15px" }}
+                            >
+                              Modifier
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              onClick={() => handleDelete(facture.facture_id)}
+                              style={{ cursor: "pointer", padding: "10px 15px" }}
+                            >
+                              Supprimer
+                            </a>
+                          </li>
+                          <li>
+                            <a
+                              className="dropdown-item cursor"
+                              onClick={() => navigate(`/admin/details_facture/${facture.facture_id}`)}
+                              style={{ cursor: "pointer", padding: "10px 15px" }}
+                            >
+                              <u>Détails</u>
+                            </a>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+     </div>
   );
 };
 

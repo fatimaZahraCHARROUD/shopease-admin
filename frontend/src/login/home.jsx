@@ -9,12 +9,12 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-vh-100">
+    <div className="min-vh-100" style={{ backgroundColor:"rgb(246,246,244)"}}>
       
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-white py-3">
+      <nav style={{ color:"rgb(74,138,126) "}} className="navbar navbar-expand-lg navbar-light   py-3">
         <Container>
-          <Link className="navbar-brand text-dark" to="/">ShopEase</Link>
+          <Link className="navbar-brand text-dark" to="/"><h1 style={{color:"rgb(223,212,171) " }}>ShopEase</h1></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -33,7 +33,7 @@ const Home = () => {
                 <a className="nav-link" href="#about">À propos</a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/signin" style={{ borderRadius:"15px", backgroundColor:"black", color:"white" }}>Se connecter</Link>
+                <Link className="nav-link" to="/signin" style={{ borderRadius:"15px", backgroundColor:"rgb(74,138,126)", color:"white" }}>Se connecter</Link>
               </li>
             </ul>
           </div>
@@ -41,62 +41,119 @@ const Home = () => {
       </nav><hr/>
 
       {/* About Us Section */}
-      <section id="about" className="py-5 bg-white mb-6">
+      <section id="about" className="py-3   mb-6"
+      style={{ backgroundColor: "rgb(246,246,244)"}}
+      
+      >
         <Container>
           <Row className="align-items-center">
-            <Col xs={12} md={8}>
-              <h1>Bienvenue chez <span style={{color:"gray"}}>ShopEase</span></h1>
+            <Col   md={7}>
+              <h1>Bienvenue chez <span style={{color:"rgb(74,138,126)"}}>ShopEase</span></h1>
               <h4 className="text-muted">Votre partenaire de confiance pour une expérience d'achat en ligne exceptionnelle</h4>
               <p className="text-muted">
                 Depuis plus de 10 ans, notre entreprise ShopEase s'engage à fournir des services de haute qualité à nos clients. 
                 Notre mission est de créer de la valeur durable tout en maintenant les plus hauts standards d'excellence...
-              </p>
+              </p> 
             </Col>
-            <Col xs={12} md={4}>
-              <img src="shopease_logo.png" alt="About us" className="img-fluid" style={{ maxWidth: "100%", height: "auto" }} />
+            <Col   md={5}>
+              <img src="bg.jpg" alt="About us" className="img-fluid" style={{ width: "300px", height: "400px" }} />
             </Col>
           </Row>
         </Container>
       </section><br/><br/><br/> 
 
-      {/* Services Section */}
-      <section id="services" className="py-5 bg-gray" style={{backgroundColor:"rgb(245, 244, 244)"}}>
-        <Container>
-          <h2 className="text-center fw-bold mb-4" style={{color:"black"}}>Nos Services</h2>
-          <Row>
-            <Col xs={12} sm={6} md={4} className="mb-4">
-              <Card className="h-100 shadow pt-3">
-                <Card.Img variant="top" src="app_mobile_service.png" style={{ height: "200px", width: "150px", objectFit: "cover", display: "block", margin: "auto" }} alt="Service 1" />
-                <Card.Body>
-                  <Card.Title>Application mobile</Card.Title>
-                  <Card.Text className="text-muted">Profitez de notre application mobile pour commander, suivre vos livraisons et accéder à des offres exclusives</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xs={12} sm={6} md={4} className="mb-4">
-              <Card className="h-100 shadow pt-3">
-                <Card.Img variant="top" src="quic_delivry_service.png" style={{ height: "200px", width: "300px", objectFit: "cover", display: "block", margin: "auto" }} alt="Service 2" />
-                <Card.Body>
-                  <Card.Title>Livraison rapide</Card.Title>
-                  <Card.Text className="text-muted">Recevez vos commandes en un temps record grâce à notre service de livraison express.</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-            <Col xs={12} sm={6} md={4} className="mb-4">
-              <Card className="h-100 shadow pt-3">
-                <Card.Img variant="top" src="intro3.png" style={{ height: "200px", width: "200px", objectFit: "cover", display: "block", margin: "auto" }} alt="Service 3" />
-                <Card.Body>
-                  <Card.Title>Paiement à la livraison</Card.Title>
-                  <Card.Text className="text-muted">Payez uniquement lorsque vous recevez votre commande, sans risque.</Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
-        </Container><br/><br/><br/>
+
+
+      <section id="services" className="py-5 bg-gray" style={{ backgroundColor: "rgb(246,246,244)" }}>
+  <Container>
+    <h2 className="text-center fw-bold mb-4" style={{ color: "rgb(74,138,126)" }}>Nos Services</h2>
+    <Row>
+      <Col xs={12} md={8} className="mb-4">
+        <Card
+          className="h-100 shadow pt-3"
+          style={{
+            backgroundColor: "rgb(74,138,126)",
+            transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          <Card.Body className="text-white">
+            <Card.Title><i className="fas fa-info-circle"></i> Notre service</Card.Title>
+            <Card.Text className="text-white">
+              Nous vous offrons la meilleure expérience d'achat avec des services rapides et fiables. 
+              Profitez de notre expertise pour un shopping en toute sérénité !
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Col>
+      <Col xs={12} md={4} className="mb-4">
+        <Card
+          className="h-100 shadow pt-3"
+          style={{
+            transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "none";
+          }}
+        >
+          <Card.Body>
+            <Card.Title><i className="fas fa-mobile-alt"></i> Application mobile</Card.Title>
+            <Card.Text className="text-muted">
+              Commandez facilement via notre application mobile et suivez vos livraisons en temps réel.
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
+
+    <Row>
+      {[
+        { icon: "fas fa-shipping-fast", title: "Livraison rapide", text: "Recevez vos commandes en un temps record grâce à notre service de livraison express." },
+        { icon: "fas fa-hand-holding-usd", title: "Paiement à la livraison", text: "Payez uniquement lorsque vous recevez votre commande, sans risque." },
+        { icon: "fas fa-star", title: "Meilleurs produits", text: "Nous sélectionnons les meilleurs produits pour vous garantir qualité et satisfaction." },
+      ].map((service, index) => (
+        <Col key={index} xs={12} sm={6} md={4} className="mb-4">
+          <Card
+            className="h-100 shadow pt-3"
+            style={{
+              transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "scale(1.05)";
+              e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.2)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <Card.Body>
+              <Card.Title><i className={service.icon}></i> {service.title}</Card.Title>
+              <Card.Text className="text-muted">{service.text}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  </Container>
+ 
+<br/><br/><br/>
       </section>
 
       {/* Mobile App Section */}
-      <section id="mobile" className="py-5 bg-white">
+      <section id="mobile" className="py-5 " style={{ backgroundColor: "rgb(246,246,244)"}}>
         <Container>
           <Row className="align-items-center">
             <Col xs={12} md={8}>
@@ -121,7 +178,7 @@ const Home = () => {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="py-5 bg-light">
+      <section id="location" className="py-5 " style={{ backgroundColor: "rgb(246,246,244)"}}>
         <Container>
           <h2 className="text-center fw-bold mb-4">Notre Localisation</h2>
           <Row>

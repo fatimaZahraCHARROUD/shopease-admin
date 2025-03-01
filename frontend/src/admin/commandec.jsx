@@ -13,6 +13,7 @@ const Commandec = () => {
   }, [userId, navigate]);
 
   const [commandec, setCommandec] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // État pour le terme de recherche
 
   const fetchCommandec = async () => {
     try {
@@ -28,95 +29,117 @@ const Commandec = () => {
   }, []);
 
   // Fonction pour gérer l'affichage du dropdown
-    const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
-  
-    const toggleDropdown = (factureId) => {
-      if (activeDropdown === factureId) {
-        setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
-      } else {
-        setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
-      }
-    };
+  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
+
+  const toggleDropdown = (factureId) => {
+    if (activeDropdown === factureId) {
+      setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
+    } else {
+      setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
+    }
+  };
+
+  // Filtrage des commandes par ID
+  const filteredCommandes = commandec.filter((commande) =>
+    commande.id.toString().includes(searchTerm) // Recherche basée sur l'ID de la commande
+  );
+
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px", marginBottom: "80px" }}>
-          Liste des commandes clients
-        </h1>
-        {commandec.length > 0 ? (
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "150vh" }}>
+      <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between", // Aligner à gauche et à droite
+            alignItems: "center", // Centrer verticalement
+            marginBottom: "10px",
+            marginTop: "30px", // Ajuster l'espacement si nécessaire
+            marginBottom: "30px",
+          }}
+        >
+          {/* Champ de recherche */}
+          <div className="input-group" style={{ width: "980px" }}>
+            <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
+              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+            </span>
+            <input
+              type="text"
+              placeholder="Rechercher par ID de commande..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control py-2"
+            />
+          </div>
+
+        
+        </div>
+
+        {filteredCommandes.length > 0 ? (
           <table className="table shadow">
             <thead className="table-light">
               <tr style={{ backgroundColor: "#289dd2", color: "white" }}>
-                <th>ID</th>
-                <th>Date</th>
-                <th>État</th>
-                <th>Livreur</th>
-                <th> </th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>État</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Livreur</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}> </th>
               </tr>
             </thead>
             <tbody>
-              {commandec.map((commande) => (
+              {filteredCommandes.map((commande) => (
                 <tr key={commande.id}>
                   <td>{commande.id}</td>
                   <td>{new Date(commande.date).toLocaleDateString("fr-FR")}</td>
                   <td>
-                  <span className={`badge ${commande.etat === "livré" ? "bg-success" : "bg-warning"}`}>
-                    {commande.etat}
-                  </span>
-
-                     
+                    <span className={`badge ${commande.etat === "livré" ? "bg-success" : "bg-warning"}`}>
+                      {commande.etat}
+                    </span>
                   </td>
                   <td>{commande.nomcomplet} - {commande.email}</td>
                   <td style={{ position: "relative" }}>
-      {/* Menu déroulant avec trois points */}
-      <div className="dropdown">
-        <button
-  style={{
-    padding: "5px 10px",
-    minWidth: "35px", // Ajuste la largeur du bouton
-  }}
-  className="btn btn-secondary"          type="button"
-          onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
-          
-        >
-          ⋮
-        </button>
+                    {/* Menu déroulant avec trois points */}
+                    <div className="dropdown">
+                      <button
+                        style={{
+                          padding: "5px 10px",
+                          minWidth: "35px", // Ajuste la largeur du bouton
+                        }}
+                        className="btn"
+                        type="button"
+                        onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
+                      >
+                        ⋮
+                      </button>
 
-        {/* Liste déroulante */}
-        {activeDropdown === commande.id && (
-          <ul
-            className="dropdown-menu show"
-            style={{
-              minWidth: "150px",
-              position: "absolute",
-              right: "0",
-              top: "100%",
-              zIndex: "1000",
-              boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            {commande.etat !== "livré" && (
-              <li>
-                <Link
-                  to={`/admin/update_commandec/${commande.id}`}
-                  className="dropdown-item"
-                >
-                  Affecter
-                </Link>
-              </li>
-            )}
-            <li>
-              <Link
-                to={`/admin/details_cc/${commande.id}`}
-                className="dropdown-item"
-              >
-                Détails
-              </Link>
-            </li>
-          </ul>
-        )}
-      </div>
-    </td>
+                      {/* Liste déroulante */}
+                      {activeDropdown === commande.id && (
+                        <ul
+                          className="dropdown-menu show"
+                          style={{
+                            minWidth: "150px",
+                            position: "absolute",
+                            right: "0",
+                            top: "100%",
+                            zIndex: "1000",
+                            boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+                          }}
+                        >
+                          {commande.etat !== "livré" && (
+                            <li>
+                              <Link to={`/admin/update_commandec/${commande.id}`} className="dropdown-item">
+                                Affecter
+                              </Link>
+                            </li>
+                          )}
+                          <li>
+                            <Link to={`/admin/details_cc/${commande.id}`} className="dropdown-item">
+                              Détails
+                            </Link>
+                          </li>
+                        </ul>
+                      )}
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -126,7 +149,6 @@ const Commandec = () => {
             Aucune commande trouvée.
           </p>
         )}
-
       </div>
     </div>
   );

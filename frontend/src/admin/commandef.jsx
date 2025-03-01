@@ -7,6 +7,7 @@ const Commandef = () => {
   const userId = localStorage.getItem("adminId");
   const navigate = useNavigate();
   const [commandef, setCommandef] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // État pour stocker l'ID recherché
 
   useEffect(() => {
     if (!userId) {
@@ -39,132 +40,98 @@ const Commandef = () => {
       }
     }
   };
-// Fonction pour gérer l'affichage du dropdown
-  const [activeDropdown, setActiveDropdown] = useState(null); // Gestion de l'élément actif du dropdown
+
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   const toggleDropdown = (factureId) => {
-    if (activeDropdown === factureId) {
-      setActiveDropdown(null); // Fermer le dropdown si on clique dessus à nouveau
-    } else {
-      setActiveDropdown(factureId); // Ouvrir le dropdown correspondant
-    }
+    setActiveDropdown(activeDropdown === factureId ? null : factureId);
   };
+
+  // 🔎 Filtrage des commandes par ID recherché
+  const filteredCommandes = commandef.filter((commande) =>
+    searchTerm === "" || commande.id.toString().includes(searchTerm)
+  );
+
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "150vh" }}>
-    <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-      <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>Gestion des Commandes Fournisseurs</h1>
-      <div className="d-flex justify-content-between mb-3 my-5">
-        <Link to="/admin/add_commandef" className="btn text-black" style={{ backgroundColor: "white" , color:"black" }}>
-          Ajouter une Commande
-        </Link>
-      </div>
-      <table className="table   shadow">
-        <thead className="table-light">
-          <tr>
-            <th>ID</th>
-            <th>Date d'Envoi</th>
-            <th>Date Possible Réception</th>
-            <th>Date Réception</th>
-            <th>État</th>
-            <th>Fournisseur</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {commandef.length > 0 ? (
-            commandef.map((commande) => (
-              <tr key={commande.id}>
-                <td>{commande.id}</td>
-                <td>{new Date(commande.date).toLocaleDateString('fr-FR')}</td>
-                <td>{commande.date_possible ? new Date(commande.date_possible).toLocaleDateString('fr-FR') : "-"}</td>
-                <td>{commande.date_reçue ? new Date(commande.date_reçue).toLocaleDateString('fr-FR') : "-"}</td>
-                <td>
-                  <span className={`badge ${commande.etat === "reçue" ? "bg-success" : "bg-warning"}`}>
-                    {commande.etat}
-                  </span>
-                </td>
-                <td>{commande.nomcomplet} - {commande.email}</td>
-                <td>
-  {/* Menu déroulant avec trois points */}
-  <div className="dropdown" style={{ marginRight: "40px" }}>
-    <button
-      className="btn btn-secondary"
-      type="button"
-      onClick={() => toggleDropdown(commande.id)} // Toggle du dropdown
-      style={{
-        padding: "5px 10px",
-        minWidth: "35px", // Ajuste la largeur du bouton
-      }}
- 
-    >
-      ⋮
-    </button>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "180vh" }}>
+      <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
 
-    {/* Liste déroulante */}
-    {activeDropdown === commande.id && (
-      <ul
-        className="dropdown-menu show"
-        aria-labelledby={`dropdownMenuButton-${commande.id}`}
-        style={{
-          minWidth: "10px", // Ajuster la largeur du menu déroulant
-          marginRight: "10px",  // Enlever toute marge droite indésirable
-          padding: "0", // Enlever le padding inutile
-        }}
-      >
-        <li>
-          <Link
-            to={`/admin/produit_cf/${commande.id}`}
-            className="dropdown-item"
-            style={{ padding: "10px 15px" }}
-          >
-            Détails
-          </Link>
-        </li>
-        <li>
-          <Link
- 
-            to={`/admin/details_facture/${commande.facture_id}`}
-            className="dropdown-item"
-            style={{ padding: "10px 15px" }}
-          >
-            Voir Facture
-          </Link>
-        </li>
-        {commande.etat !== 'reçue' && (
-          <li>
-            <Link
-              to={`/admin/update_commandef/${commande.id}`}
-              className="dropdown-item"
-              style={{ padding: "10px 15px" }}
-            >
-              Modifier
-            </Link>
-          </li>
-        )}
-        <li>
-          <a
-            className="dropdown-item"
-            onClick={() => deleteCommandef(commande.id)}
-            style={{ padding: "10px 15px" }}
-          >
-            Supprimer
-          </a>
-        </li>
-      </ul>
-    )}
-  </div>
-</td>
+        {/* Barre de recherche */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px", marginTop: "30px" }}>
+          <div className="input-group" style={{ width: "950px" }}>
+            <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
+              <i className="fa fa-search"></i>
+            </span>
+            <input
+              type="text"
+              placeholder="Rechercher par ID de commande..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control py-2"
+            />
+          </div>
 
-              </tr>
-            ))
-          ) : (
+          {/* Bouton Ajouter */}
+          <Link to="/admin/add_commandef" className="btn" style={{ backgroundColor: "white", color: "rgb(74,138,126)", fontSize: "20px", padding: "5px 15px", borderRadius: "5px", marginRight: "10px" }}>
+            +
+          </Link>
+        </div>
+
+        {/* Tableau des commandes */}
+        <table className="table shadow">
+          <thead className="table-light">
             <tr>
-              <td colSpan="7" className="text-center text-muted">Aucune commande trouvée.</td>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date d'Envoi</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date Possible Réception</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date Réception</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>État</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Fournisseur</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}> </th>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {filteredCommandes.length > 0 ? (
+              filteredCommandes.map((commande) => (
+                <tr key={commande.id}>
+                  <td>{commande.id}</td>
+                  <td>{new Date(commande.date).toLocaleDateString('fr-FR')}</td>
+                  <td>{commande.date_possible ? new Date(commande.date_possible).toLocaleDateString('fr-FR') : "-"}</td>
+                  <td>{commande.date_reçue ? new Date(commande.date_reçue).toLocaleDateString('fr-FR') : "-"}</td>
+                  <td>
+                    <span className={`badge ${commande.etat === "reçue" ? "bg-success" : "bg-warning"}`}>
+                      {commande.etat}
+                    </span>
+                  </td>
+                  <td>{commande.nomcomplet} - {commande.email}</td>
+                  <td>
+                    {/* Menu déroulant */}
+                    <div className="dropdown" style={{ marginRight: "40px" }}>
+                      <button className="btn" type="button" onClick={() => toggleDropdown(commande.id)} style={{ padding: "5px 10px", minWidth: "35px" }}>
+                        ⋮
+                      </button>
+                      {activeDropdown === commande.id && (
+                        <ul className="dropdown-menu show" style={{ minWidth: "10px", marginRight: "10px", padding: "0" }}>
+                          <li><Link to={`/admin/produit_cf/${commande.id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Détails</Link></li>
+                          <li><Link to={`/admin/details_facture/${commande.facture_id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Voir Facture</Link></li>
+                          {commande.etat !== 'reçue' && (
+                            <li><Link to={`/admin/update_commandef/${commande.id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Modifier</Link></li>
+                          )}
+                          <li><a className="dropdown-item" onClick={() => deleteCommandef(commande.id)} style={{ padding: "10px 15px" }}>Supprimer</a></li>
+                        </ul>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center text-muted">Aucune commande trouvée.</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

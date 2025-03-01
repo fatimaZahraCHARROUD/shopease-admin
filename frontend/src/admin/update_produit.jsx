@@ -109,7 +109,8 @@ const Update_product = () => {
   };
   
 
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", marginLeft: "250px" }}>
       <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding: "40px" }}>
         <h1>Modifier un Produit</h1>
@@ -220,11 +221,11 @@ const Update_product = () => {
               ))}
             </select>
           </div>
-          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "black", fontSize: "16px", fontWeight: "bold" }}>
+          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "rgb(74,138,126)", fontSize: "16px", fontWeight: "bold" }}>
             Mettre à jour
           </button>
         </form>
-      </div>
+      </div></div>
     </div>
   );
 };

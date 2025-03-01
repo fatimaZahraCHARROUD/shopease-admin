@@ -66,7 +66,8 @@ const Update_facture = () => {
     }
   };
   
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div style={{ marginLeft: "230px",backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
     <div style={{
         width: "60%",
@@ -103,11 +104,11 @@ const Update_facture = () => {
             ))}
           </select>
         </div>
-        <button type="submit" className="btn w-100 " style={{ backgroundColor:"black" , color:"white"}}>
+        <button type="submit" className="btn w-100 " style={{ backgroundColor:"rgb(74,138,126)" , color:"white"}}>
         Mettre à jour
         </button>
       </form>
-    </div>
+    </div></div>
     </div>
   );
 };

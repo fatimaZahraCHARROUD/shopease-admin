@@ -55,7 +55,8 @@ const UpdateFournisseur = () => {
     return <p className="text-center mt-5">Chargement des données...</p>;
   }
 
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" ,marginLeft:"250px" }}>
       <div className="card p-4 shadow-lg" style={{ width: "700px", borderRadius: "10px", backgroundColor: "white", padding:"40px" }}>
         <h2 className="text-center mb-4" style={{ color: "black" }}>Mettre à jour un Fournisseur</h2>
@@ -76,12 +77,12 @@ const UpdateFournisseur = () => {
             <label className="form-label fw-bold">Adresse</label>
             <input type="text" className="form-control" placeholder="Adresse" name="adresse" value={fournisseur.adresse} onChange={handleChange} required />
           </div>
-          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "black", fontSize: "16px", fontWeight: "bold" }}>
+          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "rgb(74,138,126)", fontSize: "16px", fontWeight: "bold" }}>
             Mettre à jour
           </button>
         </form>
       </div>
-    </div>
+    </div></div>
   );
 };
 

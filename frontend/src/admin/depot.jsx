@@ -95,51 +95,73 @@ const Depot = () => {
   };
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop: "20px", marginBottom: "80px" }}> Gestion des Dépôts
-        </h1>
+    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+       
+    <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between", // Aligner à gauche et à droite
+    alignItems: "center", // Centrer verticalement
+    marginTop: "30px",
+    marginBottom: "30px",
+    gap: "20px", // Ajoute un espacement naturel entre les éléments
+  }}
+>
+  {/* Champ de recherche */}
+  <div className="input-group" style={{ flexGrow: 1, maxWidth: "960px" }}>
+    <span
+      className="input-group-text"
+      style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}
+    >
+      <i className="fa fa-search"></i>
+    </span>
+    <input
+      type="text"
+      placeholder="Rechercher un depot..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="form-control py-2"
+    />
+  </div>
 
-        {/* Conteneur pour aligner le bouton et l'input de recherche */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-          {/* Formulaire d'ajout/modification */}
-          <form onSubmit={handleSubmit} style={{ display: "flex", gap: "10px", width: "100%" }}>
-            <input
-              type="text"
-              placeholder="Adresse du dépôt..."
-              className="form-control"
-              value={adresse}
-              onChange={(e) => setAdresse(e.target.value)}
-              required
-              style={{ maxWidth: "300px" }}
-            />
-            <button type="submit" className="btn" style={{ backgroundColor: "white", color: "black" }}>
-              {id ? "Modifier" : "Ajouter"}
-            </button>
-          </form>
+  {/* Formulaire d'ajout/modification */}
+  <form
+    onSubmit={handleSubmit}
+    style={{
+      display: "flex",
+      gap: "10px",
+      alignItems: "center",
+      maxWidth: "400px",
+    }}
+  >
+    <input
+      type="text"
+      placeholder="Adresse du dépôt"
+      className="form-control"
+      value={adresse}
+      onChange={(e) => setAdresse(e.target.value)}
+      required
+      style={{ maxWidth: "250px" }}
+    />
+    <button
+      type="submit"
+      className="btn"
+      style={{ backgroundColor: "white", color: "black" }}
+    >
+      {id ? "Modifier" : "Ajouter"}
+    </button>
+  </form>
+</div>
 
-          {/* Champ de recherche aligné à droite */}
-          <div className="input-group" style={{ width: "360px" }}>
-            <span className="input-group-text">
-              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
-            </span>
-            <input
-              type="text"
-              placeholder="Rechercher un dépôt..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-control"
-            />
-          </div>
-        </div>
 
         {/* Tableau des dépôts */}
         <table className="table  shadow  " style={{border:"1px solid rgb(237, 237, 237)" }}>
         <thead className="table-light">
            <tr>
-              <th>ID</th>
-              <th>Adresse</th>
-              <th>Quantité des produits actuelle</th>
-              <th> </th>
+           <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>ID</th>
+           <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Adresse</th>
+           <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Quantité des produits actuelle</th>
+           <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}></th>
             </tr>
           </thead>
           <tbody>
@@ -153,7 +175,7 @@ const Depot = () => {
   {/* Menu déroulant avec trois points */}
   <div className="dropdown" style={{ marginRight: "40px" }}>
     <button
-      className="btn btn-secondary"
+      className="btn  "
       type="button"
       onClick={() => toggleDropdown(depot.id)} // Toggle du dropdown
       style={{

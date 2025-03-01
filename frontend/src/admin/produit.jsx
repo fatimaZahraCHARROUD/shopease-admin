@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -51,46 +52,61 @@ const Product = () => {
       }
     };
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "200vh"   }}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+       
+    <div
+style={{
+  display: "flex",
+  justifyContent: "space-between", // Aligner à gauche et à droite
+  alignItems: "center", // Centrer verticalement
+  marginBottom: "10px",
+  marginTop: "30px", // Ajuster l'espacement si nécessaire
+marginBottom:"30px",
+}}
+>
+{/* Champ de recherche */}
+<div className="input-group" style={{ width: "940px" }}>
+  <span className="input-group-text" style={{ color:"white", backgroundColor: "rgb(74,138,126)"}}>
+    <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+  </span>
+  <input
+    type="text"
+    placeholder="Rechercher un produit..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="form-control py-2"
+  />
+</div>
 
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black", marginTop:"20px" }}>
-          Liste des produits
-        </h1>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", marginTop: "80px" }}>
-          <button
-            className="btn"
-            style={{ backgroundColor: "white", color: "black" }}
-            onClick={() => navigate("/admin/add_produit")}
-          >
-            Ajouter un produit
-          </button>
-          {/* Champ de recherche */}
-          <div className="input-group" style={{ width: "360px" }}>
-            <span className="input-group-text">
-              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
-            </span>
-            <input
-              type="text"
-              placeholder="Rechercher un produit..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-control py-2"
-            />
-          </div>
+{/* Bouton Ajouter */}
+<Link
+  to="/admin/add_produit"
+  className="btn"
+  style={{marginRight:"10px",
+    backgroundColor: "white",
+    color: "rgb(74,138,126)",
+    fontSize: "20px",
+    padding: "5px 15px",
+    borderRadius: "5px", // Arrondi léger
+  }}
+>
+  +
+</Link>
+</div>
 
-        </div>
+
         <table className="table  shadow  " style={{border:"1px solid rgb(237, 237, 237)" }}>
         <thead className="table-light">
             <tr>
-              <th>Image</th>
-              <th>Nom</th>
-              <th>Description</th>
-              <th>Prix Unitaire</th>
-              <th>Quantité</th>
-              <th>Catégorie</th>
-              <th>Dépôt</th>
-              <th> </th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Image</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Nom</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Description</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Prix  </th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Quantité</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Catégorie</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Dépôt</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}> </th>
             </tr>
           </thead>
           <tbody>
@@ -118,7 +134,7 @@ const Product = () => {
   {/* Menu déroulant avec trois points */}
   <div className="dropdown" style={{ marginRight: "40px" }}>
     <button
-      className="btn btn-secondary"
+      className="btn "
       type="button"
       onClick={() => toggleDropdown(product.id)} // Toggle du dropdown
       style={{

@@ -62,7 +62,8 @@ const UpdateCommandef = () => {
         }
     };
 
-    return (
+    return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
         <div style={{  marginLeft:"250px" ,
             backgroundColor: "#f8f9fa", 
             minHeight: "100vh", 
@@ -113,13 +114,13 @@ const UpdateCommandef = () => {
                     <button 
                         type="submit" 
                         className="btn w-100" 
-                        style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}
+                        style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}
                     >
                         Mettre à jour
                     </button>
                 </form>
             </div>
-        </div>
+        </div></div>
     );
 };
 

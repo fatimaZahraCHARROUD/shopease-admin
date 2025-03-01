@@ -35,8 +35,8 @@ const DetailsCategorie = () => {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-    <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-       <h3>Détails de la catégorie (produits associés) : <u>{name}</u></h3>
+    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+       <h3 style={{ color: "rgb(74,138,126)"}} >Produits associés  </h3>
       <br />
       {categorie ? (
         <div>
@@ -44,11 +44,11 @@ const DetailsCategorie = () => {
             <table className="table shadow">
               <thead className="table-light" >
                 <tr>
-                   <th>Image</th>
-                  <th>Nom</th>
-                  <th>Prix (DH)</th>
-                  <th>Description</th>
-                  <th>Quantité</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Image</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Nom</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Prix (DH)</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Description</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Quantité</th>
                 </tr>
               </thead>
               <tbody>

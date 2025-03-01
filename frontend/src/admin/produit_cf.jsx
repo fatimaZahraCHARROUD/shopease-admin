@@ -29,10 +29,10 @@ const Details_cf = () => {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-    <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-      <h1 className="text-center mb-4" style={{ color: "#333", fontWeight: "bold" }}>
+    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+      <h3 className="  mb-4" style={{ color: "rgb(74,138,126)", fontWeight: "bold" }}>
         Détails des Produits - Commande #{id}
-      </h1>
+      </h3>
 
     
 
@@ -42,13 +42,13 @@ const Details_cf = () => {
           <table className="table shadow">
             <thead className="table-light">
               <tr>
-              <th>Image</th>
+              <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Image</th>
 
-                <th>Nom du produit</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Catégorie</th>
-                <th>Dépôt</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Nom du produit</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Prix</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Quantité</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Catégorie</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Dépôt</th>
               </tr>
             </thead>
             <tbody>

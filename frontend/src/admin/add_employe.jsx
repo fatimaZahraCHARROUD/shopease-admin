@@ -39,7 +39,8 @@ const AddEmploye = () => {
         }
     };
 
-    return (
+    return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
         <div style={{ marginLeft:"250px" ,backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
             <div style={{
                 width: "700px",
@@ -70,12 +71,12 @@ const AddEmploye = () => {
                         <label className="form-label">Téléphone</label>
                         <input type="number" className="form-control" name="tel" value={employe.tel} onChange={handleChange} required />
                     </div>
-                    <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>
+                    <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>
                         Ajouter
                     </button>
                 </form>
             </div>
-        </div>
+        </div></div>
     );
 };
 

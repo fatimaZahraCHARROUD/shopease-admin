@@ -69,7 +69,8 @@ const update_commandec = () => {
   if (!commandec || Object.keys(commandec).length === 0) {
     return <p>Chargement des données...</p>;
   }
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
       <div style={{  marginLeft:"250px" ,
             backgroundColor: "#f8f9fa", 
             minHeight: "100vh", 
@@ -109,13 +110,13 @@ const update_commandec = () => {
                     <button 
                         type="submit" 
                         className="btn w-100" 
-                        style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}
+                        style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}
                     >
                         Affecter
                     </button>
                 </form>
             </div>
-        </div>
+        </div></div>
     );
  
 };

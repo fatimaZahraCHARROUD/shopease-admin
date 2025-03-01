@@ -21,9 +21,7 @@ import Add_employe from "../admin/add_employe";
 import Update_employe from "../admin/update_employe";
 
 import Depot from "../admin/depot";
-import Add_depot from "../admin/add_depot";
-import Update_depot from "../admin/update_depot";
-
+ 
 import Produit_cc from "../admin/details_cc";
 
 import Categorie from "../admin/categorie";
@@ -58,26 +56,29 @@ const Admin = () => {
  
 
   return (
-    <div>
+    <div >
       <style>
         {`
           nav {
-            background-color:rgba(255, 255, 255, 0.93);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 260px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-          }
+  border-radius: 30px;
+  margin: 10px;
+  background-color: rgb(74,138,126);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: calc(99vh - 20px); /* Adjust to leave space at the bottom */
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 20px; /* You can increase this value for more space */
+  width: 260px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
           nav ul {
             list-style-type: none;
             margin: 0;
-            margin-top: 80px;
+            margin-top: 20px;
             padding: 0;
             display: flex;
             flex-direction: column;
@@ -87,7 +88,7 @@ const Admin = () => {
             display: block;
           }
           nav ul li a, .dropdown-btn {
-            color: gray;
+            color: white;
             text-decoration: none;
             font-weight: bold;
             padding: 10px;
@@ -113,8 +114,13 @@ const Admin = () => {
           }
         `}
       </style>
-      <nav>
-        <ul>          <li><Link to="/admin/dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
+     
+      <nav> 
+        
+      <h1 style={{ marginTop:"10px" ,fontWeight:"bold" , color:" rgb(223,212,171)"}}>ShopEase</h1>
+       
+        <ul>        
+            <li><Link to="/admin/dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
 
            <li>
             <button className="dropdown-btn" onClick={() => setShowPatrimoine(!showPatrimoine)}>
@@ -124,12 +130,12 @@ const Admin = () => {
             </button>
             {showPatrimoine && (
               <ul className="dropdown">
-                <li><Link to="/admin/fournisseur">Fournisseur</Link></li>
-                <li><Link to="/admin/client">Client</Link></li>
-                <li><Link to="/admin/employe">Employé</Link></li>
-                <li><Link to="/admin/categorie">Catégorie</Link></li>
-                <li><Link to="/admin/produit">Produit</Link></li>
-                <li><Link to="/admin/depot">Dépot</Link></li>
+                <li><Link to="/admin/fournisseur"><i style={{ marginRight: "10px" }}class="fa fa-truck"></i>Fournisseur</Link></li>
+                <li><Link to="/admin/client"><i style={{ marginRight: "10px" }}class="fa fa-users"></i>Client</Link></li>
+                <li><Link to="/admin/employe"><i style={{ marginRight: "10px" }}class="fa fa-motorcycle"></i>Livreur</Link></li>
+                <li><Link to="/admin/categorie"><i style={{ marginRight: "10px" }}class="fa fa-tags"></i>Catégorie</Link></li>
+                <li><Link to="/admin/produit"><i style={{ marginRight: "10px" }}class="fa fa-cube"></i>Produit</Link></li>
+                <li><Link to="/admin/depot"><i style={{ marginRight: "10px" }}class="fa fa-warehouse"></i>Dépot</Link></li>
               </ul>
             )}
           </li>
@@ -142,16 +148,17 @@ const Admin = () => {
             </button>
             {showStore && (
               <ul className="dropdown">
-                <li><Link to="/admin/commandef">Commande Fournisseur</Link></li>
-                <li><Link to="/admin/commandec">Commande Client</Link></li>
-                <li><Link to="/admin/stock">Stock</Link></li>
+                <li><Link to="/admin/commandef"><i style={{ marginRight: "10px" }}class="fa fa-cart-plus"></i>Commande Fournisseur</Link></li>
+                <li><Link to="/admin/commandec"><i style={{ marginRight: "10px" }}class="fa fa-shopping-cart"></i>Commande Client</Link></li>
+                <li><Link to="/admin/stock"><i style={{ marginRight: "10px" }}class="fa fa-archive"></i>Stock</Link></li>
               </ul>
             )}
           </li>
           
-          <li><Link to="/admin/facture"> <i className="fa-solid fa-coins" style={{ marginRight: "10px" }}> </i> Facture</Link></li>
-          <li><Link to="/admin/reclamation">   <i class="fas fa-comment-dots"></i>  Reclamation</Link></li>
+          <li><Link to="/admin/facture"> <i style={{ marginRight: "10px" }}class="fa fa-file-invoice"></i> Facture</Link></li>
+          <hr/>
 
+          <li><Link to="/admin/reclamation">   <i style={{ marginRight: "10px" }}class="fas fa-comment-dots"></i>  Reclamation</Link></li>
           <li><Link to="/home"> <i class="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>Log out</Link></li>
         </ul>
       </nav >
@@ -171,9 +178,7 @@ const Admin = () => {
         <Route path="add_employe" element={<Add_employe />} />
         <Route path="update_employe/:id" element={<Update_employe />} />
         <Route path="depot" element={<Depot />} />
-        <Route path="add_depot" element={<Add_depot />} />
-        <Route path="update_depot/:id" element={<Update_depot />} />
-        <Route path="produit_cc/:id" element={<Produit_cc />} />
+         <Route path="produit_cc/:id" element={<Produit_cc />} />
         <Route path="categorie" element={<Categorie />} />
         <Route path="details_categorie/:id" element={<Details_categorie />} />
         <Route path="commandef" element={<Commandef />} />

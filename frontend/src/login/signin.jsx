@@ -38,90 +38,91 @@ const Signin = () => {
     }
   };
 
-  return (
-    <>
-      <style>
-        {`
-        
-          .form {
-              width: 500px;
-              margin: 50px auto;
-              padding: 20px;
-              border: 1px solid #ccc;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-              font-family: Arial, sans-serif;
-              background-color: #fff;
-          }
-          .form h1 {
-              text-align: center;
-              color: #222;
-              margin-bottom: 20px;
-          }
-          .form input {
-              width: 100%;
-              padding: 10px;
-              margin: 10px 0;
-              border: 1px solid #ccc;
-              border-radius: 4px;
-              box-sizing: border-box;
-          }
-          .form button {
-              width: 100%;
-              padding: 10px;
-              background-color:rgb(0, 0, 0);
-              color: white;
-              border: none;
-              border-radius: 4px;
-              cursor: pointer;
-              font-size: 16px;
-              font-weight: bold;
-          }
-          .form button:hover {
-              background-color:rgb(109, 107, 106);
-          }
-          .message {
-              margin-top: 10px;
-              text-align: center;
-          }
-          .error {
-              color: red;
-          }
-          .success {
-              color: green;
-          }
-        `}
-      </style><div></div>
-      <div className="form">
-        <h1>Bienvenu à ShopEase</h1><br/>
-        <form onSubmit={handleSignIn}>
-          <div style={{ marginBottom: '15px' }}>
-            <label>Email  </label>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Entrez votre email  "
-              required
-            />
-          </div>
-          <div style={{ marginBottom: '15px' }}>
-            <label>Mot de passe</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Entrez votre mot de passe"
-              required
-            />
-          </div>
-          <button type="submit">Se connecter</button>
-        </form>
-        {errorMessage && <div className="message error">{errorMessage}</div>}
-        {successMessage && <div className="message success">{successMessage}</div>}
-      </div>
-    </>
-  );
+ return (
+  <div style={{   margin: "0" }}>
+    <style>
+      {`
+        .form {
+          width: 500px;
+          margin: 50px auto;
+          padding: 20px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          font-family: Arial, sans-serif;
+          background-color: #fff;
+        }
+        .form h1 {
+          text-align: center;
+          color: #222;
+          margin-bottom: 20px;
+        }
+        .form input {
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          box-sizing: border-box;
+        }
+        .form button {
+          width: 100%;
+          padding: 10px;
+          background-color: rgb(74,138,126); /* Vert émeraude */
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          font-weight: bold;
+          transition: background-color 0.3s ease-in-out;
+        }
+        .form button:hover {
+          background-color: rgb(56, 102, 93); /* Vert foncé */
+        }
+        .message {
+          margin-top: 10px;
+          text-align: center;
+        }
+        .error {
+          color: red;
+        }
+        .success {
+          color: green;
+        }
+      `}
+    </style>
+    <div className="form">
+      <h1>Bienvenu à <strong style={{ color:"rgb(223,212,171)"}} >ShopEase </strong></h1><br />
+      <form onSubmit={handleSignIn}>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Email </label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Entrez votre email"
+            required
+          />
+        </div>
+        <div style={{ marginBottom: '15px' }}>
+          <label>Mot de passe</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Entrez votre mot de passe"
+            required
+          />
+        </div>
+        <button type="submit">Se connecter</button>
+      </form>
+      {errorMessage && <div className="message error">{errorMessage}</div>}
+      {successMessage && <div className="message success">{successMessage}</div>}
+    </div>
+  </div>
+);
+
   
 };
 

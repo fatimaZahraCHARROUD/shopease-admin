@@ -55,43 +55,59 @@ const Fournisseur = () => {
   };
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h1 style={{ fontWeight: "bold", textAlign: "center", color: "black",marginTop:"20px" }}>
-          Liste des Fournisseurs
-        </h1>
+      <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
+         
+      <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between", // Aligner à gauche et à droite
+    alignItems: "center", // Centrer verticalement
+    marginBottom: "10px",
+    marginTop: "30px", // Ajuster l'espacement si nécessaire
+  marginBottom:"30px",
+  }}
+>
+  {/* Champ de recherche */}
+  <div className="input-group" style={{ width: "960px" }}>
+    <span className="input-group-text" style={{ color:"white", backgroundColor: "rgb(74,138,126)"}}>
+      <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+    </span>
+    <input
+      type="text"
+      placeholder="Rechercher un fournisseur..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="form-control py-2"
+    />
+  </div>
+
+  {/* Bouton Ajouter */}
+  <Link
+    to="/admin/add_fournisseur"
+    className="btn"
+    style={{marginRight:"10px",
+      backgroundColor: "white",
+      color: "rgb(74,138,126)",
+      fontSize: "20px",
+      padding: "5px 15px",
+      borderRadius: "5px", // Arrondi léger
+    }}
+  >
+    +
+  </Link>
+</div>
 
 
 
-        {/* Conteneur pour aligner le bouton et l'input de recherche */}
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", marginTop: "80px" }}>
-          {/* Bouton Ajouter */}
-          <Link to="/admin/add_fournisseur" className="btn  " style={{ backgroundColor: "white", color: "black" }}>
-            Ajouter un fournisseur
-          </Link>
-
-          {/* Champ de recherche aligné à droite */}
-          <div className="input-group" style={{ width: "360px" }}>
-            <span className="input-group-text  ">
-              <i className="fa fa-search"></i> {/* Icône FontAwesome */}
-            </span>
-            <input
-              type="text"
-              placeholder="Rechercher un fournisseur..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="form-control py-2  " 
-            />
-          </div>
-        </div>
         {/* Tableau des fournisseurs */}
         <table className="table   shadow">
           <thead className="table-light">
             <tr>
-              <th>Nom</th>
-              <th>Email</th>
-              <th>Téléphone</th>
-              <th>Adresse</th>
-              <th> </th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Nom</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Email</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Téléphone</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Adresse</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}> </th>
             </tr>
           </thead>
           <tbody>
@@ -106,7 +122,7 @@ const Fournisseur = () => {
                     {/* Menu déroulant avec trois points */}
                     <div className="dropdown" style={{ marginRight: "40px" }}>
                       <button
-                        className="btn btn-secondary"
+                        className="btn  "
                         type="button"
                         onClick={() => toggleDropdown(f.id)} // Toggle du dropdown
                         style={{

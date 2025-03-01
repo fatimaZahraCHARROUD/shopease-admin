@@ -4,8 +4,7 @@ import db from "../config/database.js";
 export const getCommandesFournisseurs = (callback) => {
   const q = `
         SELECT 
-        facture.id as facture_id,
-            commandef.id, 
+             commandef.id, 
             commandef.date, commandef.date_possible, commandef.date_reçue,
             commandef.etat, 
             fournisseur.nomcomplet, 
@@ -14,8 +13,7 @@ export const getCommandesFournisseurs = (callback) => {
             commandef
         LEFT JOIN fournisseur 
             ON commandef.id_fournisseur = fournisseur.id   
-            JOIN facture ON facture.id_commandef=commandef.id
-         `;
+          `;
   db.query(q, callback);
 };
 

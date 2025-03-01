@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { Link, useNavigate } from "react-router-dom";
 
 const Details_facture = () => {
   const { id } = useParams();
@@ -26,30 +27,25 @@ const Details_facture = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
   
-    // Ajout d'un logo (si disponible)
-    // const logo = "/public/shopease_logo.png"; // Remplacez par le chemin réel de votre logo
-    // doc.addImage(logo, "PNG", 10, 10, 40, 20);
-  
     // Titre de la facture
     doc.setFontSize(18);
-    doc.text(`Facture n°FAC-${id} `, 105, 40, { align: "center" });
+    doc.text(`Facture n°FAC-${id} `, 105, 20, { align: "center" });
   
     // Informations générales
     doc.setFontSize(12);
-    doc.text("Informations de fournisseur:", 14, 50); // Titre pour l'entreprise
-    doc.text("Informations du l'entreprise  :", 120, 50); // Titre pour le fournisseur
-
+    doc.text("Informations de fournisseur:", 14, 40); // Titre pour l'entreprise
+    doc.text("Informations de l'entreprise :", 120, 40); // Titre pour le fournisseur
+  
     // Informations de ShopEase
-    doc.text(` ShopEase`,120, 60);
-    doc.text(`123 Rue hassan Al aarouit Nador , Maroc`,120, 70 );
-    doc.text(`+212 5 22 33 44 55`,  120, 80);
-
+    doc.text(`ShopEase`, 120, 50);
+    doc.text(`123 Rue hassan Al aarouit Nador, Maroc`, 120, 55);
+    doc.text(`+212 5 22 33 44 55`, 120, 60);
+  
     // Informations du fournisseur
-    doc.text(`Nom : ${facture.fournisseur_nom}`,  14, 60);
-    doc.text(`Email : ${facture.fournisseur_email}`,14, 70 );
-    doc.text(`Prix Total : ${facture.prix_total} DH`,14, 80);
-
-   
+    doc.text(`Nom : ${facture.fournisseur_nom}`, 14, 50);
+    doc.text(`Email : ${facture.fournisseur_email}`, 14, 55);
+    doc.text(`Num ICE : 1234567890`, 14, 60); // Numéro ICE au lieu du prix total
+  
     // Tableau des produits
     const tableData = facture.produits.split(", ").map((produit, index) => [
       produit,
@@ -59,58 +55,71 @@ const Details_facture = () => {
     ]);
   
     doc.autoTable({
-      startY: 100,
+      startY: 80,
       head: [["Produit", "Quantité", "Prix U", "Total"]],
       body: tableData,
-    //   theme: "grid",
       styles: { fontSize: 10, cellPadding: 5, textColor: "#333", halign: "center" },
-      headStyles: { fillColor: "#000", textColor: "#fff" },
+      headStyles: { fillColor: "rgb(74,138,126)", textColor: "#fff" },
     });
   
     // Section Total HT
     doc.autoTable({
       startY: doc.lastAutoTable.finalY + 10,
-      head: [["Total "]],
+      head: [["Total HT"]],
       body: [[`${facture.prix_total} DH`]],
       theme: "plain",
       styles: { fontSize: 12, halign: "center" },
-      headStyles: { fillColor: "#000", textColor: "#fff" },
+      headStyles: { fillColor: "rgb(74,138,126)", textColor: "#fff" },
     });
   
     // Conditions de paiement
     const conditions = [
-      ["Mode de paiement", "À la livraison"],
        ["Délai de paiement", "30 jours fin de mois"],
       ["Clause de réserve de propriété", "Les marchandises restent la propriété du fournisseur jusqu’au paiement intégral."],
     ];
   
     doc.text("Conditions de paiement :", 14, doc.lastAutoTable.finalY + 10);
     doc.autoTable({
-      startY: doc.lastAutoTable.finalY + 20,
+      startY: doc.lastAutoTable.finalY + 15,
       head: [["Condition", "Détail"]],
       body: conditions,
-    //   theme: "grid",
-      styles: { fontSize: 10, cellPadding: 5, textColor: "#333" },
+      styles: { fontSize: 10,   textColor: "#333" },
       headStyles: { fillColor: "#000", textColor: "#fff" },
-    });
+    });     
+ 
   
-    // Mentions légales
+    // Mentions légales supplémentaires dans le bas de la page
     doc.setFontSize(10);
     doc.setTextColor("#555");
     doc.text(
-      "En cas de litige, toute réclamation doit être signalée sous 7 jours après réception de la commande.",
+      `Taxe professionnelle : 15%`,
       14,
-      doc.lastAutoTable.finalY + 20,
-      { maxWidth: 180 }
+      doc.lastAutoTable.finalY + 20
+    );
+    doc.text(
+      `Registre de commerce : RC12345`,
+      14,
+      doc.lastAutoTable.finalY + 25
+    );
+    doc.text(
+      `ICE : 1234567890`,
+      14,
+      doc.lastAutoTable.finalY + 30
+    );
+    doc.text(
+      `Identifiant fiscal : 987654321`,
+      14,
+      doc.lastAutoTable.finalY + 35
     );
   
     // Téléchargement
     doc.save("Facture.pdf");
   };
   
+  
 
   if (loading) return <div className="text-center mt-5">Chargement...</div>;
-  if (!facture) return <div className="text-center mt-5">Aucune facture trouvée.</div>;
+  if (!facture) return <div className="text-center mt-5">Aucune facture trouvée.<Link to="/admin/facture" >ajouter une facture </Link></div>;
 
   return (
     <div className="container" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" ,minWidth:"100%"}}>
@@ -128,13 +137,13 @@ const Details_facture = () => {
         {/* Produits */}
         <h5 className="mb-3">Produits</h5>
         <div className="table-responsive">
-          <table className="table table-striped table-bordered text-center">
+          <table className="table    text-center">
             <thead className="table-dark">
               <tr>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>Prix U.</th>
-                <th>Total</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Produit</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Quantité</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Prix U.</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Total</th>
               </tr>
             </thead>
             <tbody>
@@ -142,10 +151,10 @@ const Details_facture = () => {
                 <tr key={index}>
                   <td>{produit}</td>
                   <td>{facture.quantites.split(", ")[index]}</td>
-                  <td>{facture.prix_unitaires.split(", ")[index]} €</td>
+                  <td>{facture.prix_unitaires.split(", ")[index]} DH</td>
                   <td>
                     {(parseFloat(facture.prix_unitaires.split(", ")[index]) *
-                      parseInt(facture.quantites.split(", ")[index], 10)).toFixed(2)} €
+                      parseInt(facture.quantites.split(", ")[index], 10)).toFixed(2)} DH
                   </td>
                 </tr>
               ))}
@@ -154,13 +163,12 @@ const Details_facture = () => {
         </div>
 
         {/* Total et Conditions */}
-        <div className="mt-4">
-          <h5 className="mb-3">Total et Conditions</h5>
-          <table className="table table-bordered text-center" style={{ maxWidth: "300px", margin: "0 auto" }}>
+        <div className="mt-2">
+           <table className="table table-bordered text-center" style={{ maxWidth: "300px", margin: "0 auto" }}>
             <tbody>
               <tr>
-                <td><strong>Total HT</strong></td>
-                <td>{facture.prix_total} €</td>
+                <td><strong>Total  </strong></td>
+                <td>{facture.prix_total} DH</td>
               </tr>
             </tbody>
           </table>
@@ -190,7 +198,7 @@ const Details_facture = () => {
 
         {/* Bouton de téléchargement */}
         <div className="text-center mt-4">
-          <button className="btn btn-dark px-4" onClick={generatePDF}>
+          <button style={{ backgroundColor:"rgb(74,138,126)" , color:"white"}} className="btn  px-4" onClick={generatePDF}>
             Télécharger la Facture en PDF
           </button>
         </div>

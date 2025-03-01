@@ -29,17 +29,28 @@ const Add_facture = () => {
     try {
       const response = await axios.get(`http://localhost:8800/api/commandesf/${idCommandef}/produits`);
       const produits = response.data;
-
-      // Calculer le prix total (prix unitaire * quantité pour chaque produit)
-      const total = produits.reduce((sum, produit) => 
-        sum + Number(produit.prix) * Number(produit.quantite), 0
-      );
-            setPrixTotal(total); // Met à jour le prix total
+  
+      // Vérifier que les produits contiennent bien des prix et quantités valides
+      console.log('Produits récupérés:', produits);
+  
+      const total = produits.reduce((sum, produit) => {
+        const prix = parseFloat(produit.prix);  // Utilisation de parseFloat pour gérer les chaînes
+        const quantite = parseInt(produit.quantite, 10);  // Utilisation de parseInt pour convertir la quantité en entier
+        if (isNaN(prix) || isNaN(quantite)) {
+          console.warn(`Données invalides pour le produit: ${produit}. Prix: ${prix}, Quantité: ${quantite}`);
+          return sum;  // Si prix ou quantité sont invalides, on les ignore dans le calcul
+        }
+        return sum + prix * quantite;  // Calcul du total pour ce produit
+      }, 0);
+  
+      console.log("Prix total calculé:", total); // Affichage du prix total calculé
+      setPrixTotal(total); // Met à jour le prix total
     } catch (error) {
       console.error("Erreur lors de la récupération des produits de la commande :", error);
       setPrixTotal(0); // Réinitialise en cas d'erreur
     }
   };
+  
 
   // Gestion du changement de commande fournisseur
   const handleCommandefChange = (e) => {
@@ -73,7 +84,8 @@ const Add_facture = () => {
     }
   };
 
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div style={{ marginLeft: "230px",backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
     <div style={{
         width: "60%",
@@ -111,12 +123,12 @@ const Add_facture = () => {
           </select>
         </div>
          
-        <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>
+        <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>
           Ajouter
         </button>
       </form>
     </div>
-    </div>
+    </div></div>
   );
 };
 

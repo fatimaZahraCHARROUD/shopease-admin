@@ -15,9 +15,9 @@ function Reclamation() {
       });
   }, []);
 
-  return (
+  return (<div style={{ backgroundColor: "#f8f9fa",}}>
     <div style={{backgroundColor: "#f8f9fa", marginLeft: "260px", padding: "20px", minHeight:"800px" }}>
-      <h2 style={{ marginBottom: "20px" }}>Réclamations des utilisateurs</h2>
+      <h4 style={{ marginBottom: "20px" , color:" rgb(74,138,126)" }}>Réclamations des utilisateurs</h4>
       
       {reclamations.length > 0 ? (
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
@@ -26,10 +26,10 @@ function Reclamation() {
               padding: "15px",
               border: "1px solid #ddd",
               borderRadius: "8px",
-              backgroundColor: "#f9f9f9",
+              backgroundColor: "white",
               boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.1)"
             }}>
-              <h3 style={{ margin: "0 0 5px 0", color: "#333" }}>{rec.nomcomplet} - {rec.email}</h3>
+              <h5 style={{ margin: "0 0 5px 0", color: "rgb(74,138,126)" }}>{rec.nomcomplet} - {rec.email}</h5>
               <p style={{ margin: "5px 0", fontSize: "16px", color: "#555" }}>{rec.msg}</p>
               <small style={{ color: "#888" }}>🗓 {new Date(rec.date).toLocaleDateString()}</small>
             </div>
@@ -38,7 +38,7 @@ function Reclamation() {
       ) : (
         <p style={{ textAlign: "center", color: "#888" }}>Aucune réclamation trouvée</p>
       )}
-    </div>
+    </div></div>
   );
 }
 

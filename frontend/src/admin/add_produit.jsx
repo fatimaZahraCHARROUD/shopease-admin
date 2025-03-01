@@ -91,7 +91,8 @@ const AddProduct = () => {
     setSelectedDepot("");
   };
 
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div
       style={{
         marginLeft: "250px",
@@ -222,7 +223,7 @@ const AddProduct = () => {
             type="submit"
             className="btn w-100"
             style={{
-              backgroundColor: "black",
+              backgroundColor: "rgb(74,138,126)",
               color: "white",
               fontWeight: "bold",
             }}
@@ -231,7 +232,7 @@ const AddProduct = () => {
           </button>
         </form>
       </div>
-    </div>
+    </div></div>
   );
 };
 

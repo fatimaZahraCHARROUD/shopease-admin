@@ -52,7 +52,8 @@ const Update_categorie = () => {
     return <p>Chargement des données...</p>;
   }
 
-  return (
+  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
+
     <div style={{ marginLeft: "250px", backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
       <div style={{ width: "700px", padding: "40px", borderRadius: "8px", backgroundColor: "white", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)" }}>
         <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Mettre à jour la catégorie</h2>
@@ -65,10 +66,10 @@ const Update_categorie = () => {
             <input className="form-control" type="text" placeholder="URL" name="imgurl" value={categorie.imgurl} onChange={handleChange} required />
           </div>
 
-          <button type="submit" className="btn w-100" style={{ backgroundColor: "black", color: "white", fontWeight: "bold" }}>Mettre à jour</button>
+          <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>Mettre à jour</button>
         </form>
       </div>
-    </div>
+    </div></div>
   );
 };
 
