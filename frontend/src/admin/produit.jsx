@@ -103,8 +103,7 @@ marginBottom:"30px",
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Nom</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Description</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Prix  </th>
-            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Quantité</th>
-            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Catégorie</th>
+             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Catégorie</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Dépôt</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}> </th>
             </tr>
@@ -127,8 +126,7 @@ marginBottom:"30px",
                   <td>{product.nom}</td>
                   <td>{product.description}</td>
                   <td>{product.prix} DH</td>
-                  <td>{product.quantite}</td>
-                  <td>{product.categorie_nom || "Non défini"}</td>
+                   <td>{product.categorie_nom || "Non défini"}</td>
                   <td>{product.depot_adresse}</td>
                   <td>
   {/* Menu déroulant avec trois points */}

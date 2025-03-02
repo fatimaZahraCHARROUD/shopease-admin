@@ -12,7 +12,7 @@ import productRoutes from "./src/routes/ProductRoutes.js";
 import factureRoutes from "./src/routes/FactureRoutes.js";
 import FournirRoutes from "./src/routes/FournirRoutes.js";
 import db from "./src/config/database.js";
-
+import clientRoutes from "./src/routes/ClientRoutes.js";              
 import dashboardRoutes from "./src/routes/DashboardRoutes.js"; 
 
 dotenv.config();
@@ -48,7 +48,8 @@ app.use("/api", factureRoutes);
 app.use("/api", FournirRoutes);
 //11. donnees de dashboard
 app.use("/api/dashboard", dashboardRoutes);
-
+// 12.gestion des client
+app.use("/api", clientRoutes);
 
 // //get all gestionnaire de depot
 // app.get("/gdepot", (req, res) => {

@@ -117,7 +117,7 @@ const Employe = () => {
                   <td>{e.nomcomplet}</td>
                   <td>{e.email}</td>
                   <td>{e.password}</td>
-                  <td>{e.adresse}</td>
+                  <td>{e.adresse}, {e.ville}</td>
                   <td>{e.tel}</td>
                   <td>
   {/* Menu déroulant avec trois points */}

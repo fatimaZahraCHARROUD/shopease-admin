@@ -11,6 +11,7 @@ const UpdateEmploye = () => {
         nomcomplet: "",
         email: "",
         adresse: "",
+        ville: "",
         password: "",
         tel: "",
     });
@@ -79,6 +80,10 @@ const UpdateEmploye = () => {
                     <div className="mb-3">
                         <label className="form-label">Adresse</label>
                         <input type="text" className="form-control" name="adresse" value={employe.adresse} onChange={handleChange} required />
+                    </div> 
+                    <div className="mb-3">
+                        <label className="form-label">Ville</label>
+                        <input type="text" className="form-control" name="ville" value={employe.ville} onChange={handleChange} required />
                     </div>
                     <div className="mb-3">
                         <label className="form-label">Code</label>
