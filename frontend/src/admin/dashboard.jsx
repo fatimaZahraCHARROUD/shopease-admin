@@ -6,8 +6,8 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement,
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, ChartTooltip, ChartLegend);
 
-const COLORS = ["#DFD49E", "#4A8A7E", "#B3EFB6", "#AC7F78", "#F6B392"];
-const COLORS_BAR = ["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f"];
+const COLORS = ["rgb(126, 176, 170)",  "rgb(166, 202, 197)",   "rgb(206, 228, 224)",   "rgb(226, 240, 237)",   "rgb(239, 250, 248)"    ]
+const COLORS_BAR = ["rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)"];
 
 const Dashboard = () => {
   const currentYear = new Date().getFullYear(); // Année actuelle
@@ -54,7 +54,7 @@ const Dashboard = () => {
     datasets: [{
       label: "Ventes en (DH)",
       data: salesData,
-      backgroundColor: "rgb(74,138,126)",
+      backgroundColor: "rgb(206,228,224)",
     }]
   };
 
@@ -64,9 +64,9 @@ const Dashboard = () => {
     datasets: [{
       label: "Clients et visiteurs ",
       data: clientsData,
-      borderColor: "rgba(75, 192, 192, 1)",
-      backgroundColor: "rgba(75, 192, 192, 0.2)",
-      pointBackgroundColor: "rgba(75, 192, 192, 1)",
+      borderColor: "rgb(74,138,126)",
+      backgroundColor: "rgb(74,138,126)",
+      pointBackgroundColor: "rgb(74,138,126)",
       pointBorderColor: "#fff",
       fill: true,
     }]
@@ -101,16 +101,16 @@ const Dashboard = () => {
         <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", padding: "20px" }}>
           
 
-          <div className="row  ">
-            {[{ title: "TOTAL DES ACHATS", amount: totalAchats,   bg: "#66c2a5"},
-            { title: "TOTAL DES VENTES", amount: totalVentes,   bg: "#fc8d62"},
-            { title: "TOTAL DES FOURNISSEURS", amount: totalFournisseurs,  bg: "#8da0cb" },
-            { title: "TOTAL DES CLIENTS", amount: totalClients,   bg: "#e78ac3" }]
+        <div className="row  ">
+            {[{ title: "TOTAL DES ACHATS", icon:"fas fa-shopping-cart" , amount: totalAchats,   bg: "#66c2a5"},
+            { title: "TOTAL DES VENTES", icon:"fas fa-cash-register" , amount: totalVentes,   bg: "#fc8d62"},
+            { title: "TOTAL DES FOURNISSEURS", icon:"fas fa-truck" , amount: totalFournisseurs,  bg: "#8da0cb" },
+            { title: "TOTAL DES CLIENTS", icon:"fas fa-user" , amount: totalClients,   bg: "#e78ac3" }]
               .map((card, index) => (
                 <div key={index} className="col mb-3">
-                  <div className="  mx-0 py-1 px-1 shadow" style={{color:"rgb(74,138,126) " ,border:"2px solid rgb(74,138,126)", backgroundColor: "white", borderRadius: "10px" }}>
+                  <div className="  mx-0 py-1 px-1 shadow" style={{color:"gray " ,  backgroundColor: "white", borderRadius: "10px" }}>
                     <div   className="card-body text-center">
-                      <p style={{ fontSize:"15px"}}> {card.title}</p>
+                      <p style={{ fontSize:"12px"}}> <i   className={`${card.icon} me-2`}></i> {card.title}</p>
                       <p>{card.amount}</p>
                     </div>
                    </div>
@@ -119,7 +119,7 @@ const Dashboard = () => {
           </div>
 
 
-          <div style={{ color:" white" , textAlign: "center" , backgroundColor:"rgb(74,138,126)", padding:"4px" }}>
+          <div  clasName="shadow" style={{ color:" white" ,  textAlign: "center" , backgroundColor:"rgb(74,138,126)", padding:"4px" }}>
             <label >Filtrer par année : </label>
             <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
               {[...Array(5)].map((_, i) => {
@@ -185,9 +185,11 @@ const Dashboard = () => {
                     const percentage = ((entry.total_clients / totalCityClients) * 100).toFixed(1);
                     return (
                       <div key={entry.ville} style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
-                        <span style={{ minWidth: "100px", fontSize: "16px", fontWeight: "bold" }}>
-                          {"🏙️"} {entry.ville}
+                       <span style={{ minWidth: "100px", fontSize: "16px", fontWeight: "bold" }}>
+                      <i className="fas fa-city me-2"></i> 
+                       {entry.ville}
                         </span>
+
                         <div
                           style={{
                             height: "30px",

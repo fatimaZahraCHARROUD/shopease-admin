@@ -28,24 +28,26 @@ const Details_facture = () => {
     const doc = new jsPDF();
   
     // Titre de la facture
-    doc.setFontSize(18);
-    doc.text(`Facture n°FAC-${id} `, 105, 20, { align: "center" });
+    // doc.setFontSize(18);
+    // doc.text(`Facture n°FAC-${id} `, 105, 20, { align: "center" });
   
     // Informations générales
-    doc.setFontSize(12);
-    doc.text("Informations de fournisseur:", 14, 40); // Titre pour l'entreprise
-    doc.text("Informations de l'entreprise :", 120, 40); // Titre pour le fournisseur
+    // doc.setFontSize(12);
+    // doc.text("Informations de fournisseur:", 14, 40); // Titre pour l'entreprise
+    // doc.text("Informations de l'entreprise :", 120, 40); // Titre pour le fournisseur
   
     // Informations de ShopEase
-    doc.text(`ShopEase`, 120, 50);
-    doc.text(`123 Rue hassan Al aarouit Nador, Maroc`, 120, 55);
-    doc.text(`+212 5 22 33 44 55`, 120, 60);
+    doc.text(`ShopEase`, 14, 50);
+    doc.text(`123 Rue hassan Al aarouit Nador, Maroc`, 14, 60);
+    doc.text(`+212 5 22 33 44 55`, 14, 70);
   
     // Informations du fournisseur
-    doc.text(`Nom : ${facture.fournisseur_nom}`, 14, 50);
-    doc.text(`Email : ${facture.fournisseur_email}`, 14, 55);
-    doc.text(`Num ICE : 1234567890`, 14, 60); // Numéro ICE au lieu du prix total
+    doc.text(`${facture.fournisseur_nom}`, 120, 90);
+    doc.text(`${facture.fournisseur_email}`, 120, 100);
+    doc.text(`Num ICE : 1234567890`, 120, 110); // Numéro ICE au lieu du prix total
   
+     doc.text(`Facture n°FAC-${id} `, 14, 120);
+
     // Tableau des produits
     const tableData = facture.produits.split(", ").map((produit, index) => [
       produit,
@@ -55,7 +57,7 @@ const Details_facture = () => {
     ]);
   
     doc.autoTable({
-      startY: 80,
+      startY: 130,
       head: [["Produit", "Quantité", "Prix U", "Total"]],
       body: tableData,
       styles: { fontSize: 10, cellPadding: 5, textColor: "#333", halign: "center" },
@@ -87,31 +89,32 @@ const Details_facture = () => {
       headStyles: { fillColor: "#000", textColor: "#fff" },
     });     
  
+
   
     // Mentions légales supplémentaires dans le bas de la page
     doc.setFontSize(10);
     doc.setTextColor("#555");
-    doc.text(
-      `Taxe professionnelle : 15%`,
-      14,
-      doc.lastAutoTable.finalY + 20
-    );
-    doc.text(
-      `Registre de commerce : RC12345`,
-      14,
-      doc.lastAutoTable.finalY + 25
-    );
-    doc.text(
-      `ICE : 1234567890`,
-      14,
-      doc.lastAutoTable.finalY + 30
-    );
-    doc.text(
-      `Identifiant fiscal : 987654321`,
-      14,
-      doc.lastAutoTable.finalY + 35
-    );
-  
+    const pageWidth = doc.internal.pageSize.getWidth(); // Largeur de la page
+const marginBottom = 10; // Marge par rapport au bas de la page
+
+// Calcul de la position Y finale pour être juste au-dessus du bas
+const finalY = doc.internal.pageSize.getHeight() - marginBottom;
+
+doc.text(
+  `Taxe professionnelle : 15% , Registre de commerce : RC12345`,
+  pageWidth / 2, // Centre horizontalement
+  finalY - 10,   // Ajustement vertical
+  { align: "center" }
+);
+
+doc.text(
+  `ICE : 1234567890 , Identifiant fiscal : 987654321`,
+  pageWidth / 2, // Centre horizontalement
+  finalY,        // Juste en dessous du premier texte
+  { align: "center" }
+);
+
+    
     // Téléchargement
     doc.save("Facture.pdf");
   };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -43,11 +45,11 @@ const Signin = () => {
     <style>
       {`
         .form {
-          width: 500px;
+          width: 900px;
           margin: 50px auto;
-          padding: 20px;
+          padding: 0 0 0 20px; 
           border: 1px solid #ccc;
-          border-radius: 8px;
+          border-radius: 50px;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
           font-family: Arial, sans-serif;
           background-color: #fff;
@@ -93,7 +95,11 @@ const Signin = () => {
       `}
     </style>
     <div className="form">
-      <h1>Bienvenu à <strong style={{ color:"rgb(223,212,171)"}} >ShopEase </strong></h1><br />
+    <Container>
+          <Row className="align-items-center">
+            <Col   md={6}>
+    
+      <h1>Bienvenu à <strong style={{ color:"rgb(74,138,126)"}} >ShopEase </strong></h1><br />
       <form onSubmit={handleSignIn}>
         <div style={{ marginBottom: '15px' }}>
           <label>Email </label>
@@ -119,7 +125,13 @@ const Signin = () => {
       </form>
       {errorMessage && <div className="message error">{errorMessage}</div>}
       {successMessage && <div className="message success">{successMessage}</div>}
-    </div>
+    </Col>
+    <Col   md={6}>
+              <img src="signin.jpg" alt="About us" className="img-fluid" style={{borderRadius:" 0 50px 50px 0", width: "420px", height: "480px" ,marginLeft:"20px" }} />
+            </Col>
+          </Row>
+        </Container>
+        </div>
   </div>
 );
 

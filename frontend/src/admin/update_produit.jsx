@@ -18,10 +18,10 @@ const Update_product = () => {
 
   const [categories, setCategories] = useState([]);
   const [depots, setDepots] = useState([]);
-  const [fournisseursList, setFournisseursList] = useState([]);
+  const [fournisseurs, setFournisseurs] = useState([]);
   const [selectedFournisseurs, setSelectedFournisseurs] = useState([]);
 
-  // Récupération des données
+  // Récupération des données du produit et des fournisseurs
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -38,9 +38,19 @@ const Update_product = () => {
           id_depot: product.id_depot,
         });
 
-        setSelectedFournisseurs(product.fournisseurs ? product.fournisseurs.map(f => f.id.toString()) : []);
+        // Stocker les IDs des fournisseurs associés au produit
+        setSelectedFournisseurs(product.fournisseurs ? product.fournisseurs.map(f => f.id_fournisseur.toString()) : []);
       } catch (error) {
         console.error("Erreur lors de la récupération du produit :", error);
+      }
+    };
+
+    const fetchSuppliers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8800/api/fournisseur`);
+        setFournisseurs(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des fournisseurs :", error);
       }
     };
 
@@ -62,19 +72,10 @@ const Update_product = () => {
       }
     };
 
-    const fetchSuppliers = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8800/api/fournisseur`);
-        setFournisseursList(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des fournisseurs :", error);
-      }
-    };
-
     fetchProduct();
+    fetchSuppliers();
     fetchCategories();
     fetchDepots();
-    fetchSuppliers();
   }, [id]);
 
   // Mise à jour du produit
@@ -107,125 +108,124 @@ const Update_product = () => {
         : prevSelected.filter((id) => id !== value.toString())
     );
   };
-  
 
-  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", marginLeft: "250px" }}>
-      <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding: "40px" }}>
-        <h1>Modifier un Produit</h1>
-        <form onSubmit={handleUpdate}>
-          <div className="mb-3">
-            <label className="form-label">Nom</label>
-            <input
-              type="text"
-              className="form-control"
-              name="nom"
-              value={productData.nom}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Description</label>
-            <textarea
-              className="form-control"
-              name="description"
-              value={productData.description}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Prix</label>
-            <input
-              type="number"
-              className="form-control"
-              name="prix"
-              value={productData.prix}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Quantité</label>
-            <input
-              type="number"
-              className="form-control"
-              name="quantite"
-              value={productData.quantite}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">URL de l'image</label>
-            <input
-              type="text"
-              className="form-control"
-              name="imgurl"
-              value={productData.imgurl}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Catégorie</label>
-            <select
-              className="form-control"
-              name="id_categorie"
-              value={productData.id_categorie}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Sélectionnez une catégorie</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.nom}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Fournisseurs</label>
-            <div>
-              {fournisseursList.map((fournisseur) => (
-                <div key={fournisseur.id} className="form-check">
-                 <input
-  className="form-check-input"
-  type="checkbox"
-  value={fournisseur.id.toString()}  // Convertir en chaîne
-  checked={selectedFournisseurs.includes(fournisseur.id.toString())} // Comparaison correcte
-  onChange={handleSupplierChange}
-/>
-
-                  <label className="form-check-label">
-                    {fournisseur.nomcomplet}
-                  </label>
-                </div>
-              ))}
+  return (
+<div style={{ backgroundColor: "#f8f9fa" }}>
+<div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", marginLeft: "250px" }}>
+        <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding: "40px" }}>
+          <h1>Modifier un Produit</h1>
+          <form onSubmit={handleUpdate}>
+            <div className="mb-3">
+              <label className="form-label">Nom</label>
+              <input
+                type="text"
+                className="form-control"
+                name="nom"
+                value={productData.nom}
+                onChange={handleChange}
+                required
+              />
             </div>
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Dépôt</label>
-            <select
-              className="form-control"
-              name="id_depot"
-              value={productData.id_depot}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Sélectionnez un dépôt</option>
-              {depots.map((depot) => (
-                <option key={depot.id} value={depot.id}>
-                  {depot.adresse}
-                </option>
-              ))}
-            </select>
-          </div>
-          <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "rgb(74,138,126)", fontSize: "16px", fontWeight: "bold" }}>
-            Mettre à jour
-          </button>
-        </form>
-      </div></div>
+            <div className="mb-3">
+              <label className="form-label">Description</label>
+              <textarea
+                className="form-control"
+                name="description"
+                value={productData.description}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Prix</label>
+              <input
+                type="number"
+                className="form-control"
+                name="prix"
+                value={productData.prix}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Quantité</label>
+              <input
+                type="number"
+                className="form-control"
+                name="quantite"
+                value={productData.quantite}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">URL de l'image</label>
+              <input
+                type="text"
+                className="form-control"
+                name="imgurl"
+                value={productData.imgurl}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Catégorie</label>
+              <select
+                className="form-control"
+                name="id_categorie"
+                value={productData.id_categorie}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Sélectionnez une catégorie</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.nom}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Fournisseurs</label>
+              <div>
+                {fournisseurs.map((fournisseur) => (
+                  <div key={fournisseur.id_fournisseur} className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      value={fournisseur.id.toString()}
+                      checked={selectedFournisseurs.includes(fournisseur.id.toString())}
+                      onChange={handleSupplierChange}
+                    />
+                    <label className="form-check-label">
+                      {fournisseur.nomcomplet} - {fournisseur.email}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Dépôt</label>
+              <select
+                className="form-control"
+                name="id_depot"
+                value={productData.id_depot}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Sélectionnez un dépôt</option>
+                {depots.map((depot) => (
+                  <option key={depot.id} value={depot.id}>
+                    {depot.adresse}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "rgb(74,138,126)", fontSize: "16px", fontWeight: "bold" }}>
+              Mettre à jour
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

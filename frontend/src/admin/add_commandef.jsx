@@ -143,7 +143,7 @@ const AddCommandef = () => {
                     />
                     <span style={{ flex: 1, marginLeft: "10px" }}>
                       <img src={produit.imgurl} alt={produit.nom} width="40" style={{ marginRight: "10px" }} />
-                      {produit.nom} - {produit.prix}€
+                      {produit.nom} - {produit.prix} DH
                     </span>
                     {selectedProducts[produit.id]?.selected && (
                       <input

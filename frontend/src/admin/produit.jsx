@@ -52,7 +52,7 @@ const Product = () => {
       }
     };
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "140vh" }}>
     <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
        
     <div

@@ -182,7 +182,7 @@ const Stock = () => {
                       {produit.quantite}
                     </strong>
                   </td>
-                  <td>{produit.prix}€</td>
+                  <td>{produit.prix} DH</td>
                   <td>{produit.adresse}</td>
                 </tr>
               ))}

@@ -79,8 +79,8 @@ const Client = () => {
                 <tr key={e.id}>
                   <td>{e.nomcomplet}</td>
                   <td>{e.email}</td>
-                  <td>{e.adresse}</td>
-                  <td>{e.tel}</td>
+                  <td>{e.adresse},{e.ville}</td>
+                  <td>0{e.tel}</td>
                 </tr>
               ))
             ) : (

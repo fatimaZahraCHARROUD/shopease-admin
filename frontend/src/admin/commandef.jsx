@@ -113,7 +113,7 @@ const Commandef = () => {
                       {activeDropdown === commande.id && (
                         <ul className="dropdown-menu show" style={{ minWidth: "10px", marginRight: "10px", padding: "0" }}>
                           <li><Link to={`/admin/produit_cf/${commande.id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Détails</Link></li>
-                          <li><Link to={`/admin/details_facture/${commande.facture_id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Voir Facture</Link></li>
+                          <li><Link to={`/admin/details_facture/${commande.id_facture}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Voir Facture</Link></li>
                           {commande.etat !== 'reçue' && (
                             <li><Link to={`/admin/update_commandef/${commande.id}`} className="dropdown-item" style={{ padding: "10px 15px" }}>Modifier</Link></li>
                           )}

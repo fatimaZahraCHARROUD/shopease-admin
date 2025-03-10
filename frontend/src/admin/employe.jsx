@@ -75,7 +75,7 @@ const Employe = () => {
       </span>
       <input
         type="text"
-        placeholder="Rechercher un employe..."
+        placeholder="Rechercher un Livreur..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="form-control py-2"
@@ -118,7 +118,7 @@ const Employe = () => {
                   <td>{e.email}</td>
                   <td>{e.password}</td>
                   <td>{e.adresse}, {e.ville}</td>
-                  <td>{e.tel}</td>
+                  <td>0{e.tel}</td>
                   <td>
   {/* Menu déroulant avec trois points */}
   <div className="dropdown" style={{ marginRight: "40px" }}>

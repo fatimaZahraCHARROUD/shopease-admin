@@ -116,7 +116,7 @@ const Fournisseur = () => {
                 <tr key={f.id}>
                   <td>{f.nomcomplet}</td>
                   <td>{f.email}</td>
-                  <td>{f.tel}</td>
+                  <td>0{f.tel}</td>
                   <td>{f.adresse}</td>
                   <td>
                     {/* Menu déroulant avec trois points */}

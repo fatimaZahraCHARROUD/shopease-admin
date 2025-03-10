@@ -62,14 +62,15 @@ const Admin = () => {
           nav {
   border-radius: 30px;
   margin: 10px;
-  background-color: rgb(74,138,126);
+  background-color: white;color:rgb(206, 169, 134);
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   height: calc(99vh - 20px); /* Adjust to leave space at the bottom */
   position: fixed;
-  top: 0;
+  top: 0;  overflow-y: auto;
+
   left: 0;
   bottom: 20px; /* You can increase this value for more space */
   width: 260px;
@@ -88,7 +89,7 @@ const Admin = () => {
             display: block;
           }
           nav ul li a, .dropdown-btn {
-            color: white;
+            color: rgb(117, 118, 118);
             text-decoration: none;
             font-weight: bold;
             padding: 10px;
@@ -103,11 +104,15 @@ const Admin = () => {
             border-radius:5px;
             background-color: rgba(225, 223, 223, 0.22);
           }
+            
           .dropdown {
-            list-style-type: none;
-            padding-left: 15px;
-            margin: 0;
-          }
+  list-style-type: none;
+  padding-left: 15px;
+  margin: 0;
+  max-height: 300px; /* Ajustez selon vos besoins */
+s /* Active le scroll seulement si nécessaire */
+}
+
           .dropdown li a {
             font-weight: normal;
             padding: 8px 10px;
@@ -117,16 +122,16 @@ const Admin = () => {
      
       <nav> 
         
-      <h1 style={{ marginTop:"10px" ,fontWeight:"bold" , color:" rgb(223,212,171)"}}>ShopEase</h1>
-       
+      <h1 style={{ marginTop:"10px" ,fontWeight:"bold" , color:" rgb(74,138,126)"}}>ShopEase</h1>
+ 
         <ul>        
-            <li><Link to="/admin/dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
+            <li><Link to="/admin/dashboard"   title="Dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
 
            <li>
             <button className="dropdown-btn" onClick={() => setShowPatrimoine(!showPatrimoine)}>
               <FaBriefcase style={{ marginRight: "10px"   }} />
               Gestion
-              {showPatrimoine ? <FaChevronUp style={{ marginLeft: "115px" }} /> : <FaChevronDown style={{ marginLeft: "115px" }} />}
+              {showPatrimoine ? <FaChevronUp style={{ marginLeft: "100px" }} /> : <FaChevronDown style={{ marginLeft: "100" }} />}
             </button>
             {showPatrimoine && (
               <ul className="dropdown">
@@ -144,7 +149,7 @@ const Admin = () => {
             <button className="dropdown-btn" onClick={() => setShowStore(!showStore)}>
               <i className="fa-solid fa-store" style={{ marginRight: "10px" }}></i>
               Store
-              {showStore ? <FaChevronUp style={{ marginLeft: "129px" }} /> : <FaChevronDown style={{ marginLeft: "129px" }} />}
+              {showStore ? <FaChevronUp style={{ marginLeft: "120px" }} /> : <FaChevronDown style={{ marginLeft: "120px" }} />}
             </button>
             {showStore && (
               <ul className="dropdown">

@@ -67,7 +67,7 @@ const UpdateEmploye = () => {
                 backgroundColor: "white",
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
             }}>
-                <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Mettre à jour un Employé</h2>
+                <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Mettre à jour un Livreur</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label className="form-label">Nom Complet</label>
