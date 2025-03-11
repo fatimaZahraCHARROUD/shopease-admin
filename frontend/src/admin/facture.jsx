@@ -5,9 +5,17 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Facture = () => {
+  const userId = localStorage.getItem("adminId");
+  const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!userId) {
+        navigate('/signin');
+      }
+    }, [userId, navigate]);
+
   const [factures, setFactures] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // Add state for search term
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchFactures();

@@ -3,6 +3,7 @@ import axios from "axios";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Bar, Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip as ChartTooltip, Legend as ChartLegend } from "chart.js";
+import {  useNavigate } from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, ChartTooltip, ChartLegend);
 
@@ -10,6 +11,15 @@ const COLORS = ["rgb(126, 176, 170)",  "rgb(166, 202, 197)",   "rgb(206, 228, 22
 const COLORS_BAR = ["rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)"];
 
 const Dashboard = () => {
+  const userId = localStorage.getItem("adminId");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userId) {
+      navigate('/signin');
+    }
+  }, [userId, navigate]);
+  
   const currentYear = new Date().getFullYear(); // Année actuelle
   const [selectedYear, setSelectedYear] = useState(currentYear); // État du filtre année
   const [totalAchats, setTotalAchats] = useState(0);

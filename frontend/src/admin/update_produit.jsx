@@ -4,8 +4,14 @@ import axios from "axios";
 
 const Update_product = () => {
   const { id } = useParams();
+ const userId = localStorage.getItem("adminId");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!userId) {
+      navigate('/signin');
+    }
+  }, [userId, navigate]);
   const [productData, setProductData] = useState({
     nom: "",
     description: "",

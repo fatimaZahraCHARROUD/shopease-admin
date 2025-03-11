@@ -5,9 +5,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 
 const Product = () => {
+  const userId = localStorage.getItem("adminId");
+  const navigate = useNavigate();
+
+    useEffect(() => {
+      if (!userId) {
+        navigate('/signin');
+      }
+    }, [userId, navigate]);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();

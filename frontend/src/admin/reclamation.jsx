@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Reclamation() {
+  const userId = localStorage.getItem("adminId");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userId) {
+      navigate('/signin');
+    }
+  }, [userId, navigate]);
   const [reclamations, setReclamations] = useState([]);
 
   // Fonction pour récupérer les réclamations depuis l'API

@@ -4,6 +4,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
+
+  const userId = localStorage.getItem("adminId");
+   
+    useEffect(() => {
+      if (!userId) {
+        navigate('/signin');
+      }
+    }, [userId, navigate]);
+    
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [depots, setDepots] = useState([]);

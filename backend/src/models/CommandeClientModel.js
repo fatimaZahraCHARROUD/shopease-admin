@@ -7,14 +7,19 @@ export const getCommandesClients = (callback) => {
             commandec.id, 
             commandec.date,
             commandec.etat, 
-            utilisateur.nomcomplet, 
-            utilisateur.email 
-        FROM 
+            liv.nomcomplet as liv_nom , 
+            liv.email as liv_email,
+            client.nomcomplet as client_nom , 
+            client.email as client_email,   
+            concat (client.adresse , ' , ' ,client.ville)  as client_adresse    
+             FROM 
             commandec 
-        LEFT JOIN utilisateur 
-            ON commandec.id_livreur = utilisateur.id 
+        LEFT JOIN utilisateur liv
+            ON commandec.id_livreur = liv.id 
+        join utilisateur client
+            ON commandec.id_client = client.id 
         WHERE 
-            (utilisateur.type_user = 'livreur' OR commandec.id_livreur IS NULL)
+            (liv.type_user = 'livreur' OR commandec.id_livreur IS NULL) and client.type_user ='client' 
     `;
   db.query(q, callback);
 };

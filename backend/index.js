@@ -14,16 +14,16 @@ import FournirRoutes from "./src/routes/FournirRoutes.js";
 import db from "./src/config/database.js";
 import clientRoutes from "./src/routes/ClientRoutes.js";              
 import dashboardRoutes from "./src/routes/DashboardRoutes.js"; 
+import userRoutes from "./src/routes/UserRoutes.js";              
+import reclamationRoutes from './src/routes/ReclamationRoutes.js';
+
 
 dotenv.config();
 const app = express();
 
-app.use(express.json());
-app.use(cors());
-// Middleware pour lire les requêtes JSON
-app.use(express.json());
-//bax ydozo request mn react to node.js
-app.use(cors());
+app.use(express.json()); // ✅ Correct
+app.use(cors()); // ✅ Correct
+
 
 
 // 1.gestion des fournisseurs
@@ -50,61 +50,56 @@ app.use("/api", FournirRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 // 12.gestion des client
 app.use("/api", clientRoutes);
+// 13.gestion d'authentification
+app.use("/", userRoutes);
+// 14.gestion des reclamation
+app.use("/api", reclamationRoutes);
 
-// //get all gestionnaire de depot
-// app.get("/gdepot", (req, res) => {
-//     const user_type="gdepot";
-//     const q = "SELECT * FROM utilisateur where type_user= ?";
-//     db.query(q,user_type, (err, data) => {
-//         if (err) return res.json(err);
-//         return res.json(data);
-//     });
+ 
+
+
+
+// //5.authentification
+// app.post('/signin', (req, res) => {
+//   const { email, password } = req.body;
+//   const admin = "admin";
+//   // Vérification de l'utilisateur dans la base de données
+//   const query = `
+//       SELECT id, email, password, type_user 
+//       FROM utilisateur
+//       WHERE email = ? AND password = ? AND type_user = ?  
+//     `;
+//   db.query(query, [email, password, admin], (err, results) => {
+//     if (err) {
+//       console.error('Erreur SQL:', err);
+//       return res.status(500).json({ success: false, message: 'Erreur serveur !!.' });
+//     }
+//     if (results.length === 0) {
+//       return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect.' });
+//     }
+//     const user = results[0];
+//     // Redirection en fonction du type d'utilisateur
+//     if (user.type_user === 'admin') {
+//       res.status(200).json({ success: true, message: 'Bienvenue, Admin!', redirectUrl: '/admin', idadmin: user.id });
+//     } else {
+//       res.status(403).json({ success: false, message: 'Accès non autorisé.' });
+//     }
+//   });
 // });
 
 
 
 
-//5.authentification
-app.post('/signin', (req, res) => {
-  const { email, password } = req.body;
-  const admin = "admin";
-  // Vérification de l'utilisateur dans la base de données
-  const query = `
-      SELECT id, email, password, type_user 
-      FROM utilisateur
-      WHERE email = ? AND password = ? AND type_user = ?  
-    `;
-  db.query(query, [email, password, admin], (err, results) => {
-    if (err) {
-      console.error('Erreur SQL:', err);
-      return res.status(500).json({ success: false, message: 'Erreur serveur !!.' });
-    }
-    if (results.length === 0) {
-      return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect.' });
-    }
-    const user = results[0];
-    // Redirection en fonction du type d'utilisateur
-    if (user.type_user === 'admin') {
-      res.status(200).json({ success: true, message: 'Bienvenue, Admin!', redirectUrl: '/admin', idadmin: user.id });
-    } else {
-      res.status(403).json({ success: false, message: 'Accès non autorisé.' });
-    }
-  });
-});
 
-
-
-
-
-app.get("/api/reclamations", (req, res) => {
-  const sql = "SELECT r.id, u.nomcomplet , u.email, r.msg, r.date FROM reclamation r , utilisateur u where u.id=r.id_client";
-  db.query(sql, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(results);
-  });
-});
+// app.get("/api/reclamations", (req, res) => {
+//   const sql = "SELECT r.id, u.nomcomplet , u.email, r.msg, r.date FROM reclamation r , utilisateur u where u.id=r.id_client";
+//   db.query(sql, (err, results) => {
+//     if (err) {
+//       return res.status(500).json({ error: err.message });
+//     }
+//     res.json(results);
+//   });
+// });
 
 
 

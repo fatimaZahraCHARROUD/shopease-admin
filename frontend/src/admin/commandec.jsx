@@ -80,6 +80,8 @@ const Commandec = () => {
               <tr style={{ backgroundColor: "#289dd2", color: "white" }}>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID</th>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Date</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Client</th>
+                <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Adresse</th>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>État</th>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>Livreur</th>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}> </th>
@@ -90,12 +92,14 @@ const Commandec = () => {
                 <tr key={commande.id}>
                   <td>{commande.id}</td>
                   <td>{new Date(commande.date).toLocaleDateString("fr-FR")}</td>
+                  <td>{commande.client_nom} -    {commande.client_email}</td>
+                  <td>{commande.client_adresse}</td>
                   <td>
                     <span className={`badge ${commande.etat === "livré" ? "bg-success" : "bg-warning"}`}>
                       {commande.etat}
                     </span>
                   </td>
-                  <td>{commande.nomcomplet} - {commande.email}</td>
+                  <td>{commande.liv_nom} - {commande.liv_email}</td>
                   <td style={{ position: "relative" }}>
                     {/* Menu déroulant avec trois points */}
                     <div className="dropdown">

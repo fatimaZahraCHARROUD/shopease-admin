@@ -3,7 +3,15 @@ import axios from "axios";
 import {  useNavigate} from "react-router-dom"; // Corriger l'importation de Link
 
 const Add_facture = () => {
-          const navigate = useNavigate(); 
+const userId = localStorage.getItem("adminId");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userId) {
+      navigate('/signin');
+    }
+  }, [userId, navigate]);
+            
     
   const [date, setDate] = useState(""); // Stocke la date de la facture
   const [prixTotal, setPrixTotal] = useState(0); // Prix total calculé

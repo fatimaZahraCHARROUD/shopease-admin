@@ -11,6 +11,7 @@ const AddCategorie = () => {
       navigate('/signin');
     }
   }, [userId, navigate]);
+  
   const [categorie, setCategorie] = useState({ nom: "", imgurl: "" });
 
   const handleSubmit = async (e) => {

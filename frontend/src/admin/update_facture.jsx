@@ -4,8 +4,15 @@ import axios from "axios";
 
 const Update_facture = () => {
   const { id } = useParams(); // Récupère l'ID de la facture à modifier
+ const userId = localStorage.getItem("adminId");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!userId) {
+      navigate('/signin');
+    }
+  }, [userId, navigate]);
+  
   const [date, setDate] = useState('');
   const [prixTotal, setPrixTotal] = useState('');
   const [idCommandef, setIdCommandef] = useState('');

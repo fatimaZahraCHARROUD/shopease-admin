@@ -6,6 +6,15 @@ import "jspdf-autotable";
 import { Link, useNavigate } from "react-router-dom";
 
 const Details_facture = () => {
+  const userId = localStorage.getItem("adminId");
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      if (!userId) {
+        navigate('/signin');
+      }
+    }, [userId, navigate]);
+    
   const { id } = useParams();
   const [facture, setFacture] = useState(null);
   const [loading, setLoading] = useState(true);
