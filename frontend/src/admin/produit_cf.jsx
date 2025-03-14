@@ -29,13 +29,28 @@ const Details_cf = () => {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-      <h3 className="  mb-4" style={{ color: "rgb(74,138,126)", fontWeight: "bold" }}>
+      
+      
+      
+      <div 
+        className="content-area"
+        style={{ 
+          padding: "20px", 
+          fontFamily: "Arial",
+          marginLeft: "270px",
+          transition: "margin-left 0.3s ease"
+        }}
+      >
+           <h3 className="  mb-4" style={{ color: "rgb(74,138,126)", fontWeight: "bold" }}>
         Détails des Produits - Commande #{id}
       </h3>
 
     
-
+      <div style={{ 
+      overflowX: "auto", 
+      maxWidth: "100%", 
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+    }}>
       {/* Table des produits */}
       <div className="table-responsive">
         {produits.length > 0 ? (
@@ -77,7 +92,7 @@ const Details_cf = () => {
           </p>
         )}
       </div>
-    </div></div>
+    </div></div></div>
   );
 };
 

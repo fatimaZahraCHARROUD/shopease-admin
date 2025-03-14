@@ -62,22 +62,15 @@ const UpdateCommandef = () => {
         }
     };
 
-    return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-        <div style={{  marginLeft:"250px" ,
-            backgroundColor: "#f8f9fa", 
-            minHeight: "100vh", 
-            display: "flex", 
-            justifyContent: "center", 
-            alignItems: "center" 
+    return (     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+        <div style={{
+          width: "100%",
+          maxWidth: "600px", // Largeur max du formulaire
+          padding: "20px",
+          borderRadius: "8px",
+          backgroundColor: "white",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
         }}>
-            <div style={{
-                width: "700px",
-                padding: "40px",
-                borderRadius: "8px",
-                backgroundColor: "white",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-            }}>
                 <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>
                     Mettre à jour la commande
                 </h2>
@@ -120,7 +113,7 @@ const UpdateCommandef = () => {
                     </button>
                 </form>
             </div>
-        </div></div>
+        </div> 
     );
 };
 

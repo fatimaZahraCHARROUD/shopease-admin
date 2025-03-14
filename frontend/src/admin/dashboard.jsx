@@ -105,144 +105,235 @@ const Dashboard = () => {
   const totalCityClients = cityData.reduce((sum, item) => sum + item.total_clients, 0);
 
   return (
-     <div style={{  backgroundColor: "#f8f9fa", minHeight: "100vh",  }}>
-      <div style={{ marginLeft: "250px", padding: "20px", fontFamily: "Arial" }}>
-
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      {/* CSS pour la responsivité */}
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .dashboard-container {
+              margin-left: 0 !important;
+              padding: 10px !important;
+            }
+            
+            .chart-title {
+              font-size: 14px !important;
+            }
+            
+            .stats-card p {
+              font-size: 11px !important;
+              margin-bottom: 5px !important;
+            }
+            
+            .city-label {
+              min-width: 70px !important;
+              font-size: 14px !important;
+            }
+            
+            .year-filter {
+              padding: 8px !important;
+              margin: 10px 0 !important;
+              display: flex !important;
+              justify-content: center !important;
+              align-items: center !important;
+            }
+            
+            .year-filter label {
+              margin-right: 8px !important;
+            }
+          }
+        `}
+      </style>
+  
+      <div 
+        className="dashboard-container" 
+        style={{ 
+          marginLeft: "250px", 
+          padding: "20px", 
+          fontFamily: "Arial",
+          transition: "margin-left 0.3s ease"
+        }}
+      >
         <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", padding: "20px" }}>
-          
-
-        <div className="row  ">
-            {[{ title: "TOTAL DES ACHATS", icon:"fas fa-shopping-cart" , amount: totalAchats,   bg: "#66c2a5"},
-            { title: "TOTAL DES VENTES", icon:"fas fa-cash-register" , amount: totalVentes,   bg: "#fc8d62"},
-            { title: "TOTAL DES FOURNISSEURS", icon:"fas fa-truck" , amount: totalFournisseurs,  bg: "#8da0cb" },
-            { title: "TOTAL DES CLIENTS", icon:"fas fa-user" , amount: totalClients,   bg: "#e78ac3" }]
-              .map((card, index) => (
-                <div key={index} className="col mb-3">
-                  <div className="  mx-0 py-1 px-1 shadow" style={{color:"gray " ,  backgroundColor: "white", borderRadius: "10px" }}>
-                    <div   className="card-body text-center">
-                      <p style={{ fontSize:"12px"}}> <i   className={`${card.icon} me-2`}></i> {card.title}</p>
-                      <p>{card.amount}</p>
-                    </div>
-                   </div>
+          {/* Cartes statistiques */}
+          <div className="row">
+            {[
+              { title: "TOTAL DES ACHATS", icon:"fas fa-shopping-cart", amount: totalAchats, bg: "#66c2a5"},
+              { title: "TOTAL DES VENTES", icon:"fas fa-cash-register", amount: totalVentes, bg: "#fc8d62"},
+              { title: "TOTAL DES FOURNISSEURS", icon:"fas fa-truck", amount: totalFournisseurs, bg: "#8da0cb" },
+              { title: "TOTAL DES CLIENTS", icon:"fas fa-user", amount: totalClients, bg: "#e78ac3" }
+            ].map((card, index) => (
+              <div key={index} className="col-6 col-md-3 mb-3">
+                <div 
+                  className="stats-card mx-0 py-1 px-1 shadow" 
+                  style={{
+                    color: "gray",
+                    backgroundColor: "white", 
+                    borderRadius: "10px",
+                    height: "100%"
+                  }}
+                >
+                  <div className="card-body text-center">
+                    <p style={{ fontSize: "12px" }}> 
+                      <i className={`${card.icon} me-2`}></i> 
+                      {card.title}
+                    </p>
+                    <p>{card.amount}</p>
+                  </div>
                 </div>
-              ))}
+              </div>
+            ))}
           </div>
-
-
-          <div  clasName="shadow" style={{ color:" white" ,  textAlign: "center" , backgroundColor:"rgb(74,138,126)", padding:"4px" }}>
-            <label >Filtrer par année : </label>
-            <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+  
+          {/* Filtre par année */}
+          <div 
+            className="year-filter shadow" 
+            style={{ 
+              color: "white", 
+              textAlign: "center", 
+              backgroundColor: "rgb(74,138,126)", 
+              padding: "4px",
+              borderRadius: "5px" 
+            }}
+          >
+            <label>Filtrer par année : </label>
+            <select 
+              value={selectedYear} 
+              onChange={(e) => setSelectedYear(e.target.value)}
+              style={{ borderRadius: "3px", padding: "2px" }}
+            >
               {[...Array(5)].map((_, i) => {
                 const an = new Date().getFullYear() - i;
                 return <option key={an} value={an}>{an}</option>;
               })}
             </select>
           </div>
-
-      
-
-
-
-
-<div class="container mt-4">
-  <div class="row">
- 
-     <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-body">
-        <h5 class="card-title">Les ventes en {selectedYear} par mois</h5>
-
-          <Bar data={chartDataSales} />
-
-          
+  
+          {/* Graphique des ventes et camembert des catégories */}
+          <div className="container-fluid mt-4 px-0">
+            <div className="row">
+              <div className="col-12 col-md-8 mb-4">
+                <div className="card shadow-sm h-100">
+                  <div className="card-body">
+                    <h5 className="card-title chart-title">Les ventes en {selectedYear} par mois</h5>
+                    <div style={{ height: "300px", width: "100%" }}>
+                      <Bar 
+                        data={chartDataSales} 
+                        options={{
+                          maintainAspectRatio: false,
+                          responsive: true
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-      </div>
-    </div>
-
-
-     <div class="col-md-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Catégories les plus vendues</h5>
-
-     <ResponsiveContainer width="100%" height={270}>
-      <PieChart>
-        <Pie data={data} dataKey="ventes" nameKey="name" cx="50%" cy="50%" outerRadius={90} fill="#8884d8">
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
-    </ResponsiveContainer>    
-  </div>         
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="container mt-4">
-  <div class="row">
- 
-     <div class="col-md-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Notre clients par ville </h5>
-          {cityData.map((entry, index) => {
-                    const percentage = ((entry.total_clients / totalCityClients) * 100).toFixed(1);
-                    return (
-                      <div key={entry.ville} style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
-                       <span style={{ minWidth: "100px", fontSize: "16px", fontWeight: "bold" }}>
-                      <i className="fas fa-city me-2"></i> 
-                       {entry.ville}
-                        </span>
-
-                        <div
-                          style={{
-                            height: "30px",
-                            width: `${percentage}%`,
-                            backgroundColor: COLORS_BAR[index % COLORS_BAR.length],
-                            borderRadius: "15px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "flex-end",
-                            paddingRight: "10px",
-                            color: "white",
-                            fontWeight: "bold",fontSize:"13px",padding:"5px",marginLeft:"10px",
-                          }}
-                        >
-                          {percentage}%
-                        </div>
-                      </div>
-                    );
-                  })}     
-                     </div>
-      </div>
-    </div>
-
- 
-     <div class="col-md-8">
-      <div class="card shadow-sm">
-        <div class="card-body">
-           <Line data={clientsChartData} options={clientsOptions} />
+  
+              <div className="col-12 col-md-4 mb-4">
+                <div className="card shadow-sm h-100">
+                  <div className="card-body">
+                    <h5 className="card-title chart-title">Catégories les plus vendues</h5>
+                    <div style={{ height: "300px", width: "100%" }}>
+                      <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                          <Pie 
+                            data={data} 
+                            dataKey="ventes" 
+                            nameKey="name" 
+                            cx="50%" 
+                            cy="50%" 
+                            outerRadius={90} 
+                            fill="#8884d8"
+                          >
+                            {data.map((entry, index) => (
+                              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                            ))}
+                          </Pie>
+                          <Tooltip />
+                          <Legend />
+                        </PieChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
- 
-
-
+  
+          {/* Clients par ville et graphique ligne des clients */}
+          <div className="container-fluid mt-2 px-0">
+            <div className="row">
+              <div className="col-12 col-md-4 mb-4">
+                <div className="card shadow-sm h-100">
+                  <div className="card-body">
+                    <h5 className="card-title chart-title">Nos clients par ville</h5>
+                    <div style={{ overflowY: "auto", maxHeight: "350px" }}>
+                      {cityData.map((entry, index) => {
+                        const percentage = ((entry.total_clients / totalCityClients) * 100).toFixed(1);
+                        return (
+                          <div key={entry.ville} style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
+                            <span 
+                              className="city-label"
+                              style={{ 
+                                minWidth: "100px", 
+                                fontSize: "16px", 
+                                fontWeight: "bold" 
+                              }}
+                            >
+                              <i className="fas fa-city me-2"></i> 
+                              {entry.ville}
+                            </span>
+  
+                            <div
+                              style={{
+                                height: "30px",
+                                width: `${percentage}%`,
+                                maxWidth: "calc(100% - 110px)",
+                                minWidth: "40px",
+                                backgroundColor: COLORS_BAR[index % COLORS_BAR.length],
+                                borderRadius: "15px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "flex-end",
+                                paddingRight: "10px",
+                                color: "white",
+                                fontWeight: "bold",
+                                fontSize: "13px",
+                                padding: "5px",
+                                marginLeft: "10px",
+                              }}
+                            >
+                              {percentage}%
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <div className="col-12 col-md-8 mb-4">
+                <div className="card shadow-sm h-100">
+                  <div className="card-body">
+                    <h5 className="card-title chart-title">Clients et visiteurs par mois</h5>
+                    <div style={{ height: "300px", width: "100%" }}>
+                      <Line 
+                        data={clientsChartData} 
+                        options={{
+                          ...clientsOptions,
+                          maintainAspectRatio: false,
+                          responsive: true
+                        }} 
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div> 
+    </div>
   );
 };
 

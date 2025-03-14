@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 const AddProduct = () => {
 
   const userId = localStorage.getItem("adminId");
-   
+  const navigate = useNavigate();
+
     useEffect(() => {
       if (!userId) {
         navigate('/signin');
@@ -25,7 +26,6 @@ const AddProduct = () => {
   const [selectedSuppliers, setSelectedSuppliers] = useState([]);
   const [selectedDepot, setSelectedDepot] = useState("");
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCategories();
@@ -100,27 +100,15 @@ const AddProduct = () => {
     setSelectedDepot("");
   };
 
-  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-    <div
-      style={{
-        marginLeft: "250px",
-        backgroundColor: "#f8f9fa",
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        className="card shadow-lg p-4 my-4"
-        style={{
-          width: "900px",
-          backgroundColor: "white",
-          borderRadius: "10px",
-          padding: "40px",
-        }}
-      >
+  return (     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+    <div style={{
+      width: "100%",
+      maxWidth: "600px", // Largeur max du formulaire
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "white",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}>
         <h2 className="text-center mb-4" style={{ color: "#333" }}>
           Ajouter un Produit
         </h2>
@@ -241,7 +229,7 @@ const AddProduct = () => {
           </button>
         </form>
       </div>
-    </div></div>
+    </div> 
   );
 };
 

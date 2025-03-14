@@ -53,12 +53,30 @@ const Commandef = () => {
   );
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "180vh" }}>
-      <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-
-        {/* Barre de recherche */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px", marginTop: "30px" }}>
-          <div className="input-group" style={{ width: "950px" }}>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      
+      
+      
+      <div 
+        className="content-area"
+        style={{ 
+          padding: "20px", 
+          fontFamily: "Arial",
+          marginLeft: "270px",
+          transition: "margin-left 0.3s ease"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "30px",
+            marginBottom: "30px",
+            flexWrap: "wrap",
+            gap: "10px"
+          }}
+        ><br/><div className="input-group" style={{ width: "950px" }}>
             <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
               <i className="fa fa-search"></i>
             </span>
@@ -76,7 +94,11 @@ const Commandef = () => {
             +
           </Link>
         </div>
-
+        <div style={{ 
+      overflowX: "auto", 
+      maxWidth: "100%", 
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+    }}>
         {/* Tableau des commandes */}
         <table className="table shadow">
           <thead className="table-light">
@@ -132,7 +154,7 @@ const Commandef = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </div></div>
   );
 };
 

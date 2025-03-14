@@ -59,19 +59,30 @@ const Product = () => {
       }
     };
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "140vh" }}>
-    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-       
-    <div
-style={{
-  display: "flex",
-  justifyContent: "space-between", // Aligner à gauche et à droite
-  alignItems: "center", // Centrer verticalement
-  marginBottom: "10px",
-  marginTop: "30px", // Ajuster l'espacement si nécessaire
-marginBottom:"30px",
-}}
->
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      
+      
+      
+    <div 
+      className="content-area"
+      style={{ 
+        padding: "20px", 
+        fontFamily: "Arial",
+        marginLeft: "270px",
+        transition: "margin-left 0.3s ease"
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "30px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          gap: "10px"
+        }}
+      ><br/>
 {/* Champ de recherche */}
 <div className="input-group" style={{ width: "940px" }}>
   <span className="input-group-text" style={{ color:"white", backgroundColor: "rgb(74,138,126)"}}>
@@ -101,7 +112,11 @@ marginBottom:"30px",
   +
 </Link>
 </div>
-
+<div style={{ 
+      overflowX: "auto", 
+      maxWidth: "100%", 
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+    }}> 
 
         <table className="table  shadow  " style={{border:"1px solid rgb(237, 237, 237)" }}>
         <thead className="table-light">
@@ -195,7 +210,7 @@ marginBottom:"30px",
             )}
           </tbody>
         </table>
-      </div>
+      </div></div>
     </div>
 
   );

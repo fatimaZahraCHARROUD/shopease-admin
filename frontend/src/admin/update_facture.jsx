@@ -73,15 +73,14 @@ const Update_facture = () => {
     }
   };
   
-  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-    <div style={{ marginLeft: "230px",backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+  return (     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
     <div style={{
-        width: "60%",
-        padding: "80px",
-        borderRadius: "8px",
-        backgroundColor: "white",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+      width: "100%",
+      maxWidth: "600px", // Largeur max du formulaire
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "white",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
     }}>
         <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}> Mettre à jour une Facture</h2>
       <form onSubmit={handleSubmit}>
@@ -116,7 +115,7 @@ const Update_facture = () => {
         </button>
       </form>
     </div></div>
-    </div>
+     
   );
 };
 

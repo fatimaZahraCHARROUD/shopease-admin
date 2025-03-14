@@ -24,9 +24,19 @@ function Reclamation() {
       });
   }, []);
 
-  return (<div style={{ backgroundColor: "#f8f9fa",}}>
-    <div style={{backgroundColor: "#f8f9fa", marginLeft: "260px", padding: "20px", minHeight:"800px" }}>
-      <h4 style={{ marginBottom: "20px" , color:" rgb(74,138,126)" }}>Réclamations des utilisateurs</h4>
+  return ( <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      
+      
+      
+    <div 
+      className="content-area"
+      style={{ 
+        padding: "20px", 
+        fontFamily: "Arial",
+        marginLeft: "270px",
+        transition: "margin-left 0.3s ease"
+      }}
+    > <br/><br/> <h4 style={{ marginBottom: "20px" , color:" rgb(74,138,126)" }}>Réclamations des utilisateurs</h4>
       
       {reclamations.length > 0 ? (
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>

@@ -35,11 +35,37 @@ const DetailsCategorie = () => {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-    <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-       <h3 style={{ color: "rgb(74,138,126)"}} >Produits associés  </h3>
+      
+      
+      
+    <div 
+      className="content-area"
+      style={{ 
+        padding: "20px", 
+        fontFamily: "Arial",
+        marginLeft: "270px",
+        transition: "margin-left 0.3s ease"
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "30px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          gap: "10px"
+        }}
+      ><br/>  <h3 style={{ color: "rgb(74,138,126)"}} >Produits associés  </h3>
       <br />
       {categorie ? (
-        <div>
+       <div style={{ 
+        overflowX: "auto", 
+        maxWidth: "100%", 
+        boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+      }}>
+
           {categorie.length > 0 ? (
             <table className="table shadow">
               <thead className="table-light" >
@@ -76,7 +102,7 @@ const DetailsCategorie = () => {
       ) : (
         <p>Aucun produit associé à cette catégorie.</p>
       )}
-    </div></div>
+    </div></div></div>
   );
 };
 

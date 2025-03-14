@@ -45,18 +45,30 @@ const Commandec = () => {
   );
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa", minHeight: "150vh" }}>
-      <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between", // Aligner à gauche et à droite
-            alignItems: "center", // Centrer verticalement
-            marginBottom: "10px",
-            marginTop: "30px", // Ajuster l'espacement si nécessaire
-            marginBottom: "30px",
-          }}
-        >
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      
+      
+      
+    <div 
+      className="content-area"
+      style={{ 
+        padding: "20px", 
+        fontFamily: "Arial",
+        marginLeft: "270px",
+        transition: "margin-left 0.3s ease"
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "30px",
+          marginBottom: "30px",
+          flexWrap: "wrap",
+          gap: "10px"
+        }}
+      ><br/>
           {/* Champ de recherche */}
           <div className="input-group" style={{ width: "980px" }}>
             <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
@@ -73,7 +85,11 @@ const Commandec = () => {
 
         
         </div>
-
+        <div style={{ 
+      overflowX: "auto", 
+      maxWidth: "100%", 
+      boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+    }}>
         {filteredCommandes.length > 0 ? (
           <table className="table shadow">
             <thead className="table-light">
@@ -153,7 +169,7 @@ const Commandec = () => {
             Aucune commande trouvée.
           </p>
         )}
-      </div>
+      </div></div>
     </div>
   );
 };

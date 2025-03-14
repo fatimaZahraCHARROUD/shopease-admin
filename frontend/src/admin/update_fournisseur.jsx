@@ -55,11 +55,15 @@ const UpdateFournisseur = () => {
     return <p className="text-center mt-5">Chargement des données...</p>;
   }
 
-  return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa" ,marginLeft:"250px" }}>
-      <div className="card p-4 shadow-lg" style={{ width: "700px", borderRadius: "10px", backgroundColor: "white", padding:"40px" }}>
-        <h2 className="text-center mb-4" style={{ color: "black" }}>Mettre à jour un Fournisseur</h2>
+  return (   <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+    <div style={{
+      width: "100%",
+      maxWidth: "600px", // Largeur max du formulaire
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "white",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}> <h2 className="text-center mb-4" style={{ color: "black" }}>Mettre à jour un Fournisseur</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label fw-bold">Nom Complet</label>
@@ -82,7 +86,7 @@ const UpdateFournisseur = () => {
           </button>
         </form>
       </div>
-    </div></div>
+    </div>
   );
 };
 

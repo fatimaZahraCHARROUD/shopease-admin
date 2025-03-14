@@ -134,9 +134,15 @@ doc.text(
   if (!facture) return <div className="text-center mt-5">Aucune facture trouvée.<Link to="/admin/facture" >ajouter une facture </Link></div>;
 
   return (
-    <div className="container" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" ,minWidth:"100%"}}>
-      <div style={{ marginLeft: "300px", padding: "20px", fontFamily: "Arial" }}>
-        <h3 className="text-center mb-4">Détails de la Facture {id}</h3>
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+    <div style={{
+      width: "100%",
+      maxWidth: "600px", // Largeur max du formulaire
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "white",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}>    <h3 className="text-center mb-4">Détails de la Facture {id}</h3>
 
         {/* Informations Générales */}
         <div className="mb-4">

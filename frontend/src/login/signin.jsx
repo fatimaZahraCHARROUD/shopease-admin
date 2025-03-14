@@ -21,121 +21,112 @@ const Signin = () => {
       if (response.data.success) {
         setSuccessMessage(response.data.message);
         setErrorMessage('');
-        
+
         if (response.data.idadmin) {
           localStorage.setItem("adminId", response.data.idadmin);
-        }  
+        }
 
-        // Redirection si nécessaire
         window.location.href = response.data.redirectUrl;
       } else {
         setErrorMessage(response.data.message || 'Login failed.');
         setSuccessMessage('');
       }
     } catch (error) {
-      setErrorMessage(
-        error.response?.data?.message || 'An error occurred. Please try again.'
-      );
+      setErrorMessage(error.response?.data?.message || 'An error occurred. Please try again.');
       setSuccessMessage('');
     }
   };
 
- return (
-  <div style={{   margin: "0" }}>
-    <style>
-      {`
-        .form {
-          width: 900px;
-          margin: 50px auto;
-          padding: 0 0 0 20px; 
-          border: 1px solid #ccc;
-          border-radius: 50px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          font-family: Arial, sans-serif;
-          background-color: #fff;
-        }
-        .form h1 {
-          text-align: center;
-          color: #222;
-          margin-bottom: 20px;
-        }
-        .form input {
-          width: 100%;
-          padding: 10px;
-          margin: 10px 0;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          box-sizing: border-box;
-        }
-        .form button {
-          width: 100%;
-          padding: 10px;
-          background-color: rgb(74,138,126); /* Vert émeraude */
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-size: 16px;
-          font-weight: bold;
-          transition: background-color 0.3s ease-in-out;
-        }
-        .form button:hover {
-          background-color: rgb(56, 102, 93); /* Vert foncé */
-        }
-        .message {
-          margin-top: 10px;
-          text-align: center;
-        }
-        .error {
-          color: red;
-        }
-        .success {
-          color: green;
-        }
-      `}
-    </style>
-    <div className="form">
-    <Container>
-          <Row className="align-items-center">
-            <Col   md={6}>
-    
-      <h1>Bienvenu à <strong style={{ color:"rgb(74,138,126)"}} >ShopEase </strong></h1><br />
-      <form onSubmit={handleSignIn}>
-        <div style={{ marginBottom: '15px' }}>
-          <label>Email </label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Entrez votre email"
-            required
-          />
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label>Mot de passe</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Entrez votre mot de passe"
-            required
-          />
-        </div>
-        <button type="submit">Se connecter</button>
-      </form>
-      {errorMessage && <div className="message error">{errorMessage}</div>}
-      {successMessage && <div className="message success">{successMessage}</div>}
-    </Col>
-    <Col   md={6}>
-              <img src="signin.jpg" alt="About us" className="img-fluid" style={{borderRadius:" 0 50px 50px 0", width: "420px", height: "480px" ,marginLeft:"20px" }} />
+  return (
+    <div className="signin-container">
+      <div className="background-image"></div>
+      <div className="overlay">
+        <Container>
+          <Row className="justify-content-center">
+            <Col xs={12} md={8} lg={5}>
+              <Card className="p-4">
+                <h1 className="title">Bienvenue à <span style={{ color: "rgb(74,138,126)" }}>ShopEase</span></h1>
+                <form onSubmit={handleSignIn}>
+                  <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Entrez votre email"
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Mot de passe</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Entrez votre mot de passe"
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="btn w-100" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
+                    Se connecter
+                  </button>
+                </form>
+                {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
+                {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
+              </Card>
             </Col>
           </Row>
         </Container>
-        </div>
-  </div>
-);
+      </div>
 
-  
+      <style>
+        {`
+          .signin-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+          }
+          .background-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('signwalp.jpg') no-repeat center center/cover;
+            filter: blur(3px);
+            z-index: -1;
+          }
+          .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+          }
+          .title {
+            text-align: left;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+          }
+          .form-label {
+            font-weight: 600;
+            text-align: left;
+            display: block;
+          }
+        `}
+      </style>
+    </div>
+  );
 };
 
 export default Signin;

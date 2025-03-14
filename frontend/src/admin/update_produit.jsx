@@ -115,11 +115,15 @@ const Update_product = () => {
     );
   };
 
-  return (
-<div style={{ backgroundColor: "#f8f9fa" }}>
-<div className="d-flex justify-content-center align-items-center" style={{ minHeight: "100vh", backgroundColor: "#f8f9fa", marginLeft: "250px" }}>
-        <div className="card p-4 shadow-lg my-4" style={{ width: "800px", borderRadius: "10px", backgroundColor: "white", padding: "40px" }}>
-          <h1>Modifier un Produit</h1>
+  return (  <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+    <div style={{
+      width: "100%",
+      maxWidth: "600px", // Largeur max du formulaire
+      padding: "20px",
+      borderRadius: "8px",
+      backgroundColor: "white",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+    }}> <h1>Modifier un Produit</h1>
           <form onSubmit={handleUpdate}>
             <div className="mb-3">
               <label className="form-label">Nom</label>
@@ -232,7 +236,7 @@ const Update_product = () => {
           </form>
         </div>
       </div>
-    </div>
+    
   );
 };
 

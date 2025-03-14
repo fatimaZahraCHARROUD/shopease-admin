@@ -59,9 +59,19 @@ const Stock = () => {
   }, [idadmin, filter]);
 
   return (
-    <div style={{ backgroundColor: "#f8f9fa" }}>
-      <div style={{ backgroundColor: "#f8f9fa", marginLeft: "280px", padding: "20px" }}>
-        {/* Afficher le message d'alerte dans un div si nécessaire */}
+    <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+      
+      
+      <br/><br/>
+    <div 
+      className="content-area"
+      style={{ 
+        padding: "20px", 
+        fontFamily: "Arial",
+        marginLeft: "270px",
+        transition: "margin-left 0.3s ease"
+      }}
+    >    {/* Afficher le message d'alerte dans un div si nécessaire */}
         {lowStockMessage && (
           <div
             style={{
@@ -140,6 +150,11 @@ const Stock = () => {
         <hr style={{ borderTop: "2px solid #ddd" }} />
 
         {produits.length > 0 ? (
+          <div style={{ 
+            overflowX: "auto", 
+            maxWidth: "100%", 
+            boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+          }}>
           <table className="table shadow">
             <thead className="table-light">
               <tr>
@@ -187,7 +202,7 @@ const Stock = () => {
                 </tr>
               ))}
             </tbody>
-          </table>
+          </table></div>
         ) : (
           <p>Aucun produit trouvé dans le stock.</p>
         )}

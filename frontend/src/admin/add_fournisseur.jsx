@@ -38,42 +38,42 @@ const AddFournisseur = () => {
         }
     };
 
-    return (    <div style={{ backgroundColor: "#f8f9fa",}}>
-
-    <div style={{ backgroundColor: "#f8f9fa",}}>
-        <div style={{marginLeft:"250px" , backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <div style={{
-                width: "50%",
-                padding: "40px",
-                borderRadius: "8px",
-                backgroundColor: "white",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
-            }}>
-                <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Ajouter un Fournisseur</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label className="form-label">Nom Complet</label>
-                        <input type="text" className="form-control" name="nomcomplet" value={fournisseur.nomcomplet} onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Email</label>
-                        <input type="email" className="form-control" name="email" value={fournisseur.email} onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Adresse</label>
-                        <input type="text" className="form-control" name="adresse" value={fournisseur.adresse} onChange={handleChange} required />
-                    </div>
-                    <div className="mb-3">
-                        <label className="form-label">Téléphone</label>
-                        <input type="text" className="form-control" name="tel" value={fournisseur.tel} onChange={handleChange} required />
-                    </div>
-                    <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>
-                        Ajouter
-                    </button>
-                </form>
-            </div>
-        </div></div></div>
-    );
+    return (
+        <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "20px" }}>
+          <div style={{
+            width: "100%",
+            maxWidth: "600px", // Largeur max du formulaire
+            padding: "20px",
+            borderRadius: "8px",
+            backgroundColor: "white",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)"
+          }}>
+            <h2 style={{ textAlign: "center", color: "#333", marginBottom: "20px" }}>Ajouter un Fournisseur</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Nom Complet</label>
+                <input type="text" className="form-control" name="nomcomplet" value={fournisseur.nomcomplet} onChange={handleChange} required />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Email</label>
+                <input type="email" className="form-control" name="email" value={fournisseur.email} onChange={handleChange} required />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Adresse</label>
+                <input type="text" className="form-control" name="adresse" value={fournisseur.adresse} onChange={handleChange} required />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Téléphone</label>
+                <input type="text" className="form-control" name="tel" value={fournisseur.tel} onChange={handleChange} required />
+              </div>
+              <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>
+                Ajouter
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+      
 };
 
 export default AddFournisseur;

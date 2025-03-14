@@ -2,6 +2,8 @@ import { Routes, Route, Link } from "react-router-dom";
 import React from "react";
 import { FaBriefcase, FaHome, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { useState } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 
  import Client from "../admin/client";
@@ -59,23 +61,45 @@ const Admin = () => {
     <div >
       <style>
         {`
+          /* Styles de base de la navigation */
           nav {
-  border-radius: 30px;
-  margin: 10px;
-  background-color: white;color:rgb(206, 169, 134);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: calc(99vh - 20px); /* Adjust to leave space at the bottom */
-  position: fixed;
-  top: 0;  overflow-y: auto;
-
-  left: 0;
-  bottom: 20px; /* You can increase this value for more space */
-  width: 260px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
+            border-radius: 30px;
+            margin: 10px;
+            background-color: white;
+            color: rgb(206, 169, 134);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            height: calc(99vh - 20px);
+            position: fixed;
+            top: 0;
+            overflow-y: auto;
+            left: 0;
+            bottom: 20px;
+            width: 260px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+          }
+          
+          /* Styles responsive pour la navigation */
+          @media (max-width: 768px) {
+            nav {
+              transform: translateX(-280px); /* Masque la sidebar en dehors de l'écran */
+              width: 260px;
+            }
+            
+            nav.show {
+              transform: translateX(0); /* Affiche la sidebar quand la classe show est active */
+            }
+            
+            .content-area {
+              margin-left: 0 !important;
+              padding: 10px !important;
+            }
+          }
+          
           nav ul {
             list-style-type: none;
             margin: 0;
@@ -84,10 +108,14 @@ const Admin = () => {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%;
           }
+          
           nav ul li {
             display: block;
+            width: 100%;
           }
+          
           nav ul li a, .dropdown-btn {
             color: rgb(117, 118, 118);
             text-decoration: none;
@@ -100,73 +128,146 @@ const Admin = () => {
             text-align: left;
             width: 100%;
           }
+          
           nav ul li a:hover, .dropdown-btn:hover {
-            border-radius:5px;
+            border-radius: 5px;
             background-color: rgba(225, 223, 223, 0.22);
           }
-            
+          
           .dropdown {
-  list-style-type: none;
-  padding-left: 15px;
-  margin: 0;
-  max-height: 300px; /* Ajustez selon vos besoins */
-s /* Active le scroll seulement si nécessaire */
-}
-
+            list-style-type: none;
+            padding-left: 15px;
+            margin: 0;
+            max-height: 300px;
+          }
+          
           .dropdown li a {
             font-weight: normal;
             padding: 8px 10px;
           }
+          
+          /* Bouton menu hamburger */
+          .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1001; 
+             color: rgb(74,138,126);
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+          }
+          
+          @media (max-width: 768px) {
+            .menu-toggle {
+              display: block;
+            }
+          }
+          
+          /* Overlay pour fermer le menu sur mobile */
+          .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+          }
+          
+          @media (max-width: 768px) {
+            .sidebar-overlay.show {
+              display: block;
+            }
+          }
+        
         `}
       </style>
      
-      <nav> 
-        
-      <h1 style={{ marginTop:"10px" ,fontWeight:"bold" , color:" rgb(74,138,126)"}}>ShopEase</h1>
- 
-        <ul>        
-            <li><Link to="/admin/dashboard"   title="Dashboard"> <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard</Link></li>
-
-           <li>
-            <button className="dropdown-btn" onClick={() => setShowPatrimoine(!showPatrimoine)}>
-              <FaBriefcase style={{ marginRight: "10px"   }} />
-              Gestion
-              {showPatrimoine ? <FaChevronUp style={{ marginLeft: "100px" }} /> : <FaChevronDown style={{ marginLeft: "100" }} />}
-            </button>
-            {showPatrimoine && (
-              <ul className="dropdown">
-                <li><Link to="/admin/fournisseur"><i style={{ marginRight: "10px" }}class="fa fa-truck"></i>Fournisseur</Link></li>
-                <li><Link to="/admin/client"><i style={{ marginRight: "10px" }}class="fa fa-users"></i>Client</Link></li>
-                <li><Link to="/admin/employe"><i style={{ marginRight: "10px" }}class="fa fa-motorcycle"></i>Livreur</Link></li>
-                <li><Link to="/admin/categorie"><i style={{ marginRight: "10px" }}class="fa fa-tags"></i>Catégorie</Link></li>
-                <li><Link to="/admin/produit"><i style={{ marginRight: "10px" }}class="fa fa-cube"></i>Produit</Link></li>
-                <li><Link to="/admin/depot"><i style={{ marginRight: "10px" }}class="fa fa-warehouse"></i>Dépot</Link></li>
-              </ul>
-            )}
-          </li>
-
-          <li>
-            <button className="dropdown-btn" onClick={() => setShowStore(!showStore)}>
-              <i className="fa-solid fa-store" style={{ marginRight: "10px" }}></i>
-              Store
-              {showStore ? <FaChevronUp style={{ marginLeft: "120px" }} /> : <FaChevronDown style={{ marginLeft: "120px" }} />}
-            </button>
-            {showStore && (
-              <ul className="dropdown">
-                <li><Link to="/admin/commandef"><i style={{ marginRight: "10px" }}class="fa fa-cart-plus"></i>Commande Fournisseur</Link></li>
-                <li><Link to="/admin/commandec"><i style={{ marginRight: "10px" }}class="fa fa-shopping-cart"></i>Commande Client</Link></li>
-                <li><Link to="/admin/stock"><i style={{ marginRight: "10px" }}class="fa fa-archive"></i>Stock</Link></li>
-              </ul>
-            )}
-          </li>
+    
+          {/* Bouton menu hamburger pour mobile */}
+          <button  
+            className="menu-toggle" 
+            onClick={() => {
+              const navElement = document.querySelector('nav');
+              const overlay = document.querySelector('.sidebar-overlay');
+              navElement.classList.toggle('show');
+              overlay.classList.toggle('show');
+            }}
+          >
+            <i className="fa fa-bars"></i>
+          </button>
           
-          <li><Link to="/admin/facture"> <i style={{ marginRight: "10px" }}class="fa fa-file-invoice"></i> Facture</Link></li>
-          <hr/>
-
-          <li><Link to="/admin/reclamation">   <i style={{ marginRight: "10px" }}class="fas fa-comment-dots"></i>  Reclamation</Link></li>
-          <li><Link to="/home"> <i class="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>Log out</Link></li>
-        </ul>
-      </nav >
+          {/* Overlay pour fermer le menu sur mobile */}
+          <div 
+            className="sidebar-overlay" 
+            onClick={() => {
+              const navElement = document.querySelector('nav');
+              const overlay = document.querySelector('.sidebar-overlay');
+              navElement.classList.remove('show');
+              overlay.classList.remove('show');
+            }}
+          ></div>
+          
+          <nav><br/><br/>
+            <h1 style={{ marginTop:"10px", fontWeight:"bold", color:"rgb(74,138,126)" }}>ShopEase</h1>
+            <ul>        
+              <li>
+                <Link to="/admin/dashboard" title="Dashboard">
+                  <i className="fa-solid fa-chart-pie" style={{ marginRight: "8px" }}></i> Dashboard
+                </Link>
+              </li>
+      
+              <li>
+                <button className="dropdown-btn" onClick={() => setShowPatrimoine(!showPatrimoine)}>
+                  <FaBriefcase style={{ marginRight: "10px" }} />
+                  Gestion
+                  {showPatrimoine ? 
+                    <FaChevronUp style={{ marginLeft: "auto" }} /> : 
+                    <FaChevronDown style={{ marginLeft: "auto" }} />
+                  }
+                </button>
+                {showPatrimoine && (
+                  <ul className="dropdown">
+                    <li><Link to="/admin/fournisseur"><i className="fa fa-truck" style={{ marginRight: "10px" }}></i>Fournisseur</Link></li>
+                    <li><Link to="/admin/client"><i className="fa fa-users" style={{ marginRight: "10px" }}></i>Client</Link></li>
+                    <li><Link to="/admin/employe"><i className="fa fa-motorcycle" style={{ marginRight: "10px" }}></i>Livreur</Link></li>
+                    <li><Link to="/admin/categorie"><i className="fa fa-tags" style={{ marginRight: "10px" }}></i>Catégorie</Link></li>
+                    <li><Link to="/admin/produit"><i className="fa fa-cube" style={{ marginRight: "10px" }}></i>Produit</Link></li>
+                    <li><Link to="/admin/depot"><i className="fa fa-warehouse" style={{ marginRight: "10px" }}></i>Dépot</Link></li>
+                  </ul>
+                )}
+              </li>
+      
+              <li>
+                <button className="dropdown-btn" onClick={() => setShowStore(!showStore)}>
+                  <i className="fa-solid fa-store" style={{ marginRight: "10px" }}></i>
+                  Store
+                  {showStore ? 
+                    <FaChevronUp style={{ marginLeft: "auto" }} /> : 
+                    <FaChevronDown style={{ marginLeft: "auto" }} />
+                  }
+                </button>
+                {showStore && (
+                  <ul className="dropdown">
+                    <li><Link to="/admin/commandef"><i className="fa fa-cart-plus" style={{ marginRight: "10px" }}></i>Commande Fournisseur</Link></li>
+                    <li><Link to="/admin/commandec"><i className="fa fa-shopping-cart" style={{ marginRight: "10px" }}></i>Commande Client</Link></li>
+                    <li><Link to="/admin/stock"><i className="fa fa-archive" style={{ marginRight: "10px" }}></i>Stock</Link></li>
+                  </ul>
+                )}
+              </li>
+              
+              <li><Link to="/admin/facture"><i className="fa fa-file-invoice" style={{ marginRight: "10px" }}></i> Facture</Link></li>
+              <hr/>
+      
+              <li><Link to="/admin/reclamation"><i className="fas fa-comment-dots" style={{ marginRight: "10px" }}></i> Reclamation</Link></li>
+              <li><Link to="/home"><i className="fas fa-sign-out-alt" style={{ marginRight: "8px" }}></i>Log out</Link></li>
+            </ul>
+          </nav>
 
       <Routes>
         <Route path="/" element={<Dashboard />} />

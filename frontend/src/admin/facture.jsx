@@ -61,49 +61,67 @@ const Facture = () => {
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
-         <div style={{ marginLeft: "270px", padding: "20px", fontFamily: "Arial" }}>
-          <div
+      
+      <div 
+        className="content-area"
+        style={{ 
+          padding: "20px", 
+          fontFamily: "Arial",
+          marginLeft: "270px",
+          transition: "margin-left 0.3s ease"
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "30px",
+            marginBottom: "30px",
+            flexWrap: "wrap",
+            gap: "10px"
+          }}
+        ><br/>
+          {/* Champ de recherche */}
+          <div className="input-group" style={{ 
+            width: "960px",
+            maxWidth: "100%"
+          }}>
+            <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
+              <i className="fa fa-search"></i>
+            </span>
+            <input
+              type="text"
+              placeholder="Rechercher par ID Facture..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="form-control py-2"
+            />
+          </div>
+  
+          {/* Bouton Ajouter */}
+          <Link
+            to="/admin/add_facture"
+            className="btn"
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "10px",
-              marginTop: "30px",
-              marginBottom: "30px",
+              backgroundColor: "white",
+              color: "rgb(74,138,126)",
+              fontSize: "20px",
+              padding: "5px 15px",
+              borderRadius: "5px",
             }}
           >
-            {/* Champ de recherche */}
-            <div className="input-group" style={{ width: "960px" }}>
-              <span className="input-group-text" style={{ color: "white", backgroundColor: "rgb(74,138,126)" }}>
-                <i className="fa fa-search"></i> {/* Icône FontAwesome */}
-              </span>
-              <input
-                type="text"
-                placeholder="Rechercher par ID Facture..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="form-control py-2"
-              />
-            </div>
-
-            {/* Bouton Ajouter */}
-            <Link
-              to="/admin/add_facture"
-              className="btn"
-              style={{
-                marginRight: "10px",
-                backgroundColor: "white",
-                color: "rgb(74,138,126)",
-                fontSize: "20px",
-                padding: "5px 15px",
-                borderRadius: "5px", // Arrondi léger
-              }}
-            >
-              +
-            </Link>
-          </div>
-
-          <table className="table shadow" style={{ borderCollapse: "collapse" }}>
+            +
+          </Link>
+        </div>
+  
+        {/* Conteneur avec overflow pour le tableau */}
+        <div style={{ 
+          overflowX: "auto", 
+          maxWidth: "100%", 
+          boxShadow: "0 0 10px rgba(0,0,0,0.1)" 
+        }}>
+          <table className="table" style={{ borderCollapse: "collapse", minWidth: "800px" }}>
             <thead>
               <tr>
                 <th style={{ color: "rgb(74,138,126)", backgroundColor: "rgb(206,228,224)" }}>ID Facture</th>
@@ -125,7 +143,7 @@ const Facture = () => {
                   <td>{facture.fournisseur_nom}</td>
                   <td>{facture.fournisseur_email}</td>
                   <td>
-                    <div className="dropdown" style={{ marginRight: "40px" }}>
+                    <div className="dropdown" style={{ marginRight: "10px" }}>
                       <button
                         className="btn"
                         type="button"
@@ -138,7 +156,7 @@ const Facture = () => {
                       >
                         ⋮
                       </button>
-
+  
                       {activeDropdown === facture.facture_id && (
                         <ul
                           className="dropdown-menu show"
@@ -185,7 +203,8 @@ const Facture = () => {
             </tbody>
           </table>
         </div>
-     </div>
+      </div>
+    </div>
   );
 };
 
