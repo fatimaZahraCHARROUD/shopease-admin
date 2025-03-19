@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+//jsPDF et jspdf-autotable : Utilisés pour générer des fichiers PDF dynamiquement.
+//  jsPDF est une bibliothèque qui permet de créer des documents PDF en JavaScript,
+//  et jspdf-autotable permet d'ajouter des tableaux à ces PDF
+import jsPDF from "jspdf";//biblio to print
+import "jspdf-autotable";//tableau
 import { Link, useNavigate } from "react-router-dom";
 
 const Details_facture = () => {
@@ -36,15 +39,7 @@ const Details_facture = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
   
-    // Titre de la facture
-    // doc.setFontSize(18);
-    // doc.text(`Facture n°FAC-${id} `, 105, 20, { align: "center" });
-  
-    // Informations générales
-    // doc.setFontSize(12);
-    // doc.text("Informations de fournisseur:", 14, 40); // Titre pour l'entreprise
-    // doc.text("Informations de l'entreprise :", 120, 40); // Titre pour le fournisseur
-  
+   
     // Informations de ShopEase
     doc.text(`ShopEase`, 14, 50);
     doc.text(`123 Rue hassan Al aarouit Nador, Maroc`, 14, 60);

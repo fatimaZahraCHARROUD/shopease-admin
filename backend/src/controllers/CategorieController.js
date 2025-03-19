@@ -1,3 +1,4 @@
+//Importation des fonctions du modèle
 import { 
     getAllCategories, 
     getCategorieById, 

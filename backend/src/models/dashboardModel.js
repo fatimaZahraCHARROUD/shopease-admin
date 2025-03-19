@@ -1,4 +1,19 @@
+//importe l'objet db, qui est probablement une connexion MySQL créée dans database.js
 import db from "../config/database.js";
+
+
+
+//Le callback permet de continuer l'exécution d'une tâche une fois que l'opération asynchrone est terminée. 
+//Le callback est utilisé ici pour gérer les résultats d'une requête SQL asynchrone. Il permet de définir ce qui doit se produire lorsque la requête SQL a terminé son exécution. Cela peut être :
+//Une gestion des erreurs si quelque chose se passe mal.
+//Une gestion des résultats (données récupérées de la base de données) si la requête est réussie.
+//Cela permet d'assurer que le programme continue d'exécuter le code approprié sans attendre indéfiniment que la requête SQL se termine, rendant ainsi l'application plus réactive et performante.
+
+//Asynchrone fait référence à un processus ou une opération qui ne bloque pas l'exécution du reste du programme pendant qu'il s'exécute. En d'autres termes, une opération asynchrone permet à un programme de continuer à faire d'autres choses pendant que cette opération est en cours.
+
+
+//=> callback gere les resultat d'une requete sql asynchrone , era appelée une fois la requête terminée, avec deux paramètres :err et result
+//=> asynchrone comme fleche asynchronne n'attend pas que la requete soit terminer pour que le system continu
 
 // Récupérer le total des achats à partir des commandes où l'état est "reçue"
 export const getTotalAchatsQuery = (callback) => {
@@ -40,7 +55,7 @@ export const getTopCategories = (annee, callback) => {
   });
 };
 
-
+//Exporte la fonction pour qu'elle puisse être utilisée ailleurs dans le projet.
 export const getSalesData = (years, yearsPlaceholder, callback) => {
   // Vérification si les années sont valides
   if (!years || years.length === 0) {

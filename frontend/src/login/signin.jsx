@@ -10,6 +10,7 @@ const Signin = () => {
   const [successMessage, setSuccessMessage] = useState('');
 
   const handleSignIn = async (e) => {
+    //Dans le cas des formulaires, cela empêche l'envoi du formulaire au serveur, ce qui permet de traiter les données avec JavaScript sans rafraîchir la page.
     e.preventDefault();
 
     try {

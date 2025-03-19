@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+//recharts : Une bibliothèque pour afficher des graphiques, ici utilisée pour afficher des graphiques circulaires (camemberts) et des graphiques à barres.
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Bar, Line } from "react-chartjs-2";
+//chart.js : Une bibliothèque de graphiques qui est utilisée ici pour afficher des graphiques linéaires
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip as ChartTooltip, Legend as ChartLegend } from "chart.js";
 import {  useNavigate } from "react-router-dom";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, ChartTooltip, ChartLegend);
 
+//circulaire
 const COLORS = ["rgb(126, 176, 170)",  "rgb(166, 202, 197)",   "rgb(206, 228, 224)",   "rgb(226, 240, 237)",   "rgb(239, 250, 248)"    ]
+//client par ville
 const COLORS_BAR = ["rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)", "rgb(126, 176, 170)"];
 
 const Dashboard = () => {
@@ -57,9 +61,9 @@ const Dashboard = () => {
     axios.get(`http://localhost:8800/api/dashboard/clients-by-city?year=${selectedYear} `).then(response => setCityData(response.data));
   }, [selectedYear]);
 
-  // Data for sales chart
+
+ //📘📘Définition des données du graphique des ventes
   const chartDataSales = {
-  
     labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"],
     datasets: [{
       label: "Ventes en (DH)",
@@ -68,7 +72,7 @@ const Dashboard = () => {
     }]
   };
 
-  // Data for clients chart
+  //📘📘Définition des données pour le graphique des clients
   const clientsChartData = {
     labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"],
     datasets: [{
@@ -82,6 +86,7 @@ const Dashboard = () => {
     }]
   };
 
+//📘📘options pour le graphique des clients
   const clientsOptions = {
     responsive: true,
     plugins: {
@@ -101,8 +106,7 @@ const Dashboard = () => {
     }
   };
 
-  // Calculating the total clients for city distribution chart
-  const totalCityClients = cityData.reduce((sum, item) => sum + item.total_clients, 0);
+//📘📘Calcul du total des clients pour le graphique de distribution par ville   const totalCityClients = cityData.reduce((sum, item) => sum + item.total_clients, 0);
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
@@ -154,7 +158,7 @@ const Dashboard = () => {
         }}
       >
         <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh", padding: "20px" }}>
-          {/* Cartes statistiques */}
+          {/*📘📘 Cartes statistiques */}
           <div className="row">
             {[
               { title: "TOTAL DES ACHATS", icon:"fas fa-shopping-cart", amount: totalAchats, bg: "#66c2a5"},
@@ -208,7 +212,7 @@ const Dashboard = () => {
             </select>
           </div>
   
-          {/* Graphique des ventes et camembert des catégories */}
+          {/* 📘📘Graphique des ventes et camembert des catégories */}
           <div className="container-fluid mt-4 px-0">
             <div className="row">
               <div className="col-12 col-md-8 mb-4">
@@ -216,6 +220,8 @@ const Dashboard = () => {
                   <div className="card-body">
                     <h5 className="card-title chart-title">Les ventes en {selectedYear} par mois</h5>
                     <div style={{ height: "300px", width: "100%" }}>
+                  {/* 📘📘Graphique des ventes  */}
+
                       <Bar 
                         data={chartDataSales} 
                         options={{
@@ -234,6 +240,8 @@ const Dashboard = () => {
                     <h5 className="card-title chart-title">Catégories les plus vendues</h5>
                     <div style={{ height: "300px", width: "100%" }}>
                       <ResponsiveContainer width="100%" height="100%">
+                    {/* 📘📘Graphique des catégories  */}
+
                         <PieChart>
                           <Pie 
                             data={data} 
@@ -259,7 +267,7 @@ const Dashboard = () => {
             </div>
           </div>
   
-          {/* Clients par ville et graphique ligne des clients */}
+          {/*📘📘 Clients par ville et graphique ligne des clients */}
           <div className="container-fluid mt-2 px-0">
             <div className="row">
               <div className="col-12 col-md-4 mb-4">
@@ -317,6 +325,7 @@ const Dashboard = () => {
                   <div className="card-body">
                     <h5 className="card-title chart-title">Clients et visiteurs par mois</h5>
                     <div style={{ height: "300px", width: "100%" }}>
+                    {/*📘📘 visiteurs */}
                       <Line 
                         data={clientsChartData} 
                         options={{

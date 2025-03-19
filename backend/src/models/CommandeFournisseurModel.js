@@ -43,6 +43,12 @@ export const getProduitsCommandeFournisseur = (id, callback) => {
   db.query(q, [id], callback);
 };
 
+//Une Promise est une manière de traiter des opérations asynchrones en JavaScript de manière plus propre et plus structurée qu'avec les callbacks.
+//resolve() et reject() sont utilisés pour marquer l'état de la promesse (réussie ou échouée).
+//Le chaînage des promesses avec then() et catch() permet de gérer les résultats et les erreurs de manière séquentielle.
+//reject() est une fonction qui est appelée lorsque l'opération asynchrone échoue et que vous voulez signaler l'erreur. Elle marque la Promise comme rejetée (rejected), ce qui permet à la méthode catch() d'être exécutée pour gérer l'erreur.
+//resolve() est une fonction qui est appelée lorsque l'opération asynchrone réussit et que vous voulez transmettre le résultat ou la donnée à la chaîne d'exécution suivante.
+
 // Ajouter une commande fournisseur
 export const addCommandeFournisseur = (data, callback) => {
   const q = "INSERT INTO commandef (`date`, `etat`, `id_fournisseur`) VALUES (CURDATE(), ?)";

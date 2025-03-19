@@ -48,7 +48,7 @@ export const getSalesByMonth = (req, res) => {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
 
-  // Conversion des années en une chaîne pour la requête SQL
+  // Conversion des années en une chaîne ['?', '?', '?', '?', '?'] pour la requête SQL préparées ex : SELECT * FROM ventes WHERE annee IN (?, ?, ?, ?, ?);
   const yearsPlaceholder = years.map(() => '?').join(',');
 
   // Récupération des données de ventes pour ces années via le modèle

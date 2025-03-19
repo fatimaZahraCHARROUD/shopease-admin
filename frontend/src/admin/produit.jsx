@@ -13,6 +13,7 @@ const Product = () => {
         navigate('/signin');
       }
     }, [userId, navigate]);
+    
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // État pour la recherche
 

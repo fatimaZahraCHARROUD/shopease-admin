@@ -1,6 +1,8 @@
-import express from "express"
-import cors from "cors"
-import dotenv from "dotenv";
+import express from "express" // Framework web pour créer des API facilement
+import cors from "cors"//Middleware qui permet de gérer les permissions des requetes get , put , post .... (autoriser la methode ou non)
+import dotenv from "dotenv";//Charge les variables d’environnement depuis un fichier .env
+
+//Importation des Routes
 import fournisseurRoutes from "./src/routes/FournisseurRoutes.js";
 import employeRoutes from "./src/routes/EmployeRoutes.js";
 import depotRoutes from "./src/routes/DepotRoutes.js";
@@ -18,14 +20,15 @@ import userRoutes from "./src/routes/UserRoutes.js";
 import reclamationRoutes from './src/routes/ReclamationRoutes.js';
 
 
-dotenv.config();
-const app = express();
+dotenv.config();//Chargement des variables d’environnement 
+const app = express();//Création de l’application Express
 
-app.use(express.json()); // ✅ Correct
-app.use(cors()); // ✅ Correct
+app.use(express.json()); //  Permet de lire les données JSON envoyées par les clients.
+app.use(cors()); // Active le partage de ressources entre origines différentes(front , back) (CORS).
 
 
 
+// Déclaration des Routes
 // 1.gestion des fournisseurs
 app.use("/api", fournisseurRoutes);
 // 2.gestion des employes
@@ -59,52 +62,9 @@ app.use("/api", reclamationRoutes);
 
 
 
-// //5.authentification
-// app.post('/signin', (req, res) => {
-//   const { email, password } = req.body;
-//   const admin = "admin";
-//   // Vérification de l'utilisateur dans la base de données
-//   const query = `
-//       SELECT id, email, password, type_user 
-//       FROM utilisateur
-//       WHERE email = ? AND password = ? AND type_user = ?  
-//     `;
-//   db.query(query, [email, password, admin], (err, results) => {
-//     if (err) {
-//       console.error('Erreur SQL:', err);
-//       return res.status(500).json({ success: false, message: 'Erreur serveur !!.' });
-//     }
-//     if (results.length === 0) {
-//       return res.status(401).json({ success: false, message: 'Email ou mot de passe incorrect.' });
-//     }
-//     const user = results[0];
-//     // Redirection en fonction du type d'utilisateur
-//     if (user.type_user === 'admin') {
-//       res.status(200).json({ success: true, message: 'Bienvenue, Admin!', redirectUrl: '/admin', idadmin: user.id });
-//     } else {
-//       res.status(403).json({ success: false, message: 'Accès non autorisé.' });
-//     }
-//   });
-// });
 
 
-
-
-
-// app.get("/api/reclamations", (req, res) => {
-//   const sql = "SELECT r.id, u.nomcomplet , u.email, r.msg, r.date FROM reclamation r , utilisateur u where u.id=r.id_client";
-//   db.query(sql, (err, results) => {
-//     if (err) {
-//       return res.status(500).json({ error: err.message });
-//     }
-//     res.json(results);
-//   });
-// });
-
-
-
-
-
+//Démarrage du Serveur
 //listen to any request to 8800
 app.listen(8800, () => {
   console.log("Connected to backend!");
