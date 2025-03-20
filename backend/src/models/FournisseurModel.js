@@ -12,14 +12,14 @@ export const getFournisseurById = (id, callback) => {
 
 // Ajouter un fournisseur
 export const createFournisseur = (data, callback) => {
-  const q = "INSERT INTO fournisseur (nomcomplet, email, tel, adresse) VALUES (?)";
-  db.query(q, [[data.nomcomplet, data.email, data.tel, data.adresse]], callback);
+  const q = "INSERT INTO fournisseur (nomcomplet, email, tel, adresse,delais) VALUES (?)";
+  db.query(q, [[data.nomcomplet, data.email, data.tel, data.adresse,data.delais]], callback);
 };
 
 // Mettre à jour un fournisseur
 export const updateFournisseur = (id, data, callback) => {
-  const q = "UPDATE fournisseur SET nomcomplet = ?, email = ?, tel = ?, adresse = ? WHERE id = ?";
-  db.query(q, [data.nomcomplet, data.email, data.tel, data.adresse, id], (err, result) => {
+  const q = "UPDATE fournisseur SET nomcomplet = ?, email = ?, tel = ?, adresse = ? ,delais=?  WHERE id = ?";
+  db.query(q, [data.nomcomplet, data.email, data.tel, data.adresse,data.delais, id], (err, result) => {
     if (err) {
       console.error("Erreur lors de la mise à jour du fournisseur :", err);
       return callback(err, null);

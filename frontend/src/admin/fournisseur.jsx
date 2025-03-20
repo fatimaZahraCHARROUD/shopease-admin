@@ -122,6 +122,7 @@ const Fournisseur = () => {
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Email</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Téléphone</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Adresse</th>
+            <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}>Délais</th>
             <th style={{color:" rgb(74,138,126)", backgroundColor:"rgb(206,228,224)"}}> </th>
             </tr>
           </thead>
@@ -133,6 +134,7 @@ const Fournisseur = () => {
                   <td>{f.email}</td>
                   <td>0{f.tel}</td>
                   <td>{f.adresse}</td>
+                  <td>{f.delais} jours</td>
                   <td>
                     {/* Menu déroulant avec trois points */}
                     <div className="dropdown" style={{ marginRight: "40px" }}>

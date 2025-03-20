@@ -30,9 +30,9 @@ import {
   
   export const updateFournisseurById = (req, res) => {
     const fournisseurId = req.params.id; 
-    const { nomcomplet, email, tel, adresse } = req.body;
+    const { nomcomplet, email, tel, adresse,delais } = req.body;
   
-    if (!nomcomplet || !email || !tel || !adresse) {
+    if (!nomcomplet || !email || !tel || !adresse || !delais) {
       return res.status(400).json({ message: "Tous les champs sont requis" });
     }
   

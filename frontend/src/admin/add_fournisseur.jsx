@@ -9,7 +9,8 @@ const AddFournisseur = () => {
         nomcomplet: "",
         email: "",
         adresse: "",
-        tel: ""
+        tel: "",
+        delais:""
     });
 
     useEffect(() => {
@@ -65,6 +66,10 @@ const AddFournisseur = () => {
               <div className="mb-3">
                 <label className="form-label">Téléphone</label>
                 <input type="text" className="form-control" name="tel" value={fournisseur.tel} onChange={handleChange} required />
+              </div> 
+              <div className="mb-3">
+                <label className="form-label">Délais</label>
+                <input type="number" className="form-control" name="delais" value={fournisseur.delais} onChange={handleChange} required />
               </div>
               <button type="submit" className="btn w-100" style={{ backgroundColor: "rgb(74,138,126)", color: "white", fontWeight: "bold" }}>
                 Ajouter

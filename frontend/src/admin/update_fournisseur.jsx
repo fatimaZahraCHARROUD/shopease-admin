@@ -18,6 +18,7 @@ const UpdateFournisseur = () => {
     email: "",
     tel: "",
     adresse: "",
+    delais:""
   });
 
   useEffect(() => {
@@ -80,6 +81,10 @@ const UpdateFournisseur = () => {
           <div className="mb-3">
             <label className="form-label fw-bold">Adresse</label>
             <input type="text" className="form-control" placeholder="Adresse" name="adresse" value={fournisseur.adresse} onChange={handleChange} required />
+          </div>
+           <div className="mb-3">
+            <label className="form-label fw-bold">Délais</label>
+            <input type="number" className="form-control" placeholder="Délais" name="delais" value={fournisseur.delais} onChange={handleChange} required />
           </div>
           <button type="submit" className="btn w-100 text-white" style={{ backgroundColor: "rgb(74,138,126)", fontSize: "16px", fontWeight: "bold" }}>
             Mettre à jour

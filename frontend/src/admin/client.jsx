@@ -60,9 +60,9 @@ const Client = () => {
       ><br/>
      {/* Champ de recherche */}
      <div className="input-group" style={{ width: "960px" }}>
-       <span className="input-group-text" style={{ color:"white", backgroundColor: "rgb(74,138,126)"}}>
-         <i className="fa fa-search"></i> {/* Icône FontAwesome */}
-       </span>
+    <span className="input-group-text" style={{ color:"white", backgroundColor: "rgb(74,138,126)"}}>
+      <i className="fa fa-search"></i> {/* Icône FontAwesome */}
+    </span>
        <input
          type="text"
          placeholder="Rechercher un client..."
