@@ -107,6 +107,7 @@ const Dashboard = () => {
   };
 
 //📘📘Calcul du total des clients pour le graphique de distribution par ville   const totalCityClients = cityData.reduce((sum, item) => sum + item.total_clients, 0);
+const totalCityClients = cityData.reduce((sum, item) => sum + item.total_clients, 0);
 
   return (
     <div style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>

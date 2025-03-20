@@ -221,7 +221,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className="  text-white py-4" style={{ backgroundColor:"rgb(217, 238, 234)"}}>
+      <footer className="  text-white py-4" style={{ backgroundColor:"rgb(77, 133, 123)"}}>
         <Container>
           <Row>
             <Col xs={12} md={4}>

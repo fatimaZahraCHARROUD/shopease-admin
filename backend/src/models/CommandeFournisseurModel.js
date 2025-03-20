@@ -14,7 +14,7 @@ export const getCommandesFournisseurs = (callback) => {
             facture.id as id_facture
         FROM commandef
         INNER JOIN fournisseur ON commandef.id_fournisseur = fournisseur.id
-        LEFT JOIN facture ON facture.id_commandef = commandef.id
+        LEFT JOIN facture ON facture.id_commandef = commandef.id order by id 
 `;
 
   db.query(q, callback);
