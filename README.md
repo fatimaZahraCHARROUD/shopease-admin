@@ -21,9 +21,9 @@ dashboard:
 product:
 <img width="1920" height="875" alt="img1" src="https://github.com/user-attachments/assets/1a2a992e-665f-4e1c-8c93-4cfc0078327e" />
 facture:
-<img width="1920" height="1080" alt="facture" src="https://github.com/user-attachments/assets/4e3714b4-2844-40f6-bc31-571f380ee9a5" />
+<img width="1920" height="902" alt="facture" src="https://github.com/user-attachments/assets/e4b6b1d0-c1e3-4b26-bff8-a1890f600443" />
 stock:
-<img width="1920" height="1080" alt="stock" src="https://github.com/user-attachments/assets/a1c8b8cb-bd7d-475b-9fb9-9d96e80b919b" />
+<img width="1920" height="875" alt="stock" src="https://github.com/user-attachments/assets/01a9f4fd-bed1-4b87-8f05-9a3d29b4589d" />
 
 
 ---
